@@ -33,13 +33,6 @@ This step can take a while on a new machine. It usually is a 2+ GB download. You
 sudo softwareupdate -i -a
 ```
 
-
-
-### Factory purchased.
-* If you just purchased the Macbook you should be good to go. Just make sure you do not have Filevault on and you are not
-using the  Apple Core Storage volume manager (if it is check out [this thread](http://awesometoast.com/yosemite-core-storage-and-partition-woes/)
-to set it to HFS+).
-
 The defaults look like this. This script expects your "Macintosh HD" to be at disk0s2.
 
 ```
@@ -53,28 +46,17 @@ $ diskutil list
 3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
 ```
 
-* Update the software. This is important as the only way to get firmware updates. Type the below and enter your password.
-This can take a while if this is a new machine. You might actually think it locked up. It just takes a while
-depending on your bandwidth. You simply might want to use the GUI update application to have some indication of progress.
-(Note: maybe do this last. I found that I could not open up any more GUI apps without a reboot)
-Though also maybe it may overwrite the EFI stuff. so maybe needs to go first
+# References & Resources
 
-```
-sudo softwareupdate -i -a
-```
-
-# References
-
-### Mac on Archlinux 
+#### Mac on Archlinux 
 http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/
 https://wiki.archlinux.org/index.php/MacBook
 https://bbs.archlinux.org/viewtopic.php?id=195924
 https://github.com/pandeiro/arch-on-air
 https://github.com/jantman/puppet-archlinux-macbookretina
-https://github.com/search?utf8=%E2%9C%93&q=arch+linux+macbook
 https://wiki.debian.org/iMacIntel
 https://github.com/coldnew/macbookair-2013-config/blob/master/kernel-config.example
-https://github.com/NapoleonWils0n/cerberus/blob/6e224ff0b3677fce7c78ee7db15095c68e7a1ea7/arch-linux/arch-linux-macair.sh
+https://github.com/NapoleonWils0n/cerberus/
 https://github.com/gammy/macbook8-1_archlinux
 https://wiki.archlinux.org/index.php/MacBook
 http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/
@@ -82,32 +64,31 @@ https://medium.com/@PhilPlckthun/arch-linux-running-on-my-macbook-2ea525ebefe3
 https://help.ubuntu.com/community/MacBookPro11-1/utopic
 https://github.com/jantman/puppet-archlinux-macbookretina
 http://www.nixknight.com/2014/02/arch-linux-installation-with-kde-desktop/
-https://github.com/pandeiro/arch-on-air
 
-### Creating/Resizing of MacOS drives
+#### Creating/Resizing of MacOS drives
 http://apple.stackexchange.com/questions/63130/create-new-partition-in-unallocated-space-with-diskutil
 https://github.com/cowboy/dotfiles/blob/master/bin/osx_hide_partition
 http://en.wikipedia.org/wiki/GUID_Partition_Table
 
-### Homebrew
+#### Homebrew
 http://brew.sh/
 
-### Docker
+#### Docker
 http://blog.javabien.net/2014/03/03/setup-docker-on-osx-the-no-brainer-way/
 http://viget.com/extend/how-to-use-docker-on-os-x-the-missing-guide
 
-### EXT4
+#### EXT4
 https://github.com/carlcarl/blog/blob/cacca2e50fe4fbcca2e9c3d68bad9176a66f8016/content/archive/osx_mavericks_ext4.md
 http://download.paragon-software.com/doc/Manual_extfsmac_eng.pdf
 http://www.paragon-software.com/home/extfs-mac/download.html
 https://jamfnation.jamfsoftware.com/discussion.html?id=12843
 http://tips.jay.cat/ext4-support-in-osx-yosemite/
 
-### EFI
+#### EFI
 http://www.rodsbooks.com/refind/installing.html#wde
 
-### VirtualBox
+#### VirtualBox
 https://wiki.archlinux.org/index.php/VirtualBox
 
-### SquashFS
+#### SquashFS
 http://askubuntu.com/questions/95392/how-to-create-a-bootable-system-with-a-squashfs-root
