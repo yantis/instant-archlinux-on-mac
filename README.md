@@ -44,6 +44,20 @@ do that type:
 curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install.sh && mac-install USB
 ```
 
+# Breakdown (Behind the scenes)
+* Command Line Developer tools, homebrew, VirtualBox, Boot2Docker, Docker all get silently and automatically installed.
+* Since Mac OSX doesn't support ext4 file systems. We install a 10 day trial of Paragon ExtFS (It can be uninstalled after the install)
+* Filesystem gets converted to HFS+ if needed then volume gets shrunk down to make room for ArchLinux.
+* rEFInd is installed for dual booting MacOs & Linux As well as a very sexy [rEFInd Minimal Theme](https://github.com/EvanPurkhiser/rEFInd-minimal)
+* The physical volume gets mapped to virtual volumes for VirtualBox.
+* The system is profiled to be able to dynamically adapt to its hardware.
+* Boot2Docker launches Virtualbox with our physical volumes mapped.
+* We then launch a [docker container](https://registry.hub.docker.com/u/yantis/instant-archlinux-on-mac) which then downloads
+this [script](https://github.com/yantis/instant-archlinux-on-mac/blob/master/mac-install-internal.sh) to dynamically setup Arch Linux.
+* We unsquash    
+
+https://registry.hub.docker.com/u/yantis/instant-archlinux-on-mac/
+
 # Troubleshooting
 
 The defaults for an HFS+ Filesystem look like this. This script expects your "Macintosh HD" to be at disk0s2.
