@@ -46,7 +46,7 @@ curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master
 
 # Troubleshooting
 
-The defaults look like this. This script expects your "Macintosh HD" to be at disk0s2.
+The defaults for an HFS+ Filesystem look like this. This script expects your "Macintosh HD" to be at disk0s2.
 
 ```
 $ diskutil list
@@ -57,6 +57,26 @@ $ diskutil list
 1:                        EFI EFI                     209.7 MB   disk0s1
 2:                  Apple_HFS Macintosh HD            499.4 GB   disk0s2
 3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+```
+
+The defaults for Core Storage look like this. This script expects "Apple_CoreStorage" to be at disk0s2.
+
+```
+$ diskutil list
+
+/dev/disk0
+#:                       TYPE NAME                    SIZE       IDENTIFIER
+0:      GUID_partition_scheme                        *500.3 GB   disk0
+1:                        EFI EFI                     209.7 MB   disk0s1
+2:          Apple_CoreStorage                         499.4 GB   disk0s2
+3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+
+/dev/disk1
+#:                       TYPE NAME                    SIZE       IDENTIFIER
+0:                  Apple_HFS Macintosh HD           *499.0 GB   disk1
+                              Logical Volume on disk0s2
+                              C3E9416F-A8DF-4E50-9BEE-87B2C538689E
+                              Unencrypted
 ```
 
 * Make sure that Firevalut is turned off.
