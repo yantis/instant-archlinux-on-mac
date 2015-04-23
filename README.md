@@ -50,13 +50,13 @@ $ diskutil list
 # References & Resources
 
 #### Mac on Archlinux 
-[http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/]
-[https://wiki.archlinux.org/index.php/MacBook]
-[https://bbs.archlinux.org/viewtopic.php?id=195924]
-[https://github.com/pandeiro/arch-on-air]
-[https://github.com/jantman/puppet-archlinux-macbookretina]
-[https://wiki.debian.org/iMacIntel]
-[https://github.com/coldnew/macbookair-2013-config/blob/master/kernel-config.example]
+[http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/](http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/)
+[https://wiki.archlinux.org/index.php/MacBook](https://wiki.archlinux.org/index.php/MacBook)
+[https://bbs.archlinux.org/viewtopic.php?id=195924](https://bbs.archlinux.org/viewtopic.php?id=195924)
+[https://github.com/pandeiro/arch-on-air](https://github.com/pandeiro/arch-on-air)
+[https://github.com/jantman/puppet-archlinux-macbookretina](https://github.com/jantman/puppet-archlinux-macbookretina)
+[https://wiki.debian.org/iMacIntel](https://wiki.debian.org/iMacIntel)
+[https://github.com/coldnew/macbookair-2013-config/blob/master/kernel-config.example](https://github.com/coldnew/macbookair-2013-config/blob/master/kernel-config.example)
 [https://github.com/NapoleonWils0n/cerberus/]
 [https://github.com/gammy/macbook8-1_archlinux]
 [https://wiki.archlinux.org/index.php/MacBook]
