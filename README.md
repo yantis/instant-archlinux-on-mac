@@ -1,10 +1,10 @@
 # Instant Arch Linux on Macs & Macbooks
 
-This will setup Arch Linux on your Mac/MacBook all from Mac OSX. No need for any USB drives or figuring out the proper network drivers to get your
+This will setup Arch Linux on your Mac/MacBook all from Mac OSX. No need for any USB drives or figuring out the proper network/video drivers to get your
 system to get up. It should install without any rebooting etc. Just launch it and enter your password twice and go about your business.
 
-Warning: Backup your stuff or use a fresh Macbook. There are no guarantees this will work and it might leave your machine in an unusable 
-state. I personally didn't worry about this to much as you can just reset it back to a [factory restore]
+Warning: Backup your stuff or use a fresh iMac or Macbook. There are no guarantees this will work and it might leave your machine in an unusable 
+state. I personally didn't worry about this to much as one can just reset it back to a [factory restore]
 (https://github.com/yantis/instant-archlinux-on-mac/blob/master/factory-restore.md) with "⌘ + R" at startup 
 or "option + ⌘  + R for [internet recovery](https://github.com/yantis/instant-archlinux-on-mac/blob/master/factory-restore.md).
 
@@ -24,7 +24,7 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net and
 * [MacBook8,1] - Macbook 12" April 2015 (Setup works but so far no one that I know has any version of linux on one of these. If you do please let me know so I can fix it)
 
 # Setup
-* Make sure FileVault encryption is turned off. If it isn't you need to disable it and reboot.
+* Make sure FileVault encryption is [turned off](https://support.apple.com/kb/PH18674?locale=en_US). If it isn't you need to disable it and reboot.
 * Use ⌘ + space to open spotlight. Type in terminal and hit return.
 * Optionally, update your software either through the the terminal or app store  Though if you do you may have to reboot though probably not.
 This step can take a while on a new machine. It usually is a 2+ GB download. You simply might want to use the GUI update application to have some indication of progress.
@@ -79,7 +79,7 @@ $ diskutil list
                               Unencrypted
 ```
 
-* Make sure that Firevalut is turned off.
+* Make sure that FireVault is [turned off](https://support.apple.com/kb/PH18674?locale=en_US)
 * If the script doesn't remove Core Storage for you. You can try the trick of enabling FileVault, rebooting, disabling it and rebooting. Which should remove Core Storage.
 * Fusion drives do not work yet as it hasn't been programmed in yet.
 * Make sure to leave at least 30GB for MacOSX (or at least whatever the drive space is plus a few GB for updates).
