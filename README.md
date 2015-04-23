@@ -1,4 +1,4 @@
-Instant Arch Linux on Macs & Macbooks
+# Instant Arch Linux on Macs & Macbooks
 
 This will setup Arch Linux on your Mac/MacBook all from Mac OSX. No need for any USB drives or figuring out the proper network drivers to get your
 system to get up. It should install without any rebooting etc. Just launch it and enter your password twice and go about your business.
@@ -11,8 +11,6 @@ or "option + ⌘  + R for [internet recovery](https://github.com/yantis/instant-
 Will this work with your iMac or MacBook? Possibly. It worked with all the ones I tested it with. I suspect it will most likely work and even if not perfect
 you will be in a much better place than trying to do it by hand. I do know for a fact that I haven't set it up to work with fusion drives yet
 so if your drive is a fusion drive it won't work without some minor changes.
-
-# Testing
 
 ## Tested Working
 * Mountain Lion, Lion, Yosimite
@@ -49,10 +47,10 @@ $ diskutil list
 # References & Resources
 
 #### Mac on Archlinux 
-http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/
-https://wiki.archlinux.org/index.php/MacBook
-https://bbs.archlinux.org/viewtopic.php?id=195924
-https://github.com/pandeiro/arch-on-air
+http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/(http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/)
+https://wiki.archlinux.org/index.php/MacBook(https://wiki.archlinux.org/index.php/MacBook)
+https://bbs.archlinux.org/viewtopic.php?id=195924(https://bbs.archlinux.org/viewtopic.php?id=195924)
+https://github.com/pandeiro/arch-on-air(https://github.com/pandeiro/arch-on-air)
 https://github.com/jantman/puppet-archlinux-macbookretina
 https://wiki.debian.org/iMacIntel
 https://github.com/coldnew/macbookair-2013-config/blob/master/kernel-config.example
