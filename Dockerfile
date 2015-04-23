@@ -31,7 +31,6 @@ RUN pacman --noconfirm -Syyu && \
             squashfs-tools && \
 
     # Install stuff for the docker container to use now which we will remove.
-    #TODO ADD systemd
     pacman --noconfirm -S \
             dkms \
             git \
@@ -99,26 +98,26 @@ RUN pacman --noconfirm -Syyu && \
     # Remove the awc-cli we used for building the above
     runuser -l docker -c "yaourt --noconfirm -Rs aws-cli" && \
 
-    # build & cache xf86-input-mtrack-git package
+    # Build & cache xf86-input-mtrack-git package
     wget -P /tmp https://aur.archlinux.org/packages/xf/xf86-input-mtrack-git/xf86-input-mtrack-git.tar.gz && \
     tar -xvf /tmp/xf86-input-mtrack-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/xf86-input-mtrack-git && \
     runuser -l docker -c "(cd /tmp/xf86-input-mtrack-git && makepkg -sc --noconfirm)" && \
     mv /tmp/xf86-input-mtrack-git/*.xz /var/cache/pacman/custom/ && \
 
-    # build & cache thermald package
+    # Build & cache thermald package
     wget -P /tmp https://aur.archlinux.org/packages/th/thermald/thermald.tar.gz && \
-         tar -xvf /tmp/thermald.tar.gz -C /tmp && \
-         chown -R docker:docker /tmp/thermald && \
-         runuser -l docker -c "(cd /tmp/thermald && makepkg -sc --noconfirm)" && \
-         mv /tmp/thermald/*.xz /var/cache/pacman/general/ && \
+    tar -xvf /tmp/thermald.tar.gz -C /tmp && \
+    chown -R docker:docker /tmp/thermald && \
+    runuser -l docker -c "(cd /tmp/thermald && makepkg -sc --noconfirm)" && \
+    mv /tmp/thermald/*.xz /var/cache/pacman/general/ && \
 
-    # build & cache nvidia-bl-dkms package
+    # Build & cache nvidia-bl-dkms package
     wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-bl-dkms/nvidia-bl-dkms.tar.gz && \
-        tar -xvf /tmp/nvidia-bl-dkms.tar.gz -C /tmp && \
-        chown -R docker:docker /tmp/nvidia-bl-dkms && \
-        runuser -l docker -c "(cd /tmp/nvidia-bl-dkms && makepkg -sc --noconfirm)" && \
-        mv /tmp/nvidia-bl-dkms/*.xz /var/cache/pacman/custom/ && \
+    tar -xvf /tmp/nvidia-bl-dkms.tar.gz -C /tmp && \
+    chown -R docker:docker /tmp/nvidia-bl-dkms && \
+    runuser -l docker -c "(cd /tmp/nvidia-bl-dkms && makepkg -sc --noconfirm)" && \
+    mv /tmp/nvidia-bl-dkms/*.xz /var/cache/pacman/custom/ && \
 
     ## NVIDIA START##
     # build and cache stuff needed for nvidia
@@ -147,7 +146,9 @@ RUN pacman --noconfirm -Syyu && \
     rm -r /tmp/* && \
 
     # Remove Nvidia utils/dkms from the system since we do not need them anymore.
-    pacman --noconfirm -Rs nvidia-utils nvidia-dkms && \
+    pacman --noconfirm -Rs \
+            nvidia-utils \
+            nvidia-dkms && \
 
     # Remove nvidia drivers since dkms replaces them.
     rm /var/cache/pacman/pkg/nvidia-3* && \
@@ -166,8 +167,8 @@ RUN pacman --noconfirm -Syyu && \
 
     # Download broadcom and intel drivers.
     pacman --noconfirm -Sw --cachedir /var/cache/pacman/custom \
-        broadcom-wl-dkms \
-        xf86-video-intel && \
+            broadcom-wl-dkms \
+            xf86-video-intel && \
 
     # Download and cache Liberation TTF Mono Powerline Fonts
     wget -P /tmp https://aur.archlinux.org/packages/tt/ttf-liberation-mono-powerline-git/ttf-liberation-mono-powerline-git.tar.gz && \
@@ -219,13 +220,13 @@ RUN pacman --noconfirm -Syyu && \
 
     # Remove anything we added that we do not need
     pacman --noconfirm -Rs dbus-glib dri2proto dri3proto fontsproto glproto \
-    libxml2 libxss mesa pixman presentproto randrproto renderproto flex libtool \
-    resourceproto videoproto xf86driproto xineramaproto xorg-util-macros inputproto \
-    linux dkms gcc linux-headers binutils guile make libxfont xorg-bdftopcf \
-    xorg-font-utils fontconfig xorg-fonts-encodings python-setuptools python \
-    dbus systemd yaourt package-query automake git m4 libx32-flex bison autoconf \
-    automake1.11 freetype2 harfbuzz graphite libpng xorg-server-devel \
-    libunistring gettext && \
+            libxml2 libxss mesa pixman presentproto randrproto renderproto flex libtool \
+            resourceproto videoproto xf86driproto xineramaproto xorg-util-macros inputproto \
+            linux dkms gcc linux-headers binutils guile make libxfont xorg-bdftopcf \
+            xorg-font-utils fontconfig xorg-fonts-encodings python-setuptools python \
+            dbus systemd yaourt package-query automake git m4 libx32-flex bison autoconf \
+            automake1.11 freetype2 harfbuzz graphite libpng xorg-server-devel \
+            libunistring gettext && \
 
     # Clean up to make this as small as possible
     localepurge && \
@@ -249,88 +250,88 @@ RUN pacman --noconfirm -Syyu && \
 
 # Cache packages that have happened since the last airootfs image
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-    btrfs-progs \
-    ca-certificates-utils \
-    ca-certificates \
-    dnsmasq \
-    glib2 \
-    glibc \
-    grml-zsh-config \
-    gssproxy \
-    lftp \
-    libinput \
-    libssh2 \
-    libtasn1 \
-    lz4 \
-    man-pages \
-    nano \
-    ntp \
-    partclone \
-    openconnect \
-    systemd-sysvcompat \
-    tcpdump \
-    testdisk && \
+            btrfs-progs \
+            ca-certificates-utils \
+            ca-certificates \
+            dnsmasq \
+            glib2 \
+            glibc \
+            grml-zsh-config \
+            gssproxy \
+            lftp \
+            libinput \
+            libssh2 \
+            libtasn1 \
+            lz4 \
+            man-pages \
+            nano \
+            ntp \
+            partclone \
+            openconnect \
+            systemd-sysvcompat \
+            tcpdump \
+            testdisk && \
     rm -r /var/lib/pacman/sync/*
 
 # Just download these since we don't actually need them for the docker container.
 # Make sure none of these are in the list above.
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-    base-devel \
-    acpi \
-    alsa-utils \
-    arch-install-scripts \
-    aria2 \
-    awesome \
-    c-ares \
-    cpupower \
-    ctags \
-    dkms \
-    feh \
-    git \
-    haveged \
-    htop \
-    gnome-keyring \
-    google-chrome \
-    hfsprogs \
-    intel-ucode \
-    imagemagick \
-    linux \
-    linux-headers \
-    lm_sensors \
-    mlocate \
-    networkmanager \
-    network-manager-applet \
-    pavucontrol \
-    package-query \
-    pciutils \
-    pekwm \
-    plasma \
-    powertop \
-    pulseaudio \
-    pulseaudio-alsa \
-    python-dateutil \
-    python-docutils \
-    python-pyasn1\
-    python-rsa \
-    python-setuptools \
-    python-six \
-    reflector \
-    rsync \
-    sqlite \
-    sddm \
-    systemd \
-    terminus-font \
-    tree \
-    tmux \
-    vicious \
-    vim \
-    xfce4 \
-    xfce4-whiskermenu-plugin \
-    xorg-server \
-    xorg-server-utils \
-    xorg-xinit \
-    xorg-xev \
-    yajl \
-    yaourt \
-    zsh-syntax-highlighting && \
+            base-devel \
+            acpi \
+            alsa-utils \
+            arch-install-scripts \
+            aria2 \
+            awesome \
+            c-ares \
+            cpupower \
+            ctags \
+            dkms \
+            feh \
+            git \
+            haveged \
+            htop \
+            gnome-keyring \
+            google-chrome \
+            hfsprogs \
+            intel-ucode \
+            imagemagick \
+            linux \
+            linux-headers \
+            lm_sensors \
+            mlocate \
+            networkmanager \
+            network-manager-applet \
+            pavucontrol \
+            package-query \
+            pciutils \
+            pekwm \
+            plasma \
+            powertop \
+            pulseaudio \
+            pulseaudio-alsa \
+            python-dateutil \
+            python-docutils \
+            python-pyasn1\
+            python-rsa \
+            python-setuptools \
+            python-six \
+            reflector \
+            rsync \
+            sqlite \
+            sddm \
+            systemd \
+            terminus-font \
+            tree \
+            tmux \
+            vicious \
+            vim \
+            xfce4 \
+            xfce4-whiskermenu-plugin \
+            xorg-server \
+            xorg-server-utils \
+            xorg-xinit \
+            xorg-xev \
+            yajl \
+            yaourt \
+            zsh-syntax-highlighting && \
     rm -r /var/lib/pacman/sync/*
