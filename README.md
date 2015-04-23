@@ -44,27 +44,24 @@ $ diskutil list
 3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
 ```
 
-# CHECK BACK IN A COUPLE HOURS FOR THIS TO BE COMPLETED. 
-
-
 # References & Resources
 
 #### Mac on Archlinux 
-[http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/](http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/)
-[https://wiki.archlinux.org/index.php/MacBook](https://wiki.archlinux.org/index.php/MacBook)
-[https://bbs.archlinux.org/viewtopic.php?id=195924](https://bbs.archlinux.org/viewtopic.php?id=195924)
-[https://github.com/pandeiro/arch-on-air](https://github.com/pandeiro/arch-on-air)
-[https://github.com/jantman/puppet-archlinux-macbookretina](https://github.com/jantman/puppet-archlinux-macbookretina)
-[https://wiki.debian.org/iMacIntel](https://wiki.debian.org/iMacIntel)
-[https://github.com/coldnew/macbookair-2013-config/blob/master/kernel-config.example](https://github.com/coldnew/macbookair-2013-config/blob/master/kernel-config.example)
-[https://github.com/NapoleonWils0n/cerberus/]
-[https://github.com/gammy/macbook8-1_archlinux]
-[https://wiki.archlinux.org/index.php/MacBook]
-[http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/]
-[https://medium.com/@PhilPlckthun/arch-linux-running-on-my-macbook-2ea525ebefe3]
-[https://help.ubuntu.com/community/MacBookPro11-1/utopic]
-[https://github.com/jantman/puppet-archlinux-macbookretina]
-[http://www.nixknight.com/2014/02/arch-linux-installation-with-kde-desktop/]
+* http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/
+* https://wiki.archlinux.org/index.php/MacBook
+* https://bbs.archlinux.org/viewtopic.php?id=195924
+* https://github.com/pandeiro/arch-on-air
+https://github.com/jantman/puppet-archlinux-macbookretina
+https://wiki.debian.org/iMacIntel
+https://github.com/coldnew/macbookair-2013-config/blob/master/kernel-config.example
+https://github.com/NapoleonWils0n/cerberus/
+https://github.com/gammy/macbook8-1_archlinux
+https://wiki.archlinux.org/index.php/MacBook
+http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/
+https://medium.com/@PhilPlckthun/arch-linux-running-on-my-macbook-2ea525ebefe3
+https://help.ubuntu.com/community/MacBookPro11-1/utopic
+https://github.com/jantman/puppet-archlinux-macbookretina
+http://www.nixknight.com/2014/02/arch-linux-installation-with-kde-desktop/
 
 #### Creating/Resizing of MacOS drives
 http://apple.stackexchange.com/questions/63130/create-new-partition-in-unallocated-space-with-diskutil
