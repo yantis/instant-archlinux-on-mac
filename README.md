@@ -8,6 +8,9 @@ state. I personally didn't worry about this to much as one can just reset it bac
 (https://github.com/yantis/instant-archlinux-on-mac/blob/master/factory-restore.md) with "⌘ + R" at startup 
 or "option + ⌘  + R for [internet recovery](https://github.com/yantis/instant-archlinux-on-mac/blob/master/factory-restore.md).
 
+That being said. It has been designed to not write anything in case of failure. So worst case if it doesn't work you will probably be OK.
+Though seriously back up anything you actually want to be safe.
+
 Will this work with your iMac or MacBook? Possibly. It worked with all the ones I tested it with. I suspect it will most likely work and even if not perfect
 you will be in a much better place than trying to do it by hand. I do know for a fact that I haven't set it up to work with fusion drives yet
 so if your drive is a fusion drive it won't work without some minor changes.
