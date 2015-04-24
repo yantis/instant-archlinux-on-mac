@@ -42,10 +42,10 @@ If you wanted your Mac to have 100GB and Arch Linux to have the rest type this:
 curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install.sh && mac-install.sh 100
 ```
 
-Same as above but using Google's URL shortner.
+Same as above but using Google's URL shortener:
 
 ```
-curl -sL http://goo.gl/VdgxPO | sh /dev/stdin 50
+curl -sL http://goo.gl/VdgxPO | sh /dev/stdin 100
 ```
 
 There is a USB option but I haven't figured out the booting on that yet. So that is a work in progress but to 
