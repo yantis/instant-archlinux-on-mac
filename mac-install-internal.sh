@@ -533,22 +533,30 @@ chroot /arch mkinitcpio -p linux
 ###############################################################################
 # Rank mirrors by speed and only use https mirrors
 ###############################################################################
-chroot /arch reflector --verbose -l 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+chroot /arch reflector \
+  --verbose \
+  -l 10 \
+  --protocol https \
+  --sort rate \
+  --save /etc/pacman.d/mirrorlist
 
 ###############################################################################
 # Restore pacman's security
 ###############################################################################
+echo "Restoring pacman's security"
 chroot /arch sed -i "s/SigLevel = Never/#SigLevel = Never/g" /etc/pacman.conf
 
 ###############################################################################
 # Delete the arch user
 # TODO figure out where this user came from...maybe a typo somewhere?
 ###############################################################################
+echo "Deleting arch user."
 chroot /arch userdel -r arch 2> /dev/null
 
 ###############################################################################
 # Move any general or custom packages into the pacman cache
 ###############################################################################
+echo "Moving any general or custom packages into pacman cache"
 mv /arch/var/cache/pacman/general/* /arch/var/cache/pacman/pkg/
 mv /arch/var/cache/pacman/custom/* /arch/var/cache/pacman/pkg/
 
@@ -558,6 +566,7 @@ mv /arch/var/cache/pacman/custom/* /arch/var/cache/pacman/pkg/
 # pacman -Syy won't update everyting if the packages changed
 # TODO: See /usr/lib/yaourt/*.sh
 ###############################################################################
+echo "Updating Databases"
 chroot /arch runuser -l user -c "yaourt -Syy"
 
 ###############################################################################
