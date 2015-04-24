@@ -29,6 +29,9 @@ system to get up. It should install without any rebooting etc. Just launch it an
 state. I personally didn't worry about this to much as one can just reset it back to a <a href="https://github.com/yantis/instant-archlinux-on-mac/blob/master/factory-restore.md">factory restore</a> with "⌘ + R" at startup 
 or "option + ⌘  + R for <a href="https://github.com/yantis/instant-archlinux-on-mac/blob/master/factory-restore.md">internet recovery</a>.</p>
 
+<p>That being said. It has been designed to not write anything in case of failure. So worst case if it doesn't work you will probably be OK.
+Though seriously back up anything you actually want to be safe.</p>
+
 <p>Will this work with your iMac or MacBook? Possibly. It worked with all the ones I tested it with. I suspect it will most likely work and even if not perfect
 you will be in a much better place than trying to do it by hand. I do know for a fact that I haven't set it up to work with fusion drives yet
 so if your drive is a fusion drive it won't work without some minor changes.</p>
@@ -68,6 +71,11 @@ This step can take a while on a new machine. It usually is a 2+ GB download. You
 <p>If you wanted your Mac to have 100GB and Arch Linux to have the rest type this:</p>
 
 <pre><code>curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install.sh &amp;&amp; mac-install.sh 100
+</code></pre>
+
+<p>Same as above but using Google's URL shortener:</p>
+
+<pre><code>curl -sL http://goo.gl/VdgxPO | sh /dev/stdin 100
 </code></pre>
 
 <p>There is a USB option but I haven't figured out the booting on that yet. So that is a work in progress but to 
@@ -137,6 +145,7 @@ this <a href="https://github.com/yantis/instant-archlinux-on-mac/blob/master/mac
 <li>Fusion drives do not work yet as it hasn't been programmed in yet.</li>
 <li>Make sure to leave at least 30GB for Mac OSX (or at least whatever the drive space is plus a few GB for updates).</li>
 <li>If you want to mess with a minimal install of Archlinux. It runs perfectly fine on 10GB or less of space.</li>
+<li>This hasn't been tested with bootcamp but I suspect it will not work as is.</li>
 </ul>
 
 <h1>
