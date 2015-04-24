@@ -119,6 +119,7 @@ $ diskutil list
 # References & Resources
 
 #### Mac on Archlinux 
+* https://wiki.gentoo.org/wiki/Apple_Macbook_Pro_Retina
 * http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/
 * https://wiki.archlinux.org/index.php/MacBook
 * https://bbs.archlinux.org/viewtopic.php?id=195924
