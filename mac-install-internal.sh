@@ -514,10 +514,6 @@ ExecStart=
 ExecStart=-/sbin/agetty --noclear %I 38400 linux
 EOL
 
-
-# TEMP STUFF
-chroot /arch pacman --noconfirm --needed -S konsole
-
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 # Final things before syncing to the physical drive.
