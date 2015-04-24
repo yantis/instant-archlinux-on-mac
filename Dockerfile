@@ -263,7 +263,7 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
 ###############################################################################
 # Just download these since we don't actually need them for the docker container.
 # Make sure none of these are in the list above.
-# This is broken into four layers because dockerhub can not handle it
+# This is broken into several layers because dockerhub can not handle it
 ###############################################################################
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             base-devel \
@@ -322,8 +322,14 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             terminus-font \
             tree \
             tmux \
-            vim \
-            xfce4 \
+            vim  && \
+            rm -r /var/lib/pacman/sync/*
+
+RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
+            xfce4 && \
+            rm -r /var/lib/pacman/sync/*
+
+RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             xfce4-whiskermenu-plugin \
             xorg-server \
             xorg-server-utils \
@@ -333,3 +339,5 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             yaourt \
             zsh-syntax-highlighting && \
     rm -r /var/lib/pacman/sync/*
+
+CMD /bin/zsh
