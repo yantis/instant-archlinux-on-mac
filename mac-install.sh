@@ -233,8 +233,8 @@ if ! [ "$(boot2docker status)" = "running" ] ; then
   fi
 
   sudo vboxmanage internalcommands createrawvmdk -filename $MAINDISK -rawdisk /dev/$EXT4VOL
-  sudo chmod 777 $MAINDISK
-  sudo chmod 777 /dev/$EXT4VOL
+  sudo chmod 666 $MAINDISK
+  sudo chmod 666 /dev/$EXT4VOL
   vboxmanage storageattach boot2docker-vm --storagectl "SATA" --port 2 --device 0 --type hdd --medium $MAINDISK
   boot2docker up
 fi
@@ -329,7 +329,6 @@ else
   # Sometimes rEFInd fails to unmount /Volumes/ESP so lets use that if its already open
   if [ ! -d  /Volumes/ESP ];
   then
-    # sudo chmod 777 /dev/${ROOTDISK}s1
     sudo mkdir -p /Volumes/ESP
     sudo mount -t msdos /dev/${ROOTDISK}s1 /Volumes/ESP
   fi
