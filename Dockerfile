@@ -263,6 +263,7 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
 ###############################################################################
 # Just download these since we don't actually need them for the docker container.
 # Make sure none of these are in the list above.
+# This is broken into four layers because dockerhub can not handle it
 ###############################################################################
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             base-devel \
@@ -280,7 +281,10 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             htop \
             gnome-keyring \
             gnome-terminal \
-            google-chrome \
+            google-chrome  && \
+    rm -r /var/lib/pacman/sync/*
+
+RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             hfsprogs \
             intel-ucode \
             imagemagick \
@@ -299,7 +303,6 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             pulseaudio && \
     rm -r /var/lib/pacman/sync/*
 
-# Break this into two since Dockerhub can't handle it.
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             pulseaudio-alsa \
             python-dateutil \
@@ -311,7 +314,10 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             reflector \
             rsync \
             sqlite \
-            sddm \
+            sddm && \
+    rm -r /var/lib/pacman/sync/*
+
+RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             systemd \
             terminus-font \
             tree \
