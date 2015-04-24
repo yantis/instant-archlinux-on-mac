@@ -286,15 +286,19 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             dnsmasq \
             glib2 \
             glibc \
+            gnupg \
+            gnutls \
             grml-zsh-config \
             gssproxy \
             lftp \
             libinput \
             libssh2 \
+            libsystemd \
             libtasn1 \
             lz4 \
             man-pages \
             nano \
+            nettle \
             ntp \
             partclone \
             openconnect \
