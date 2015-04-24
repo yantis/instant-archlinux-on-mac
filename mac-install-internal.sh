@@ -27,7 +27,7 @@ echo "Mac Model: $MODEL"
 # To a URL so the user can change it to thier liking.
 ###############################################################################
 wget -O /root/initial_configuration.sh \
-  http://yantis.net-general.s3.amazonaws.com/initial_configuration.sh
+  https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/initial_configuration.sh
 
 ###############################################################################
 # A lot of this complexity is because of the error:
