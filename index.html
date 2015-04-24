@@ -43,8 +43,8 @@ so if your drive is a fusion drive it won't work without some minor changes.</p>
 
 <ul>
 <li>Mountain Lion, Lion, Yosemite</li>
-<li>[MacBookPro10,1] - MacBook Pro Retina 17" 2013</li>
-<li>[MacBookPro10,2] - MacBook Pro Retina 15" 2013</li>
+<li>[MacBookPro10,1] - MacBook Pro (Retina, Mid 2012)</li>
+<li>[MacBookPro10,2] - MacBook Pro (Retina, 13-inch, Late 2012)</li>
 <li>[iMac15,1] - iMac Retina 2014</li>
 </ul>
 
@@ -75,7 +75,7 @@ This step can take a while on a new machine. It usually is a 2+ GB download. You
 
 <p>Same as above but using Google's URL shortener:</p>
 
-<pre><code>curl -sL http://goo.gl/VdgxPO | sh /dev/stdin 100
+<pre><code>curl -OL http://goo.gl/VdgxPO &amp;&amp; sh VdgxPO 100
 </code></pre>
 
 <p>There is a USB option but I haven't figured out the booting on that yet. So that is a work in progress but to 
@@ -102,6 +102,13 @@ this <a href="https://github.com/yantis/instant-archlinux-on-mac/blob/master/mac
 <li>rEFInd is installed for dual booting Mac OSX &amp; Linux As well as a very sexy <a href="https://github.com/EvanPurkhiser/rEFInd-minimal">rEFInd Minimal Theme</a>
 </li>
 <li>Nothing actually gets written unless everything is successful.</li>
+</ul>
+
+<h1>
+<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Issues</h1>
+
+<ul>
+<li>When booting up there is now a small but noticable delay of around 30 seconds. This has something to do with rEFInd and should be fixable.</li>
 </ul>
 
 <h1>
