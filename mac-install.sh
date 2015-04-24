@@ -268,7 +268,6 @@ if [ ! -f ~/airootfs.sfs ];
 then
   echo "Downloading rootfs image"
   cd ~
-  # wget http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs
   curl -OL http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs
 fi
 

@@ -339,7 +339,11 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             pekwm \
             plasma \
             powertop \
-            pulseaudio \
+            pulseaudio && \
+    rm -r /var/lib/pacman/sync/*
+
+# Break this into two since Dockerhub can't handle it.
+RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             pulseaudio-alsa \
             python-dateutil \
             python-docutils \
