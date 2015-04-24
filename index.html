@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Instant-archlinux-on-mac by yantis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Instant-archlinux-on-mac</h1>
+      <h2 class="project-tagline">Instant Arch Linux on Mac &amp; MacBook</h2>
+      <a href="https://github.com/yantis/instant-archlinux-on-mac" class="btn">View on GitHub</a>
+      <a href="https://github.com/yantis/instant-archlinux-on-mac/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/yantis/instant-archlinux-on-mac/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="instant-arch-linux-on-macs--macbooks" class="anchor" href="#instant-arch-linux-on-macs--macbooks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instant Arch Linux on Macs &amp; MacBooks</h1>
+
+<p>This will setup Arch Linux on your Mac or MacBook all from Mac OSX. No need for any USB drives or figuring out the proper network/video drivers to get your
+system to get up. It should install without any rebooting etc. Just launch it and enter your password twice and go about your business.</p>
+
+<p>Warning: Backup your stuff or use a fresh iMac or MacBook. There are no guarantees this will work and it might leave your machine in an unusable 
+state. I personally didn't worry about this to much as one can just reset it back to a <a href="https://github.com/yantis/instant-archlinux-on-mac/blob/master/factory-restore.md">factory restore</a> with "⌘ + R" at startup 
+or "option + ⌘  + R for <a href="https://github.com/yantis/instant-archlinux-on-mac/blob/master/factory-restore.md">internet recovery</a>.</p>
+
+<p>Will this work with your iMac or MacBook? Possibly. It worked with all the ones I tested it with. I suspect it will most likely work and even if not perfect
+you will be in a much better place than trying to do it by hand. I do know for a fact that I haven't set it up to work with fusion drives yet
+so if your drive is a fusion drive it won't work without some minor changes.</p>
+
+<p>If you have any problems feel free to shoot me an email at <a href="mailto:yantis@yantis.net">yantis@yantis.net</a> and we can see if we can solve them together.</p>
+
+<h2>
+<a id="tested-working" class="anchor" href="#tested-working" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tested Working</h2>
+
+<ul>
+<li>Mountain Lion, Lion, Yosemite</li>
+<li>[MacBookPro10,1] - MacBook Pro Retina 17" 2013</li>
+<li>[MacBookPro10,2] - MacBook Pro Retina 15" 2013</li>
+<li>[iMac15,1] - iMac Retina 2014</li>
+</ul>
+
+<h2>
+<a id="tested-not-working-but-in-progress" class="anchor" href="#tested-not-working-but-in-progress" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tested not working but in progress</h2>
+
+<ul>
+<li>[MacBook8,1] - MacBook 12" April 2015 (Setup works but so far no one that I know has any version of Linux on one of these. If you do please let me know so I can fix it)</li>
+</ul>
+
+<h1>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h1>
+
+<ul>
+<li>Make sure FileVault encryption is <a href="https://support.apple.com/kb/PH18674?locale=en_US">turned off</a>. If it isn't you need to disable it and reboot.</li>
+<li>Use ⌘ + space to open spotlight. Type in terminal and hit return.</li>
+<li>Optionally, update your software either through the terminal or App store  Though if you do you may have to reboot though probably not.
+This step can take a while on a new machine. It usually is a 2+ GB download. You simply might want to use the GUI update application to have some indication of progress.</li>
+</ul>
+
+<pre><code>sudo softwareupdate -i -a
+</code></pre>
+
+<p>If you wanted your Mac to have 100GB and Arch Linux to have the rest type this:</p>
+
+<pre><code>curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install.sh &amp;&amp; mac-install 100
+</code></pre>
+
+<p>There is a USB option but I haven't figured out the booting on that yet. So that is a work in progress but to 
+do that type:</p>
+
+<pre><code>curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install.sh &amp;&amp; mac-install USB
+</code></pre>
+
+<h1>
+<a id="breakdown-behind-the-scenes" class="anchor" href="#breakdown-behind-the-scenes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Breakdown (Behind the scenes)</h1>
+
+<ul>
+<li>Command Line Developer tools, Homebrew, VirtualBox, Boot2docker, Docker all get silently and automatically installed.</li>
+<li>Since Mac OSX doesn't support the Ext4 file system. We install a 10 day trial of Paragon ExtFS (It can be uninstalled after the install)</li>
+<li>The file system gets converted to HFS+ if needed then volume gets shrunk down to make room for Arch Linux.</li>
+<li>The physical volume gets mapped to virtual volumes for VirtualBox.</li>
+<li>The system is profiled to be able to dynamically adapt to its hardware.</li>
+<li>Boot2docker launches VirtualBox with our physical volumes mapped.</li>
+<li>A <a href="https://registry.hub.docker.com/u/yantis/instant-archlinux-on-mac">docker container</a> gets launched which then downloads
+this <a href="https://github.com/yantis/instant-archlinux-on-mac/blob/master/mac-install-internal.sh">script</a> to dynamically setup Arch Linux.</li>
+<li>It unsquashes a <a href="http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/">rootfs image</a> into a chroot jail.</li>
+<li>Everything gets installed and setup in that chroot jail.</li>
+<li>Once completed everything in that chroot jail gets rsynced over to the virtual mapped physical drive.</li>
+<li>rEFInd is installed for dual booting Mac OSX &amp; Linux As well as a very sexy <a href="https://github.com/EvanPurkhiser/rEFInd-minimal">rEFInd Minimal Theme</a>
+</li>
+<li>Nothing actually gets written unless everything is successful.</li>
+</ul>
+
+<h1>
+<a id="troubleshooting" class="anchor" href="#troubleshooting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Troubleshooting</h1>
+
+<p>The defaults for an HFS+ file system look like this. This script expects your "Macintosh HD" to be at disk0s2.</p>
+
+<pre><code>$ diskutil list
+
+/dev/disk0
+#:                       TYPE NAME                    SIZE       IDENTIFIER
+0:      GUID_partition_scheme                        *500.3 GB   disk0
+1:                        EFI EFI                     209.7 MB   disk0s1
+2:                  Apple_HFS Macintosh HD            499.4 GB   disk0s2
+3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+</code></pre>
+
+<p>The defaults for Core Storage look like this. This script expects "Apple_CoreStorage" to be at disk0s2.</p>
+
+<pre><code>$ diskutil list
+
+/dev/disk0
+#:                       TYPE NAME                    SIZE       IDENTIFIER
+0:      GUID_partition_scheme                        *500.3 GB   disk0
+1:                        EFI EFI                     209.7 MB   disk0s1
+2:          Apple_CoreStorage                         499.4 GB   disk0s2
+3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3
+
+/dev/disk1
+#:                       TYPE NAME                    SIZE       IDENTIFIER
+0:                  Apple_HFS Macintosh HD           *499.0 GB   disk1
+                              Logical Volume on disk0s2
+                              C3E9416F-A8DF-4E50-9BEE-87B2C538689E
+                              Unencrypted
+</code></pre>
+
+<ul>
+<li>Make sure that FireVault is <a href="https://support.apple.com/kb/PH18674?locale=en_US">turned off</a>
+</li>
+<li>If the script doesn't remove Core Storage for you. You can try the trick of enabling FileVault, rebooting, disabling it and rebooting. Which should remove Core Storage.</li>
+<li>Fusion drives do not work yet as it hasn't been programmed in yet.</li>
+<li>Make sure to leave at least 30GB for Mac OSX (or at least whatever the drive space is plus a few GB for updates).</li>
+<li>If you want to mess with a minimal install of Archlinux. It runs perfectly fine on 10GB or less of space.</li>
+</ul>
+
+<h1>
+<a id="references--resources" class="anchor" href="#references--resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>References &amp; Resources</h1>
+
+<h4>
+<a id="mac-on-archlinux" class="anchor" href="#mac-on-archlinux" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mac on Archlinux</h4>
+
+<ul>
+<li><a href="http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/">http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/MacBook">https://wiki.archlinux.org/index.php/MacBook</a></li>
+<li><a href="https://bbs.archlinux.org/viewtopic.php?id=195924">https://bbs.archlinux.org/viewtopic.php?id=195924</a></li>
+<li><a href="https://github.com/pandeiro/arch-on-air">https://github.com/pandeiro/arch-on-air</a></li>
+<li><a href="https://github.com/jantman/puppet-archlinux-macbookretina">https://github.com/jantman/puppet-archlinux-macbookretina</a></li>
+<li><a href="https://wiki.debian.org/iMacIntel">https://wiki.debian.org/iMacIntel</a></li>
+<li><a href="https://github.com/coldnew/macbookair-2013-config/blob/master/kernel-config.example">https://github.com/coldnew/macbookair-2013-config/blob/master/kernel-config.example</a></li>
+<li><a href="https://github.com/NapoleonWils0n/cerberus/">https://github.com/NapoleonWils0n/cerberus/</a></li>
+<li><a href="https://github.com/gammy/macbook8-1_archlinux">https://github.com/gammy/macbook8-1_archlinux</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/MacBook">https://wiki.archlinux.org/index.php/MacBook</a></li>
+<li><a href="http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/">http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/</a></li>
+<li><a href="https://medium.com/@PhilPlckthun/arch-linux-running-on-my-macbook-2ea525ebefe3">https://medium.com/@PhilPlckthun/arch-linux-running-on-my-macbook-2ea525ebefe3</a></li>
+<li><a href="https://help.ubuntu.com/community/MacBookPro11-1/utopic">https://help.ubuntu.com/community/MacBookPro11-1/utopic</a></li>
+<li><a href="https://github.com/jantman/puppet-archlinux-macbookretina">https://github.com/jantman/puppet-archlinux-macbookretina</a></li>
+<li><a href="http://www.nixknight.com/2014/02/arch-linux-installation-with-kde-desktop/">http://www.nixknight.com/2014/02/arch-linux-installation-with-kde-desktop/</a></li>
+</ul>
+
+<h4>
+<a id="creatingresizing-of-macos-drives" class="anchor" href="#creatingresizing-of-macos-drives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating/Resizing of MacOS drives</h4>
+
+<ul>
+<li><a href="http://apple.stackexchange.com/questions/63130/create-new-partition-in-unallocated-space-with-diskutil">http://apple.stackexchange.com/questions/63130/create-new-partition-in-unallocated-space-with-diskutil</a></li>
+<li><a href="https://github.com/cowboy/dotfiles/blob/master/bin/osx_hide_partition">https://github.com/cowboy/dotfiles/blob/master/bin/osx_hide_partition</a></li>
+<li><a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">http://en.wikipedia.org/wiki/GUID_Partition_Table</a></li>
+</ul>
+
+<h4>
+<a id="homebrew" class="anchor" href="#homebrew" aria-hidden="true"><span class="octicon octicon-link"></span></a>Homebrew</h4>
+
+<ul>
+<li><a href="http://brew.sh/">http://brew.sh/</a></li>
+</ul>
+
+<h4>
+<a id="docker" class="anchor" href="#docker" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker</h4>
+
+<ul>
+<li><a href="http://blog.javabien.net/2014/03/03/setup-docker-on-osx-the-no-brainer-way/">http://blog.javabien.net/2014/03/03/setup-docker-on-osx-the-no-brainer-way/</a></li>
+<li><a href="http://viget.com/extend/how-to-use-docker-on-os-x-the-missing-guide">http://viget.com/extend/how-to-use-docker-on-os-x-the-missing-guide</a></li>
+</ul>
+
+<h4>
+<a id="ext4" class="anchor" href="#ext4" aria-hidden="true"><span class="octicon octicon-link"></span></a>EXT4</h4>
+
+<ul>
+<li><a href="https://github.com/carlcarl/blog/blob/cacca2e50fe4fbcca2e9c3d68bad9176a66f8016/content/archive/osx_mavericks_ext4.md">https://github.com/carlcarl/blog/blob/cacca2e50fe4fbcca2e9c3d68bad9176a66f8016/content/archive/osx_mavericks_ext4.md</a></li>
+<li><a href="http://download.paragon-software.com/doc/Manual_extfsmac_eng.pdf">http://download.paragon-software.com/doc/Manual_extfsmac_eng.pdf</a></li>
+<li><a href="http://www.paragon-software.com/home/extfs-mac/download.html">http://www.paragon-software.com/home/extfs-mac/download.html</a></li>
+<li><a href="https://jamfnation.jamfsoftware.com/discussion.html?id=12843">https://jamfnation.jamfsoftware.com/discussion.html?id=12843</a></li>
+<li><a href="http://tips.jay.cat/ext4-support-in-osx-yosemite/">http://tips.jay.cat/ext4-support-in-osx-yosemite/</a></li>
+</ul>
+
+<h4>
+<a id="efi" class="anchor" href="#efi" aria-hidden="true"><span class="octicon octicon-link"></span></a>EFI</h4>
+
+<ul>
+<li><a href="http://www.rodsbooks.com/refind/installing.html#wde">http://www.rodsbooks.com/refind/installing.html#wde</a></li>
+</ul>
+
+<h4>
+<a id="virtualbox" class="anchor" href="#virtualbox" aria-hidden="true"><span class="octicon octicon-link"></span></a>VirtualBox</h4>
+
+<ul>
+<li><a href="https://wiki.archlinux.org/index.php/VirtualBox">https://wiki.archlinux.org/index.php/VirtualBox</a></li>
+</ul>
+
+<h4>
+<a id="squashfs" class="anchor" href="#squashfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>SquashFS</h4>
+
+<ul>
+<li><a href="http://askubuntu.com/questions/95392/how-to-create-a-bootable-system-with-a-squashfs-root">http://askubuntu.com/questions/95392/how-to-create-a-bootable-system-with-a-squashfs-root</a></li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/yantis/instant-archlinux-on-mac">Instant-archlinux-on-mac</a> is maintained by <a href="https://github.com/yantis">yantis</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-61848149-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
+
