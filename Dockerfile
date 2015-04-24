@@ -52,51 +52,51 @@ RUN pacman --noconfirm -Syyu && \
     mkdir -p /var/cache/pacman/custom && \
     mkdir -p /var/cache/pacman/general && \
 
-    # AWS Command Line Tools
-    runuser -l docker -c "yaourt --noconfirm -S aws-cli" && \
+    # # AWS Command Line Tools
+    # runuser -l docker -c "yaourt --noconfirm -S aws-cli" && \
 
-    ## Download and cache python-jmespath
-    wget -P /tmp https://aur.archlinux.org/packages/py/python-jmespath/python-jmespath.tar.gz && \
-    tar -xvf /tmp/python-jmespath.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/python-jmespath && \
-    runuser -l docker -c "(cd /tmp/python-jmespath && makepkg -sc --noconfirm)" && \
-    mv /tmp/python-jmespath/*.xz /var/cache/pacman/general/ && \
-    rm -r /tmp/* && \
+    # ## Download and cache python-jmespath
+    # wget -P /tmp https://aur.archlinux.org/packages/py/python-jmespath/python-jmespath.tar.gz && \
+    # tar -xvf /tmp/python-jmespath.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/python-jmespath && \
+    # runuser -l docker -c "(cd /tmp/python-jmespath && makepkg -sc --noconfirm)" && \
+    # mv /tmp/python-jmespath/*.xz /var/cache/pacman/general/ && \
+    # rm -r /tmp/* && \
 
-    ## Download and cache python-botocore
-    wget -P /tmp https://aur.archlinux.org/packages/py/python-botocore/python-botocore.tar.gz && \
-    tar -xvf /tmp/python-botocore.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/python-botocore && \
-    runuser -l docker -c "(cd /tmp/python-botocore && makepkg -sc --noconfirm)" && \
-    mv /tmp/python-botocore/*.xz /var/cache/pacman/general/ && \
-    rm -r /tmp/* && \
+    # ## Download and cache python-botocore
+    # wget -P /tmp https://aur.archlinux.org/packages/py/python-botocore/python-botocore.tar.gz && \
+    # tar -xvf /tmp/python-botocore.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/python-botocore && \
+    # runuser -l docker -c "(cd /tmp/python-botocore && makepkg -sc --noconfirm)" && \
+    # mv /tmp/python-botocore/*.xz /var/cache/pacman/general/ && \
+    # rm -r /tmp/* && \
 
-    ## Download and cache python-bcdoc
-    wget -P /tmp https://aur.archlinux.org/packages/py/python-bcdoc/python-bcdoc.tar.gz && \
-    tar -xvf /tmp/python-bcdoc.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/python-bcdoc && \
-    runuser -l docker -c "(cd /tmp/python-bcdoc && makepkg -sc --noconfirm)" && \
-    mv /tmp/python-bcdoc/*.xz /var/cache/pacman/general/ && \
-    rm -r /tmp/* && \
+    # ## Download and cache python-bcdoc
+    # wget -P /tmp https://aur.archlinux.org/packages/py/python-bcdoc/python-bcdoc.tar.gz && \
+    # tar -xvf /tmp/python-bcdoc.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/python-bcdoc && \
+    # runuser -l docker -c "(cd /tmp/python-bcdoc && makepkg -sc --noconfirm)" && \
+    # mv /tmp/python-bcdoc/*.xz /var/cache/pacman/general/ && \
+    # rm -r /tmp/* && \
 
-    ## Download and cache python-colorama
-    wget -P /tmp https://aur.archlinux.org/packages/py/python-colorama-0.2.5/python-colorama-0.2.5.tar.gz && \
-    tar -xvf /tmp/python-colorama-0.2.5.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/python-colorama-0.2.5 && \
-    runuser -l docker -c "(cd /tmp/python-colorama-0.2.5 && makepkg -sc --noconfirm)" && \
-    mv /tmp/python-colorama-0.2.5/*.xz /var/cache/pacman/general/ && \
-    rm -r /tmp/* && \
+    # ## Download and cache python-colorama
+    # wget -P /tmp https://aur.archlinux.org/packages/py/python-colorama-0.2.5/python-colorama-0.2.5.tar.gz && \
+    # tar -xvf /tmp/python-colorama-0.2.5.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/python-colorama-0.2.5 && \
+    # runuser -l docker -c "(cd /tmp/python-colorama-0.2.5 && makepkg -sc --noconfirm)" && \
+    # mv /tmp/python-colorama-0.2.5/*.xz /var/cache/pacman/general/ && \
+    # rm -r /tmp/* && \
 
-    ## Download and cache aws-cli
-    wget -P /tmp https://aur.archlinux.org/packages/aw/aws-cli/aws-cli.tar.gz && \
-    tar -xvf /tmp/aws-cli.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/aws-cli && \
-    runuser -l docker -c "(cd /tmp/aws-cli && makepkg -sc --noconfirm)" && \
-    mv /tmp/aws-cli/*.xz /var/cache/pacman/general/ && \
-    rm -r /tmp/* && \
+    # ## Download and cache aws-cli
+    # wget -P /tmp https://aur.archlinux.org/packages/aw/aws-cli/aws-cli.tar.gz && \
+    # tar -xvf /tmp/aws-cli.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/aws-cli && \
+    # runuser -l docker -c "(cd /tmp/aws-cli && makepkg -sc --noconfirm)" && \
+    # mv /tmp/aws-cli/*.xz /var/cache/pacman/general/ && \
+    # rm -r /tmp/* && \
 
-    # Remove the awc-cli we used for building the above
-    runuser -l docker -c "yaourt --noconfirm -Rs aws-cli" && \
+    # # Remove the awc-cli we used for building the above
+    # runuser -l docker -c "yaourt --noconfirm -Rs aws-cli" && \
 
     # Build & cache xf86-input-mtrack-git package
     wget -P /tmp https://aur.archlinux.org/packages/xf/xf86-input-mtrack-git/xf86-input-mtrack-git.tar.gz && \
