@@ -48,7 +48,6 @@ curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master
 * Command Line Developer tools, Homebrew, VirtualBox, Boot2docker, Docker all get silently and automatically installed.
 * Since Mac OSX doesn't support the Ext4 file system. We install a 10 day trial of Paragon ExtFS (It can be uninstalled after the install)
 * The file system gets converted to HFS+ if needed then volume gets shrunk down to make room for Arch Linux.
-* rEFInd is installed for dual booting Mac OSX & Linux As well as a very sexy [rEFInd Minimal Theme](https://github.com/EvanPurkhiser/rEFInd-minimal)
 * The physical volume gets mapped to virtual volumes for VirtualBox.
 * The system is profiled to be able to dynamically adapt to its hardware.
 * Boot2docker launches VirtualBox with our physical volumes mapped.
@@ -57,6 +56,7 @@ this [script](https://github.com/yantis/instant-archlinux-on-mac/blob/master/mac
 * It unsquashes a [rootfs image](http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/) into a chroot jail.
 * Everything gets installed and setup in that chroot jail.
 * Once completed everything in that chroot jail gets rsynced over to the virtual mapped physical drive.
+* rEFInd is installed for dual booting Mac OSX & Linux As well as a very sexy [rEFInd Minimal Theme](https://github.com/EvanPurkhiser/rEFInd-minimal)
 * Nothing actually gets written unless everything is successful.
 
 # Troubleshooting
