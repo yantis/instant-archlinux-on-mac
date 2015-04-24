@@ -285,12 +285,14 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
     rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
+            linux \
+            linux-headers && \
+    rm -r /var/lib/pacman/sync/*
+
+RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             hfsprogs \
             intel-ucode \
             imagemagick \
-            konsole \
-            linux \
-            linux-headers \
             lm_sensors \
             mlocate \
             networkmanager \
@@ -298,13 +300,17 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             pavucontrol \
             package-query \
             pciutils \
-            plasma \
             powertop \
+            pulseaudio-alsa \
             pulseaudio && \
     rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-            pulseaudio-alsa \
+            plasma \
+            konsole && \
+    rm -r /var/lib/pacman/sync/*
+
+RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             python-dateutil \
             python-docutils \
             python-pyasn1\
