@@ -39,11 +39,6 @@ if hash nvidia-xconfig 2> /dev/null; then
     -no-logo \
     --render-accel \
     -o /usr/share/X11/xorg.conf.d/20-nvidia.conf
-
-# I belive this means we have two video cards if we have an Nvidia card (intel/nvidia combo)
-# So disable the backlight on the intel card as that will error out.
-# TODO: check that we have a acpi_video1.service before deleting this.
-systemctl disable systemd-backlight@backlight:acpi_video0.service
 fi
 
 ###############################################################################
