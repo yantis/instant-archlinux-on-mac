@@ -241,10 +241,14 @@ if grep -i -A1 "NVIDIA" /systeminfo | grep -qi "GPU" ; then
   HOOKS="base udev autodetect modconf block filesystems keyboard fsck"
 
   # Install Nvidia DKMS and Utils 
-  chroot /arch bash -c "pacman --noconfirm --needed -U /var/cache/pacman/custom/nvidia-*-3*.pkg.tar.xz"
+  chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/nvidia-*-3*.pkg.tar.xz
 
   # Install Nvidia hook 
-  chroot /arch bash -c "pacman --noconfirm --needed -U /var/cache/pacman/custom/nvidia-hook*.pkg.tar.xz"
+  chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/nvidia-hook*.pkg.tar.xz
+
+  # Uninstall mesa-libgl & install nvidia-libgl
+  chroot /arch pacman --noconfirm -Rdd mesa-libgl
+  chroot /arch pacman --noconfirm -S nvidia-libgl
 
   # Install Nvidia backlight stuff
   # dmesg says "No supported Nvidia graphics adapter found"
@@ -509,6 +513,10 @@ cat >/arch/etc/systemd/system/getty@tty1.service.d/override.conf<<EOL
 ExecStart=
 ExecStart=-/sbin/agetty --noclear %I 38400 linux
 EOL
+
+
+# TEMP STUFF
+chroot /arch pacman --noconfirm --needed -S konsole
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------

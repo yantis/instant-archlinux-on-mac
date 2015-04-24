@@ -15,7 +15,6 @@
 FROM yantis/archlinux-small
 MAINTAINER Jonathan Yantis <yantis@yantis.net>
 
-ADD run-remote-script.sh /bin/run-remote-script
 
 ###############################################################################
 # Install permanent additions to the container.
@@ -23,7 +22,8 @@ ADD run-remote-script.sh /bin/run-remote-script
     # Force a refresh of all the packages even if already up to date.
 RUN pacman --noconfirm -Syyu && \
 
-    # Make our run remote script exectutable
+    # create run remote script and make it exectutable
+    bash -c "echo 'curl -L \$1 | sh' > /bin/run-remote-script" && \
     chmod +x /bin/run-remote-script && \
 
     # Remove the texinfo-fake package since we are installing perl for rsync.
@@ -52,17 +52,72 @@ RUN pacman --noconfirm -Syyu && \
     pacman-optimize && \
     rm -r /var/lib/pacman/sync/*
 
+
 ###############################################################################
-# Build what we need for the Arch Linux install.
-# As well as add in any temp stuff for building which we will remove later.
+# Build and Cache NVIDA Drivers
+# 349xx series drivers are problematic on the Macbooks so using 346xx
 ###############################################################################
-RUN pacman --needed --noconfirm -Sy \
-            base-devel \
-            dkms \
-            git \
-            linux \
-            linux-headers \
-            yaourt && \
+RUN pacman --noconfirm -Sy binutils gcc make autoconf fakeroot && \
+
+    # create custom cache locations
+    mkdir -p /var/cache/pacman/custom && \
+
+    # build and cache nvidia-346xx-dkms package
+    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-346xx-dkms/nvidia-346xx-dkms.tar.gz && \
+    tar -xvf /tmp/nvidia-346xx-dkms.tar.gz -C /tmp && \
+    chown -R docker:docker /tmp/nvidia-346xx-dkms && \
+    runuser -l docker -c "(cd /tmp/nvidia-346xx-dkms && makepkg -scd --noconfirm)" && \
+    mv /tmp/nvidia-346xx-dkms/*.xz /var/cache/pacman/custom/ && \
+    rm -r /tmp/* && \
+
+    # build and cache nvidia-346xx-utils package
+    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-346xx-utils/nvidia-346xx-utils.tar.gz && \
+    tar -xvf /tmp/nvidia-346xx-utils.tar.gz -C /tmp && \
+    chown -R docker:docker /tmp/nvidia-346xx-utils && \
+    runuser -l docker -c "(cd /tmp/nvidia-346xx-utils && makepkg -scd --noconfirm)" && \
+    mv /tmp/nvidia-346xx-utils/*.xz /var/cache/pacman/custom/ && \
+    rm -r /tmp/* && \
+
+    # build and cache nvidia-hook package
+    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-hook/nvidia-hook.tar.gz && \
+    tar -xvf /tmp/nvidia-hook.tar.gz -C /tmp && \
+    chown -R docker:docker /tmp/nvidia-hook && \
+    runuser -l docker -c "(cd /tmp/nvidia-hook && makepkg -scd --noconfirm)" && \
+    mv /tmp/nvidia-hook/*.xz /var/cache/pacman/custom/ && \
+    rm -r /tmp/* && \
+
+    # Remove anything we added that we do not need
+    pacman --noconfirm -Rs  binutils gcc make autoconf fakeroot && \
+
+    # Remove info & man
+    rm -r /usr/share/info/* && \
+    rm -r /usr/share/man/* && \
+
+    # Clean up pacman
+    bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+    paccache -rk0 >/dev/null 2>&1 &&  \
+    pacman-optimize && \
+    rm -r /var/lib/pacman/sync/*
+
+
+###############################################################################
+# Build any packages we may need to install.
+###############################################################################
+RUN pacman --noconfirm --needed -Sy base-devel && \
+
+    # Build & cache xf86-input-mtrack-git package
+    wget -P /tmp https://aur.archlinux.org/packages/xf/xf86-input-mtrack-git/xf86-input-mtrack-git.tar.gz && \
+    tar -xvf /tmp/xf86-input-mtrack-git.tar.gz -C /tmp && \
+    chown -R docker:docker /tmp/xf86-input-mtrack-git && \
+    runuser -l docker -c "(cd /tmp/xf86-input-mtrack-git && makepkg -sc --noconfirm)" && \
+    mv /tmp/xf86-input-mtrack-git/*.xz /var/cache/pacman/custom/ && \
+
+    # Build & cache nvidia-bl-dkms package
+    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-bl-dkms/nvidia-bl-dkms.tar.gz && \
+    tar -xvf /tmp/nvidia-bl-dkms.tar.gz -C /tmp && \
+    chown -R docker:docker /tmp/nvidia-bl-dkms && \
+    runuser -l docker -c "(cd /tmp/nvidia-bl-dkms && makepkg -sc --noconfirm)" && \
+    mv /tmp/nvidia-bl-dkms/*.xz /var/cache/pacman/custom/ && \
 
     # extract the firmware for the b43 (even if the user doesn't need it. It doesn't hurt)
     # https://wiki.archlinux.org/index.php/Broadcom_wireless
@@ -72,18 +127,10 @@ RUN pacman --needed --noconfirm -Sy \
     mkdir /firmware && \
     b43-fwcutter -w /firmware broadcom-wl-4.178.10.4/linux/wl_apsta.o && \
     rm -r broadcom-wl* && \
-    pacman --noconfirm -R b43-fwcutter && \
+    pacman --noconfirm -Rs b43-fwcutter && \
 
-    # create custom cache locations
-    mkdir -p /var/cache/pacman/custom && \
+    # create general cache location
     mkdir -p /var/cache/pacman/general && \
-
-    # Build & cache xf86-input-mtrack-git package
-    wget -P /tmp https://aur.archlinux.org/packages/xf/xf86-input-mtrack-git/xf86-input-mtrack-git.tar.gz && \
-    tar -xvf /tmp/xf86-input-mtrack-git.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/xf86-input-mtrack-git && \
-    runuser -l docker -c "(cd /tmp/xf86-input-mtrack-git && makepkg -sc --noconfirm)" && \
-    mv /tmp/xf86-input-mtrack-git/*.xz /var/cache/pacman/custom/ && \
 
     # Build & cache thermald package
     wget -P /tmp https://aur.archlinux.org/packages/th/thermald/thermald.tar.gz && \
@@ -91,51 +138,6 @@ RUN pacman --needed --noconfirm -Sy \
     chown -R docker:docker /tmp/thermald && \
     runuser -l docker -c "(cd /tmp/thermald && makepkg -sc --noconfirm)" && \
     mv /tmp/thermald/*.xz /var/cache/pacman/general/ && \
-
-    # Build & cache nvidia-bl-dkms package
-    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-bl-dkms/nvidia-bl-dkms.tar.gz && \
-    tar -xvf /tmp/nvidia-bl-dkms.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/nvidia-bl-dkms && \
-    runuser -l docker -c "(cd /tmp/nvidia-bl-dkms && makepkg -sc --noconfirm)" && \
-    mv /tmp/nvidia-bl-dkms/*.xz /var/cache/pacman/custom/ && \
-
-    ## NVIDIA START##
-    # build and cache stuff needed for nvidia
-    pacman --noconfirm -S nvidia nvidia-utils && \
-
-    # build and cache nvidia-dkms package
-    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-dkms/nvidia-dkms.tar.gz && \
-    tar -xvf /tmp/nvidia-dkms.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/nvidia-dkms && \
-    runuser -l docker -c "(cd /tmp/nvidia-dkms && makepkg -sc --noconfirm)" && \
-    mv /tmp/nvidia-dkms/*.xz /var/cache/pacman/custom/ && \
-    rm -r /tmp/* && \
-
-    # Remove Nvidia so we can install nvidia-dkms
-    pacman --noconfirm -Rdd nvidia && \
-
-    # Install Nvidia DKMS
-    pacman --noconfirm -U /var/cache/pacman/custom/nvidia-dkms* && \
-
-    # build and cache nvidia-hook package
-    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-hook/nvidia-hook.tar.gz && \
-    tar -xvf /tmp/nvidia-hook.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/nvidia-hook && \
-    runuser -l docker -c "(cd /tmp/nvidia-hook && makepkg -sc --noconfirm)" && \
-    mv /tmp/nvidia-hook/*.xz /var/cache/pacman/custom/ && \
-    rm -r /tmp/* && \
-
-    # Remove Nvidia utils/dkms from the system since we do not need them anymore.
-    pacman --noconfirm -Rs \
-            nvidia-utils \
-            nvidia-dkms && \
-
-    # Remove nvidia drivers since dkms replaces them.
-    rm /var/cache/pacman/pkg/nvidia-3* && \
-
-    # Move utils to the custom directory to be installed with nvidia dkms & hook
-    mv /var/cache/pacman/pkg/nvidia-utils* /var/cache/pacman/custom/ && \
-    ## NVIDIA END##
 
     # build and cache mbpfan-git package
     wget -P /tmp https://aur.archlinux.org/packages/mb/mbpfan-git/mbpfan-git.tar.gz && \
@@ -198,64 +200,15 @@ RUN pacman --needed --noconfirm -Sy \
     mv /tmp/zaw-git/*.xz /var/cache/pacman/general/ && \
     rm -r /tmp/* && \
 
-    # # AWS Command Line Tools
-    # runuser -l docker -c "yaourt --noconfirm -S aws-cli" && \
-
-    # ## Download and cache python-jmespath
-    # wget -P /tmp https://aur.archlinux.org/packages/py/python-jmespath/python-jmespath.tar.gz && \
-    # tar -xvf /tmp/python-jmespath.tar.gz -C /tmp && \
-    # chown -R docker:docker /tmp/python-jmespath && \
-    # runuser -l docker -c "(cd /tmp/python-jmespath && makepkg -sc --noconfirm)" && \
-    # mv /tmp/python-jmespath/*.xz /var/cache/pacman/general/ && \
-    # rm -r /tmp/* && \
-
-    # ## Download and cache python-botocore
-    # wget -P /tmp https://aur.archlinux.org/packages/py/python-botocore/python-botocore.tar.gz && \
-    # tar -xvf /tmp/python-botocore.tar.gz -C /tmp && \
-    # chown -R docker:docker /tmp/python-botocore && \
-    # runuser -l docker -c "(cd /tmp/python-botocore && makepkg -sc --noconfirm)" && \
-    # mv /tmp/python-botocore/*.xz /var/cache/pacman/general/ && \
-    # rm -r /tmp/* && \
-
-    # ## Download and cache python-bcdoc
-    # wget -P /tmp https://aur.archlinux.org/packages/py/python-bcdoc/python-bcdoc.tar.gz && \
-    # tar -xvf /tmp/python-bcdoc.tar.gz -C /tmp && \
-    # chown -R docker:docker /tmp/python-bcdoc && \
-    # runuser -l docker -c "(cd /tmp/python-bcdoc && makepkg -sc --noconfirm)" && \
-    # mv /tmp/python-bcdoc/*.xz /var/cache/pacman/general/ && \
-    # rm -r /tmp/* && \
-
-    # ## Download and cache python-colorama
-    # wget -P /tmp https://aur.archlinux.org/packages/py/python-colorama-0.2.5/python-colorama-0.2.5.tar.gz && \
-    # tar -xvf /tmp/python-colorama-0.2.5.tar.gz -C /tmp && \
-    # chown -R docker:docker /tmp/python-colorama-0.2.5 && \
-    # runuser -l docker -c "(cd /tmp/python-colorama-0.2.5 && makepkg -sc --noconfirm)" && \
-    # mv /tmp/python-colorama-0.2.5/*.xz /var/cache/pacman/general/ && \
-    # rm -r /tmp/* && \
-
-    # ## Download and cache aws-cli
-    # wget -P /tmp https://aur.archlinux.org/packages/aw/aws-cli/aws-cli.tar.gz && \
-    # tar -xvf /tmp/aws-cli.tar.gz -C /tmp && \
-    # chown -R docker:docker /tmp/aws-cli && \
-    # runuser -l docker -c "(cd /tmp/aws-cli && makepkg -sc --noconfirm)" && \
-    # mv /tmp/aws-cli/*.xz /var/cache/pacman/general/ && \
-    # rm -r /tmp/* && \
-
-    # # Remove the awc-cli we used for building the above
-    # runuser -l docker -c "yaourt --noconfirm -Rs aws-cli" && \
-
-    # Remove anything just needed for the AWS Tools install.
-    # pacman --noconfirm -Rs python python-setuptools
-
     # Remove anything we added that we do not need
     pacman --noconfirm -Rs dbus-glib dri2proto dri3proto fontsproto glproto \
-            libxml2 libxss mesa pixman presentproto randrproto renderproto flex \
-            resourceproto videoproto xf86driproto xineramaproto xorg-util-macros \
-            linux dkms gcc linux-headers binutils guile make libxfont xorg-bdftopcf \
-            xorg-font-utils fontconfig xorg-fonts-encodings libtool m4 git inputproto \
-            dbus systemd yaourt package-query automake libx32-flex bison autoconf \
-            automake1.11 freetype2 harfbuzz graphite libpng xorg-server-devel \
-            libunistring gettext && \
+    libxml2 libxss mesa pixman presentproto randrproto renderproto flex \
+    resourceproto videoproto xf86driproto xineramaproto xorg-util-macros \
+    linux dkms gcc linux-headers binutils guile make libxfont xorg-bdftopcf \
+    xorg-font-utils fontconfig xorg-fonts-encodings libtool m4 git inputproto \
+    dbus systemd package-query automake libx32-flex bison autoconf \
+    automake1.11 freetype2 harfbuzz graphite libpng xorg-server-devel \
+    libunistring gettext && \
 
     # Clean up to make this as small as possible
     localepurge && \
@@ -317,7 +270,6 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             alsa-utils \
             arch-install-scripts \
             aria2 \
-            # awesome \
             c-ares \
             cpupower \
             ctags \
@@ -327,10 +279,12 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             haveged \
             htop \
             gnome-keyring \
+            gnome-terminal \
             google-chrome \
             hfsprogs \
             intel-ucode \
             imagemagick \
+            konsole \
             linux \
             linux-headers \
             lm_sensors \
@@ -340,7 +294,6 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             pavucontrol \
             package-query \
             pciutils \
-            # pekwm \
             plasma \
             powertop \
             pulseaudio && \
@@ -363,7 +316,6 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             terminus-font \
             tree \
             tmux \
-            # vicious \
             vim \
             xfce4 \
             xfce4-whiskermenu-plugin \
