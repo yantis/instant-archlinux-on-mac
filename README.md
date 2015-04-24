@@ -19,8 +19,8 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net and
 
 ## Tested Working
 * Mountain Lion, Lion, Yosemite
-* [MacBookPro10,1] - MacBook Pro Retina 15" 2013
-* [MacBookPro10,2] - MacBook Pro Retina 13" 2013
+* [MacBookPro10,1] - MacBook Pro (Retina, Mid 2012)
+* [MacBookPro10,2] - MacBook Pro (Retina, 13-inch, Late 2012)
 * [iMac15,1] - iMac Retina 2014
 
 ## Tested not working but in progress
