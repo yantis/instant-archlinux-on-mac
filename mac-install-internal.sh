@@ -551,7 +551,7 @@ chroot /arch sed -i "s/SigLevel = Never/#SigLevel = Never/g" /etc/pacman.conf
 # TODO figure out where this user came from...maybe a typo somewhere?
 ###############################################################################
 echo "Deleting arch user."
-chroot /arch userdel -r arch 2> /dev/null
+chroot /arch userdel -r arch
 
 ###############################################################################
 # Move any general or custom packages into the pacman cache
