@@ -106,10 +106,6 @@ echo "Server = http://mirrors.kernel.org/archlinux/\$repo/os/\$arch" > /arch/etc
 # Plus it makes the install extremely fast.
 ###############################################################################
 mkdir -p /arch/var/cache/pacman/general/
-
-# Temp to see if it fixes GCC error
-rm /var/cache/pacman/general/gcc*
-
 cp /var/cache/pacman/general/* /arch/var/cache/pacman/general/
 
 mkdir -p /arch/var/cache/pacman/custom/
