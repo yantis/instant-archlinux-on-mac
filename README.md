@@ -35,13 +35,13 @@ sudo softwareupdate -i -a
 
 If you wanted your Mac to have 100GB and Arch Linux to have the rest type this:
 ```
-curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install.sh && mac-install 100
+curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install.sh && mac-install.sh 100
 ```
 
 There is a USB option but I haven't figured out the booting on that yet. So that is a work in progress but to 
 do that type:
 ```
-curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install.sh && mac-install USB
+curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install.sh && mac-install.sh USB
 ```
 
 # Breakdown (Behind the scenes)
