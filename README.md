@@ -146,3 +146,5 @@ $ diskutil list
 
 #### SquashFS
 * http://askubuntu.com/questions/95392/how-to-create-a-bootable-system-with-a-squashfs-root
+
+[Github Pages](http://yantis.github.io/instant-archlinux-on-mac/)
