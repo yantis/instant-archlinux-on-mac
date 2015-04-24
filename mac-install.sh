@@ -214,6 +214,72 @@ else
 fi
 
 ###############################################################################
+# Setting up Virtual Disk to Physical Disk mapping
+###############################################################################
+# If boo2docker is already running then something went wrong and the user restarted the script
+if ! [ "$(boot2docker status)" = "running" ] ; then
+
+  echo "Setting up Virtual Disk to Physical Disk mapping"
+
+  # Create some temp file names for our virtual disks.
+  MAINDISK=`mktemp /tmp/main.vmdk.XXXXXX` || exit 1
+  rm $MAINDISK
+
+  # Make sure main disk is unmounted
+  if [ -d /Volumes/1 ];
+  then
+    unmount $EXT4VOL
+  fi
+
+  sudo vboxmanage internalcommands createrawvmdk -filename $MAINDISK -rawdisk /dev/$EXT4VOL
+  sudo chmod 777 $MAINDISK
+  sudo chmod 777 /dev/$EXT4VOL
+  vboxmanage storageattach boot2docker-vm --storagectl "SATA" --port 2 --device 0 --type hdd --medium $MAINDISK
+  boot2docker up
+fi
+
+###############################################################################
+# Get Boot2Docker exports
+$(boot2docker shellinit)
+###############################################################################
+
+###############################################################################
+# Generate system profile
+# Generate system profile so we have information about this machine inside the VM
+# If it exists as a directory delete it. (why does this keep getting created?)
+###############################################################################
+if [ -d ~/systeminfo.txt ];
+then
+  echo "Removing systeminfo.txt directory"
+  rm -r ~/systeminfo.txt
+fi
+
+if [ ! -f ~/systeminfo.txt ];
+then
+  echo "Generating system profile"
+  system_profiler -detailLevel mini > ~/systeminfo.txt
+fi
+
+###############################################################################
+# Pull latest docker
+# Not really needed for one time use but while working on the script it is nice.
+###############################################################################
+docker pull yantis/instant-archlinux-on-mac
+
+###############################################################################
+# Run the container but make the script user definable as who knows what changes
+# a user might want to make to the install script.
+###############################################################################
+docker run \
+  --privileged \
+  -v ~/systeminfo.txt:/systeminfo \
+  -u root \
+  --rm \
+  -ti \
+  yantis/instant-archlinux-on-mac \
+  bash -c "run-remote-script https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install-internal.sh"
+
+###############################################################################
 # Install rEFInd
 ###############################################################################
 # Check if rEFInd already installed
@@ -294,76 +360,10 @@ else
 fi
 
 ###############################################################################
-# Setting up Virtual Disk to Physical Disk mapping
-###############################################################################
-# If boo2docker is already running then something went wrong and the user restarted the script
-if ! [ "$(boot2docker status)" = "running" ] ; then
-
-  echo "Setting up Virtual Disk to Physical Disk mapping"
-
-  # Create some temp file names for our virtual disks.
-  MAINDISK=`mktemp /tmp/main.vmdk.XXXXXX` || exit 1
-  rm $MAINDISK
-
-  # Make sure main disk is unmounted
-  if [ -d /Volumes/1 ];
-  then
-    unmount $EXT4VOL
-  fi
-
-  sudo vboxmanage internalcommands createrawvmdk -filename $MAINDISK -rawdisk /dev/$EXT4VOL
-  sudo chmod 777 $MAINDISK
-  sudo chmod 777 /dev/$EXT4VOL
-  vboxmanage storageattach boot2docker-vm --storagectl "SATA" --port 2 --device 0 --type hdd --medium $MAINDISK
-  boot2docker up
-fi
-
-###############################################################################
-# Get Boot2Docker exports
-$(boot2docker shellinit)
-###############################################################################
-
-###############################################################################
-# Generate system profile
-# Generate system profile so we have information about this machine inside the VM
-# If it exists as a directory delete it. (why does this keep getting created?)
-###############################################################################
-if [ -d ~/systeminfo.txt ];
-then
-  echo "Removing systeminfo.txt directory"
-  rm -r ~/systeminfo.txt
-fi
-
-if [ ! -f ~/systeminfo.txt ];
-then
-  echo "Generating system profile"
-  system_profiler -detailLevel mini > ~/systeminfo.txt
-fi
-
-###############################################################################
-# Pull latest docker
-# Not really needed for one time use but while working on the script it is nice.
-###############################################################################
-docker pull yantis/instant-archlinux-on-mac
-
-
-###############################################################################
-# Even if we failed clean up so no more exits on errors from this point on.
+# Even if we failed clean up what we can 
+# so no more exits on errors from this point on.
 ###############################################################################
 set +e
-
-###############################################################################
-# Run the container but make the script user definable as who knows what changes
-# a user might want to make to the install script.
-###############################################################################
-docker run \
-  --privileged \
-  -v ~/systeminfo.txt:/systeminfo \
-  -u root \
-  --rm \
-  -ti \
-  yantis/instant-archlinux-on-mac \
-  bash -c "run-remote-script https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install-internal.sh"
 
 ###############################################################################
 # Take down the virtual machine
