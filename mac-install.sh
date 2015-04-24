@@ -262,12 +262,6 @@ then
 fi
 
 ###############################################################################
-# Pull latest docker
-# Not really needed for one time use but while working on the script it is nice.
-###############################################################################
-docker pull yantis/instant-archlinux-on-mac
-
-###############################################################################
 # Download the rootfs
 ###############################################################################
 if [ ! -f ~/airootfs.sfs ];
@@ -277,6 +271,12 @@ then
   # wget http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs
   curl -OL http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs
 fi
+
+###############################################################################
+# Pull latest docker
+# Not really needed for one time use but while working on the script it is nice.
+###############################################################################
+docker pull yantis/instant-archlinux-on-mac
 
 ###############################################################################
 # Install rEFInd
