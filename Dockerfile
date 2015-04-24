@@ -7,12 +7,19 @@
 #    ├─yantis/archlinux-small
 #       ├─yantis/archlinux-mac-installer
 
+# Dockerhub can not handle uploading layers above 500MB
+# The layers time out on upload. Also, if a single RUN command
+# takes to long to run Dockerhub will fail to build it so
+# breaking them down into smaller chunks even if more redundant.
+
 FROM yantis/archlinux-small
 MAINTAINER Jonathan Yantis <yantis@yantis.net>
 
-ADD http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs /root/airootfs.sfs
 ADD run-remote-script.sh /bin/run-remote-script
 
+###############################################################################
+# Install permanent additions to the container.
+###############################################################################
     # Force a refresh of all the packages even if already up to date.
 RUN pacman --noconfirm -Syyu && \
 
@@ -22,16 +29,35 @@ RUN pacman --noconfirm -Syyu && \
     # Remove the texinfo-fake package since we are installing perl for rsync.
     pacman --noconfirm -Rdd texinfo-fake && \
 
-    # Install base-devel but do not skip any packages since we need the cache
-    pacman --noconfirm --needed -S base-devel && \
-
     # Install stuff we will need later
-    pacman --noconfirm -S \
+    pacman --noconfirm --needed -S \
+            perl \
+            texinfo \
             rsync \
             squashfs-tools && \
 
-    # Install stuff for the docker container to use now which we will remove.
-    pacman --noconfirm -S \
+    # Clean up to make this as small as possible
+    localepurge && \
+
+    # Remove info, man and docs (only in this container.. not on our new install)
+    rm -r /usr/share/info/* && \
+    rm -r /usr/share/man/* && \
+
+    # Delete any backup files like /etc/pacman.d/gnupg/pubring.gpg~
+    find /. -name "*~" -type f -delete && \
+
+    # Clean up pacman
+    bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+    paccache -rk0 >/dev/null 2>&1 &&  \
+    pacman-optimize && \
+    rm -r /var/lib/pacman/sync/*
+
+###############################################################################
+# Build what we need for the Arch Linux install.
+# As well as add in any temp stuff for building which we will remove later.
+###############################################################################
+RUN pacman --needed --noconfirm -Sy \
+            base-devel \
             dkms \
             git \
             linux \
@@ -51,52 +77,6 @@ RUN pacman --noconfirm -Syyu && \
     # create custom cache locations
     mkdir -p /var/cache/pacman/custom && \
     mkdir -p /var/cache/pacman/general && \
-
-    # # AWS Command Line Tools
-    # runuser -l docker -c "yaourt --noconfirm -S aws-cli" && \
-
-    # ## Download and cache python-jmespath
-    # wget -P /tmp https://aur.archlinux.org/packages/py/python-jmespath/python-jmespath.tar.gz && \
-    # tar -xvf /tmp/python-jmespath.tar.gz -C /tmp && \
-    # chown -R docker:docker /tmp/python-jmespath && \
-    # runuser -l docker -c "(cd /tmp/python-jmespath && makepkg -sc --noconfirm)" && \
-    # mv /tmp/python-jmespath/*.xz /var/cache/pacman/general/ && \
-    # rm -r /tmp/* && \
-
-    # ## Download and cache python-botocore
-    # wget -P /tmp https://aur.archlinux.org/packages/py/python-botocore/python-botocore.tar.gz && \
-    # tar -xvf /tmp/python-botocore.tar.gz -C /tmp && \
-    # chown -R docker:docker /tmp/python-botocore && \
-    # runuser -l docker -c "(cd /tmp/python-botocore && makepkg -sc --noconfirm)" && \
-    # mv /tmp/python-botocore/*.xz /var/cache/pacman/general/ && \
-    # rm -r /tmp/* && \
-
-    # ## Download and cache python-bcdoc
-    # wget -P /tmp https://aur.archlinux.org/packages/py/python-bcdoc/python-bcdoc.tar.gz && \
-    # tar -xvf /tmp/python-bcdoc.tar.gz -C /tmp && \
-    # chown -R docker:docker /tmp/python-bcdoc && \
-    # runuser -l docker -c "(cd /tmp/python-bcdoc && makepkg -sc --noconfirm)" && \
-    # mv /tmp/python-bcdoc/*.xz /var/cache/pacman/general/ && \
-    # rm -r /tmp/* && \
-
-    # ## Download and cache python-colorama
-    # wget -P /tmp https://aur.archlinux.org/packages/py/python-colorama-0.2.5/python-colorama-0.2.5.tar.gz && \
-    # tar -xvf /tmp/python-colorama-0.2.5.tar.gz -C /tmp && \
-    # chown -R docker:docker /tmp/python-colorama-0.2.5 && \
-    # runuser -l docker -c "(cd /tmp/python-colorama-0.2.5 && makepkg -sc --noconfirm)" && \
-    # mv /tmp/python-colorama-0.2.5/*.xz /var/cache/pacman/general/ && \
-    # rm -r /tmp/* && \
-
-    # ## Download and cache aws-cli
-    # wget -P /tmp https://aur.archlinux.org/packages/aw/aws-cli/aws-cli.tar.gz && \
-    # tar -xvf /tmp/aws-cli.tar.gz -C /tmp && \
-    # chown -R docker:docker /tmp/aws-cli && \
-    # runuser -l docker -c "(cd /tmp/aws-cli && makepkg -sc --noconfirm)" && \
-    # mv /tmp/aws-cli/*.xz /var/cache/pacman/general/ && \
-    # rm -r /tmp/* && \
-
-    # # Remove the awc-cli we used for building the above
-    # runuser -l docker -c "yaourt --noconfirm -Rs aws-cli" && \
 
     # Build & cache xf86-input-mtrack-git package
     wget -P /tmp https://aur.archlinux.org/packages/xf/xf86-input-mtrack-git/xf86-input-mtrack-git.tar.gz && \
@@ -218,13 +198,62 @@ RUN pacman --noconfirm -Syyu && \
     mv /tmp/zaw-git/*.xz /var/cache/pacman/general/ && \
     rm -r /tmp/* && \
 
+    # # AWS Command Line Tools
+    # runuser -l docker -c "yaourt --noconfirm -S aws-cli" && \
+
+    # ## Download and cache python-jmespath
+    # wget -P /tmp https://aur.archlinux.org/packages/py/python-jmespath/python-jmespath.tar.gz && \
+    # tar -xvf /tmp/python-jmespath.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/python-jmespath && \
+    # runuser -l docker -c "(cd /tmp/python-jmespath && makepkg -sc --noconfirm)" && \
+    # mv /tmp/python-jmespath/*.xz /var/cache/pacman/general/ && \
+    # rm -r /tmp/* && \
+
+    # ## Download and cache python-botocore
+    # wget -P /tmp https://aur.archlinux.org/packages/py/python-botocore/python-botocore.tar.gz && \
+    # tar -xvf /tmp/python-botocore.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/python-botocore && \
+    # runuser -l docker -c "(cd /tmp/python-botocore && makepkg -sc --noconfirm)" && \
+    # mv /tmp/python-botocore/*.xz /var/cache/pacman/general/ && \
+    # rm -r /tmp/* && \
+
+    # ## Download and cache python-bcdoc
+    # wget -P /tmp https://aur.archlinux.org/packages/py/python-bcdoc/python-bcdoc.tar.gz && \
+    # tar -xvf /tmp/python-bcdoc.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/python-bcdoc && \
+    # runuser -l docker -c "(cd /tmp/python-bcdoc && makepkg -sc --noconfirm)" && \
+    # mv /tmp/python-bcdoc/*.xz /var/cache/pacman/general/ && \
+    # rm -r /tmp/* && \
+
+    # ## Download and cache python-colorama
+    # wget -P /tmp https://aur.archlinux.org/packages/py/python-colorama-0.2.5/python-colorama-0.2.5.tar.gz && \
+    # tar -xvf /tmp/python-colorama-0.2.5.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/python-colorama-0.2.5 && \
+    # runuser -l docker -c "(cd /tmp/python-colorama-0.2.5 && makepkg -sc --noconfirm)" && \
+    # mv /tmp/python-colorama-0.2.5/*.xz /var/cache/pacman/general/ && \
+    # rm -r /tmp/* && \
+
+    # ## Download and cache aws-cli
+    # wget -P /tmp https://aur.archlinux.org/packages/aw/aws-cli/aws-cli.tar.gz && \
+    # tar -xvf /tmp/aws-cli.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/aws-cli && \
+    # runuser -l docker -c "(cd /tmp/aws-cli && makepkg -sc --noconfirm)" && \
+    # mv /tmp/aws-cli/*.xz /var/cache/pacman/general/ && \
+    # rm -r /tmp/* && \
+
+    # # Remove the awc-cli we used for building the above
+    # runuser -l docker -c "yaourt --noconfirm -Rs aws-cli" && \
+
+    # Remove anything just needed for the AWS Tools install.
+    # pacman --noconfirm -Rs python python-setuptools
+
     # Remove anything we added that we do not need
     pacman --noconfirm -Rs dbus-glib dri2proto dri3proto fontsproto glproto \
-            libxml2 libxss mesa pixman presentproto randrproto renderproto flex libtool \
-            resourceproto videoproto xf86driproto xineramaproto xorg-util-macros inputproto \
+            libxml2 libxss mesa pixman presentproto randrproto renderproto flex \
+            resourceproto videoproto xf86driproto xineramaproto xorg-util-macros \
             linux dkms gcc linux-headers binutils guile make libxfont xorg-bdftopcf \
-            xorg-font-utils fontconfig xorg-fonts-encodings python-setuptools python \
-            dbus systemd yaourt package-query automake git m4 libx32-flex bison autoconf \
+            xorg-font-utils fontconfig xorg-fonts-encodings libtool m4 git inputproto \
+            dbus systemd yaourt package-query automake libx32-flex bison autoconf \
             automake1.11 freetype2 harfbuzz graphite libpng xorg-server-devel \
             libunistring gettext && \
 
@@ -245,10 +274,11 @@ RUN pacman --noconfirm -Syyu && \
     pacman-optimize && \
     rm -r /var/lib/pacman/sync/*
 
+###############################################################################
+# Cache packages that have happened since the last airootfs image
 # Purposely add another layer here to break up the size.
 # Since we kept the one above clean it should add minimal overhead.
-
-# Cache packages that have happened since the last airootfs image
+###############################################################################
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             btrfs-progs \
             ca-certificates-utils \
@@ -273,8 +303,10 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             testdisk && \
     rm -r /var/lib/pacman/sync/*
 
+###############################################################################
 # Just download these since we don't actually need them for the docker container.
 # Make sure none of these are in the list above.
+###############################################################################
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             base-devel \
             acpi \

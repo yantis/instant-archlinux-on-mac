@@ -267,6 +267,16 @@ fi
 docker pull yantis/instant-archlinux-on-mac
 
 ###############################################################################
+# Download the rootfs
+###############################################################################
+if [ ! -f ~/airootfs.sfs ];
+then
+  echo "Downloading rootfs image"
+  cd ~
+  wget http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs
+fi
+
+###############################################################################
 # Install rEFInd
 ###############################################################################
 # Check if rEFInd already installed
@@ -347,7 +357,7 @@ else
 fi
 
 ###############################################################################
-# Even if we fail clean up what we can 
+# Even if we faild clean up what we can 
 # so no more exits on errors from this point on.
 ###############################################################################
 set +e
@@ -359,6 +369,7 @@ set +e
 docker run \
   --privileged \
   -v ~/systeminfo.txt:/systeminfo \
+  -v ~/airootfs.sfs:/root/airootfs.sfs \
   -u root \
   --rm \
   -ti \
