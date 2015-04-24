@@ -102,6 +102,7 @@ $ diskutil list
 * Fusion drives do not work yet as it hasn't been programmed in yet.
 * Make sure to leave at least 30GB for Mac OSX (or at least whatever the drive space is plus a few GB for updates).
 * If you want to mess with a minimal install of Archlinux. It runs perfectly fine on 10GB or less of space.
+* This hasn't been tested with bootcamp but I suspect it will not work as is.
 
 # References & Resources
 
