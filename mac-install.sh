@@ -267,19 +267,6 @@ fi
 docker pull yantis/instant-archlinux-on-mac
 
 ###############################################################################
-# Run the container but make the script user definable as who knows what changes
-# a user might want to make to the install script.
-###############################################################################
-docker run \
-  --privileged \
-  -v ~/systeminfo.txt:/systeminfo \
-  -u root \
-  --rm \
-  -ti \
-  yantis/instant-archlinux-on-mac \
-  bash -c "run-remote-script https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install-internal.sh"
-
-###############################################################################
 # Install rEFInd
 ###############################################################################
 # Check if rEFInd already installed
@@ -360,10 +347,23 @@ else
 fi
 
 ###############################################################################
-# Even if we failed clean up what we can 
+# Even if we fail clean up what we can 
 # so no more exits on errors from this point on.
 ###############################################################################
 set +e
+
+###############################################################################
+# Run the container but make the script user definable as who knows what changes
+# a user might want to make to the install script.
+###############################################################################
+docker run \
+  --privileged \
+  -v ~/systeminfo.txt:/systeminfo \
+  -u root \
+  --rm \
+  -ti \
+  yantis/instant-archlinux-on-mac \
+  bash -c "run-remote-script https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install-internal.sh"
 
 ###############################################################################
 # Take down the virtual machine
