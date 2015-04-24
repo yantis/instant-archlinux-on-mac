@@ -70,6 +70,10 @@ this [script](https://github.com/yantis/instant-archlinux-on-mac/blob/master/mac
 * rEFInd is installed for dual booting Mac OSX & Linux As well as a very sexy [rEFInd Minimal Theme](https://github.com/EvanPurkhiser/rEFInd-minimal)
 * Nothing actually gets written unless everything is successful.
 
+
+# Issues
+* When booting up there is now a small but noticable delay of around 30 seconds. This has something to do with rEFInd and should be fixable.
+
 # Troubleshooting
 
 The defaults for an HFS+ file system look like this. This script expects your "Macintosh HD" to be at disk0s2.
