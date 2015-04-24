@@ -317,7 +317,7 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             alsa-utils \
             arch-install-scripts \
             aria2 \
-            awesome \
+            # awesome \
             c-ares \
             cpupower \
             ctags \
@@ -340,7 +340,7 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             pavucontrol \
             package-query \
             pciutils \
-            pekwm \
+            # pekwm \
             plasma \
             powertop \
             pulseaudio && \
@@ -363,7 +363,7 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             terminus-font \
             tree \
             tmux \
-            vicious \
+            # vicious \
             vim \
             xfce4 \
             xfce4-whiskermenu-plugin \
