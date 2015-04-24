@@ -510,9 +510,6 @@ ExecStart=
 ExecStart=-/sbin/agetty --noclear %I 38400 linux
 EOL
 
-# Force root user to change password on next login.
-chroot /arch chage -d 0 root
-
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 # Final things before syncing to the physical drive.
@@ -580,6 +577,9 @@ chroot /arch chown -R user:users /home/user/
 # TODO confirm I do not need to do this on first run
 ###############################################################################
 chroot /arch  pacman-key --populate archlinux
+
+# Force root user to change password on next login.
+chroot /arch chage -d 0 root
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
