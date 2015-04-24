@@ -45,7 +45,7 @@ curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master
 Same as above but using Google's URL shortener:
 
 ```
-curl -OL http://goo.gl/VdgxPO && sh VdgxPO 100
+curl -OL goo.gl/VdgxPO && sh VdgxPO 100
 ```
 
 There is a USB option but I haven't figured out the booting on that yet. So that is a work in progress but to 
