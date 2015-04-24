@@ -282,12 +282,22 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             gnome-keyring \
             gnome-terminal \
             google-chrome  && \
-    rm -r /var/lib/pacman/sync/*
+
+            # Clean up pacman
+            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+            paccache -rk0 >/dev/null 2>&1 &&  \
+            pacman-optimize && \
+            rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             linux \
             linux-headers && \
-    rm -r /var/lib/pacman/sync/*
+
+            # Clean up pacman
+            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+            paccache -rk0 >/dev/null 2>&1 &&  \
+            pacman-optimize && \
+            rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             hfsprogs \
@@ -303,12 +313,22 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             powertop \
             pulseaudio-alsa \
             pulseaudio && \
-    rm -r /var/lib/pacman/sync/*
+
+            # Clean up pacman
+            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+            paccache -rk0 >/dev/null 2>&1 &&  \
+            pacman-optimize && \
+            rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             plasma \
             konsole && \
-    rm -r /var/lib/pacman/sync/*
+
+            # Clean up pacman
+            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+            paccache -rk0 >/dev/null 2>&1 &&  \
+            pacman-optimize && \
+            rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             python-dateutil \
@@ -321,7 +341,12 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             rsync \
             sqlite \
             sddm && \
-    rm -r /var/lib/pacman/sync/*
+
+            # Clean up pacman
+            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+            paccache -rk0 >/dev/null 2>&1 &&  \
+            pacman-optimize && \
+            rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             systemd \
@@ -329,10 +354,20 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             tree \
             tmux \
             vim  && \
+
+            # Clean up pacman
+            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+            paccache -rk0 >/dev/null 2>&1 &&  \
+            pacman-optimize && \
             rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             xfce4 && \
+
+            # Clean up pacman
+            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+            paccache -rk0 >/dev/null 2>&1 &&  \
+            pacman-optimize && \
             rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
@@ -344,6 +379,11 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             yajl \
             yaourt \
             zsh-syntax-highlighting && \
-    rm -r /var/lib/pacman/sync/*
+
+            # Clean up pacman
+            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+            paccache -rk0 >/dev/null 2>&1 &&  \
+            pacman-optimize && \
+            rm -r /var/lib/pacman/sync/*
 
 CMD /bin/zsh
