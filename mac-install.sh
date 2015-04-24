@@ -357,7 +357,7 @@ else
 fi
 
 ###############################################################################
-# Even if we faild clean up what we can 
+# Even if we failed clean up what we can 
 # so no more exits on errors from this point on.
 ###############################################################################
 set +e
@@ -366,6 +366,7 @@ set +e
 # Run the container but make the script user definable as who knows what changes
 # a user might want to make to the install script.
 ###############################################################################
+SUCCESSFUL_INSTALL=0
 docker run \
   --privileged \
   -v ~/systeminfo.txt:/systeminfo \
@@ -375,6 +376,9 @@ docker run \
   -ti \
   yantis/instant-archlinux-on-mac \
   bash -c "run-remote-script https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master/mac-install-internal.sh"
+
+# Flag that we did or did not have a successful install
+SUCCESSFUL_INSTALL=$?
 
 ###############################################################################
 # Take down the virtual machine
@@ -403,8 +407,12 @@ sudo sed -i.bak "s/Defaults timestamp_timeout=-1/#Defaults timestamp_timeout=-1/
 ###############################################################################
 # All Done 
 ###############################################################################
-echo "DONE - REBOOT NOW TO USE ARCH LINUX."
-read -p "Press [Enter] key to REBOOT or CTRL C to keep using Mac OSX"
-sudo reboot
+if [ $SUCCESSFUL_INSTALL -ne 0 ]; then
+  echo "ERROR: The install was not successful please try again."
+else
+  echo "DONE - REBOOT NOW TO USE ARCH LINUX."
+  read -p "Press [Enter] key to REBOOT or CTRL C to keep using Mac OSX"
+  sudo reboot
+fi
 
 # vim:set ts=2 sw=2 et:
