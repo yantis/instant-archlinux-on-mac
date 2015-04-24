@@ -114,9 +114,9 @@ fi
 ###############################################################################
 # Install wget to download Virtualbox
 ###############################################################################
-if ! hash wget 2> /dev/null; then
-  brew install wget
-fi
+# if ! hash wget 2> /dev/null; then
+#   brew install wget
+# fi
 
 ###############################################################################
 # Install Virtualbox 
@@ -124,7 +124,8 @@ fi
 # TODO: I am still getting asked for a password here.
 ###############################################################################
 if ! hash vboxmanage 2> /dev/null; then
-  wget http://download.virtualbox.org/virtualbox/4.3.26/VirtualBox-4.3.26-98988-OSX.dmg
+  # wget http://download.virtualbox.org/virtualbox/4.3.26/VirtualBox-4.3.26-98988-OSX.dmg
+  curl -OL http://download.virtualbox.org/virtualbox/4.3.26/VirtualBox-4.3.26-98988-OSX.dmg
   hdiutil mount VirtualBox-4.3.26-98988-OSX.dmg
   sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
   sleep 2
@@ -273,7 +274,8 @@ if [ ! -f ~/airootfs.sfs ];
 then
   echo "Downloading rootfs image"
   cd ~
-  wget http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs
+  # wget http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs
+  curl -OL http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs
 fi
 
 ###############################################################################
