@@ -381,12 +381,12 @@ docker run \
 SUCCESSFUL_INSTALL=$?
 
 ###############################################################################
-# Take down the virtual machine
-# Give the virtual machine time to clone otherwise we can not shut down. 
-# 15 seconds is arbitrary but 5 or 10 sometimes isn't enough.
+# Shut down the boo2docker virtual machine
 ###############################################################################
-sleep 15 
-boot2docker down
+timeout=$(($(date +%s) + 60))
+until boot2docker down 2>/dev/null || [[ $(date +%s) -gt $timeout ]]; do
+  :
+done
 
 ###############################################################################
 # Remove our physical harddrive from the boot2docker virtualmachine
