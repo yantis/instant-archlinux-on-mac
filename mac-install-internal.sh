@@ -93,8 +93,8 @@ echo "[infinality-bundle-fonts]" >> /arch/etc/pacman.conf
 echo "Server = http://bohoomil.com/repo/fonts" >>/arch/etc/pacman.conf
 echo "[infinality-bundle]" >> /arch/etc/pacman.conf
 echo "Server = http://bohoomil.com/repo/x86_64" >>/arch/etc/pacman.conf
-chroot /arch bash pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
-chroot /arch bash pacman-key --lsign 962DDE58
+# chroot /arch bash pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
+# chroot /arch bash pacman-key --lsign 962DDE58
 
 #  keys don't work in chroot jail in the docker container. TEMP disable.
 echo "SigLevel = Never" >> /arch/etc/pacman.conf
