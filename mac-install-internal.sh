@@ -163,9 +163,9 @@ chroot /arch pacman -Su --noconfirm
 # Setup Infinality Fonts
 ###############################################################################
 chroot /arch pacman --noconfirm -Rdd freetype2 cairo fontconfig
-chroot /arch pacman --noconfirm --needed -S infinality-bundle-multilib
-chroot /arch pacman --noconfirm --needed -S infinality-bundle
+chroot /arch pacman --noconfirm --needed -S infinality-bundle-multilib infinality-bundle
 
+# Instal fonts
 chroot /arch pacman --noconfirm -Rdd ttf-dejavu
 chroot /arch pacman --noconfirm --needed -S ibfonts-meta-base
 
