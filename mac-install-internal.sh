@@ -455,7 +455,7 @@ EOL
 # Mac Retina doesn't have a trackpad
 if [[ $MODEL == *"MacBook"* ]]
 then
-  chroot /arch bash -c "pacman --noconfirm -U /var/cache/pacman/custom/xf86-input-mtrack*.pkg.tar.xz"
+  chroot /arch bash -c "pacman --noconfirm --needed -U /var/cache/pacman/custom/xf86-input-mtrack*.pkg.tar.xz"
   cat >/arch/usr/share/X11/xorg.conf.d/10-mtrack.conf <<EOL
   Section "InputClass"
   MatchIsTouchpad "on"
@@ -516,7 +516,7 @@ EOL
 ###############################################################################
 # Setup Awesome Tiling Windows Manager
 ###############################################################################
-chroot /arch pacman --noconfirm --needed awesome vicious
+chroot /arch pacman --noconfirm --needed -S awesome vicious
 chroot /arch mkdir -p /home/user/.config/awesome
 chroot /arch cp -rf /usr/share/awesome/themes/default \
                     /home/user/.config/awesome/themes/default
