@@ -87,22 +87,26 @@ sed -i 's/#\[multilib\]/\[multilib\]/g' /arch/etc/pacman.conf
 
 ###############################################################################
 # Enable Infinality Fonts Repo
-# Update this after the database syncing because of the key failures.
+# 
+# Temp disable signature checking. But restore at the end.
+# because of GPGME error: Inapproropriate ioctrl for device
 ###############################################################################
 echo "[infinality-bundle-fonts]" >> /arch/etc/pacman.conf
 echo "Server = http://bohoomil.com/repo/fonts" >>/arch/etc/pacman.conf
+echo "SigLevel = Never" >> /arch/etc/pacman.conf
+
 echo "[infinality-bundle]" >> /arch/etc/pacman.conf
 echo "Server = http://bohoomil.com/repo/x86_64" >>/arch/etc/pacman.conf
+echo "SigLevel = Never" >> /arch/etc/pacman.conf
+
 echo "[infinality-bundle-multilib]" >> /arch/etc/pacman.conf
 echo "Server = http://bohoomil.com/repo/multilib/x86_64" >> /arch/etc/pacman.conf
+echo "SigLevel = Never" >> /arch/etc/pacman.conf
+
 chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign 962DDE58
 chroot /arch pacman-key -r AE6866C7962DDE58 --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign AE6866C7962DDE58
-
-# Temp disable signature checking 
-# because of GPGME error: Inapproropriate ioctrl for device
-echo "SigLevel = Never" >> /arch/etc/pacman.conf
 
 ###############################################################################
 # Allow for colored output in pacman.conf
