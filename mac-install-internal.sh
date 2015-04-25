@@ -87,7 +87,6 @@ sed -i 's/#\[multilib\]/\[multilib\]/g' /arch/etc/pacman.conf
 
 ###############################################################################
 # Enable Infinality Fonts Repo
-# 
 # Temp disable signature checking. But restore at the end.
 # because of GPGME error: Inapproropriate ioctrl for device
 ###############################################################################
@@ -163,7 +162,7 @@ chroot /arch pacman -Su --noconfirm
 ###############################################################################
 # Setup Infinality Fonts
 ###############################################################################
-chroot /arch pacman -Rdd lib32-freetype2 lib32-fontconfig
+# chroot /arch pacman -Rdd lib32-freetype2 lib32-fontconfig
 chroot /arch pacman --noconfirm -S infinality-bundle-multilib
 
 chroot /arch pacman -Rdd freetype2 cairo fontconfig
@@ -717,8 +716,6 @@ umount /mnt/archlinux
 ###############################################################################
 # TODO LIST
 ###############################################################################
-# Infinality Fonts
-# Google TTF Fonts
 # Powertop
 # Virtulbox VM of Archlinux on the Mac side
 # Shared volume
