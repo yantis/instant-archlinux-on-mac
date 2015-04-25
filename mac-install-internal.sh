@@ -44,7 +44,7 @@ mount -o bind /dev /arch/dev
 
 # Important for pacman (for signature check)
 # (Doesn't seem to matter at all they are still messed up.)
-mount -o bind /dev/pts /arch/dev/pts
+mount --bind /dev/pts /arch/dev/pts
 
 ###############################################################################
 # Use Google's nameservers though I believe we may be able to simply copy the
