@@ -61,14 +61,13 @@ chroot /arch haveged
 ###############################################################################
 # Init pacman
 ###############################################################################
-chroot /arch  pacman-key --init
-chroot /arch  pacman-key --populate archlinux
+chroot /arch gpg --refresh-keys
+chroot /arch pacman-key --init
+chroot /arch pacman-key --populate
+chroot /arch pacman-key --refresh-keys
 
 # Fix for failed: IPC connect call failed
-# chroot /arch bash -c "dirmngr </dev/null > /dev/null 2>&1"
-chroot /arch mkdir /root/.gnupg
-chroot /arch touch /root/.gnupg/dirmngr_ldapservers.conf
-
+chroot /arch bash -c "dirmngr </dev/null > /dev/null 2>&1"
 
 ###############################################################################
 # Temp bypass sigchecks because of 
