@@ -12,8 +12,7 @@
 # Exit on any error whatsoever
 # since we don't actually modify the physical drive until the very end
 ###############################################################################
-set -e
-set -u
+set -e -u
 
 ###############################################################################
 # Get the model of this Mac/Macbook
@@ -38,12 +37,18 @@ wget -O /root/initial_configuration.sh \
 mkdir /arch
 unsquashfs -d /squashfs-root /root/airootfs.sfs
 mount -o loop /squashfs-root/airootfs.img /arch
-mount -t proc none /arch/proc
-mount -t sysfs none /arch/sys
-mount -o bind /dev /arch/dev
+
+# mount -t proc none /arch/proc
+# mount -t sysfs none /arch/sys
+# mount -o bind /dev /arch/dev
 
 # Important for pacman (for signature check)
 # (Doesn't seem to matter at all they are still messed up.)
+# mount --bind /dev/pts /arch/dev/pts
+
+mount --bind /proc /arch/proc
+mount --bind /sys /arch/sys
+mount --bind /dev /arch/dev
 mount --bind /dev/pts /arch/dev/pts
 
 ###############################################################################
