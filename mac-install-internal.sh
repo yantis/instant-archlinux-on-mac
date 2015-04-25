@@ -679,7 +679,7 @@ chroot /arch chown -R user:users /home/user/
 # Otherwise pacman can not look up the keys remotely.
 # TODO confirm I do not need to do this on first run
 ###############################################################################
-chroot /arch  pacman-key --populate archlinux
+# chroot /arch  pacman-key --populate archlinux
 
 # Force root user to change password on next login.
 chroot /arch chage -d 0 root
