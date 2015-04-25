@@ -407,10 +407,13 @@ sudo sed -i.bak "s/Defaults timestamp_timeout=-1/#Defaults timestamp_timeout=-1/
 ###############################################################################
 # All Done 
 ###############################################################################
+echo "*******************************************************"
 if [ $SUCCESSFUL_INSTALL -ne 0 ]; then
   echo "ERROR: The install was not successful please try again."
+  echo "*******************************************************"
 else
   echo "DONE - REBOOT NOW TO USE ARCH LINUX."
+  echo "*******************************************************"
   read -p "Press [Enter] key to REBOOT or CTRL C to keep using Mac OSX"
   sudo reboot
 fi
