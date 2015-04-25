@@ -31,6 +31,7 @@ if hash vboxmanage 2> /dev/null; then
 
   hdiutil mount VirtualBox-4.3.26-98988-OSX.dmg
   sudo sh /Volumes/VirtualBox/VirtualBox_Uninstall.tool --unattended
+  sleep 2
   hdiutil unmount /Volumes/VirtualBox/
 
   # Unrem this to remove the downloaded install file.
