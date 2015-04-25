@@ -514,7 +514,6 @@ ExecStart=
 ExecStart=-/sbin/agetty --noclear %I 38400 linux
 EOL
 
-
 ###############################################################################
 # Setup Awesome Tiling Windows Manager
 ###############################################################################
@@ -522,10 +521,22 @@ chroot /arch pacman --noconfirm --needed awesome vicious
 chroot /arch mkdir -p /home/user/.config/awesome
 chroot /arch cp -rf /usr/share/awesome/themes/default \
                     /home/user/.config/awesome/themes/default
-sed -i "s/beautiful.init(\"\/usr\/share\/awesome\/themes\/default\/theme.lua\")/beautiful.init(awful.util.getdir(\"config\") .. \"\/themes\/default\/theme.lua\")/" \
+chroot /arch sed -i "s/beautiful.init(\"\/usr\/share\/awesome\/themes\/default\/theme.lua\")/beautiful.init(awful.util.getdir(\"config\") .. \"\/themes\/default\/theme.lua\")/" \
       /home/user/.config/awesome/rc.lua
-sed -i "s/xterm/xfce4-terminal/" /home/user/.config/awesome/rc.lua
-sed -i "s/nano/vim/" /home/user/.config/awesome/rc.lua
+chroot /arch sed -i "s/xterm/xfce4-terminal/" /home/user/.config/awesome/rc.lua
+chroot /arch sed -i "s/nano/vim/" /home/user/.config/awesome/rc.lua
+
+###############################################################################
+# Setup oh-my-zsh
+###############################################################################
+chroot /arch cp /usr/share/oh-my-zsh/zshrc /home/user/.zshrc
+chroot /arch sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"bullet-train\"/" \
+  /home/user/.zshrc
+chroot /arch sed -i "s/plugins=(git)/plugins=(git git-extras pip tmux python rsync cp archlinux node npm history-substring-search)/" \
+  /home/user/.zshrc
+echo "BULLETTRAIN_CONTEXT_SHOW=\"true\"" >> /arch/home/user/.zshrc
+echo "BULLETTRAIN_CONTEXT_BG=\"31\"" >> /arch/home/user/.zshrc
+echo "BULLETTRAIN_CONTEXT_FG=\"231\"" >> /arch/home/user/.zshrc
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
