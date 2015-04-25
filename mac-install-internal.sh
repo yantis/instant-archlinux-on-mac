@@ -517,7 +517,7 @@ EOL
 # Setup Awesome Tiling Windows Manager
 ###############################################################################
 chroot /arch pacman --noconfirm --needed -S awesome vicious
-chroot /arch mkdir -p /home/user/.config/awesome/themes
+chroot /arch mkdir -p /home/user/.config/awesome/themes/default
 chroot /arch cp -rf /usr/share/awesome/themes/default \
                     /home/user/.config/awesome/themes/default
 chroot /arch sed -i "s/beautiful.init(\"\/usr\/share\/awesome\/themes\/default\/theme.lua\")/beautiful.init(awful.util.getdir(\"config\") .. \"\/themes\/default\/theme.lua\")/" \
