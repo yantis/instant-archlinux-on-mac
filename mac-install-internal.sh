@@ -61,13 +61,11 @@ chroot /arch haveged
 ###############################################################################
 # Init pacman
 ###############################################################################
-chroot /arch gpg --refresh-keys
-chroot /arch pacman-key --init
-chroot /arch pacman-key --populate
-chroot /arch pacman-key --refresh-keys
-
 # Fix for failed: IPC connect call failed
 chroot /arch bash -c "dirmngr </dev/null > /dev/null 2>&1"
+chroot /arch pacman-key --init
+chroot /arch pacman-key --populate
+
 
 ###############################################################################
 # Temp bypass sigchecks because of 
@@ -99,6 +97,8 @@ echo "[infinality-bundle-multilib]" >> /arch/etc/pacman.conf
 echo "Server = http://bohoomil.com/repo/multilib/x86_64" >> /arch/etc/pacman.conf
 chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign 962DDE58
+chroot /arch pacman-key -r AE6866C7962DDE58 --keyserver hkp://subkeys.pgp.net
+chroot /arch pacman-key --lsign AE6866C7962DDE58
 
 # Temp disable signature checking 
 # because of GPGME error: Inapproropriate ioctrl for device
