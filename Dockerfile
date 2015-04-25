@@ -306,13 +306,27 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             lm_sensors \
             mlocate \
             networkmanager \
-            network-manager-applet \
+            network-manager-applet && \
+
+            # Clean up pacman
+            rm -r /var/lib/pacman/sync/*
+
+RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             pavucontrol \
             package-query \
             pciutils \
             powertop \
             pulseaudio-alsa \
             pulseaudio && \
+
+            # Clean up pacman
+            rm -r /var/lib/pacman/sync/*
+
+RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
+            libical \
+            solid \
+            gamin \
+            bluez && \
 
             # Clean up pacman
             rm -r /var/lib/pacman/sync/*
