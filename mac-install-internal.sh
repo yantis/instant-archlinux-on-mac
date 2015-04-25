@@ -87,6 +87,16 @@ sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /arch/et
 sed -i 's/#\[multilib\]/\[multilib\]/g' /arch/etc/pacman.conf
 
 ###############################################################################
+# Enable Infinality Fonts Repo
+###############################################################################
+echo "[infinality-bundle-fonts]" >> /arch/etc/pacman.conf
+echo "Server = http://bohoomil.com/repo/fonts" >>/arch/etc/pacman.conf
+echo "[infinality-bundle]" >> /arch/etc/pacman.conf
+echo "Server = http://bohoomil.com/repo/x86_64" >>/arch/etc/pacman.conf
+chroot /arch bash pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
+chroot /arch bash pacman-key --lsign 962DDE58
+
+###############################################################################
 # Allow for colored output in pacman.conf
 ###############################################################################
 sed -i "s/#Color/Color/" /arch/etc/pacman.conf
@@ -106,6 +116,10 @@ echo "Server = http://mirrors.kernel.org/archlinux/\$repo/os/\$arch" > /arch/etc
 # Plus it makes the install extremely fast.
 ###############################################################################
 mkdir -p /arch/var/cache/pacman/general/
+
+# Remove any development packages.
+rm  /var/cache/pacman/general/*devel*
+
 cp /var/cache/pacman/general/* /arch/var/cache/pacman/general/
 
 mkdir -p /arch/var/cache/pacman/custom/
@@ -199,9 +213,6 @@ if grep -i -A1 "AMD" /systeminfo | grep -qi "GPU" ; then
 
   # Blacklist the open source radeon module
   echo "install radeon /bin/false" >> /arch/etc/modprobe.d/blacklist.conf
-
-  # Fix for failed: IPC connect call failed
-  chroot /arch bash -c "dirmngr </dev/null > /dev/null 2>&1"
 
   echo "[catalyst]" >> /arch/etc/pacman.conf
   echo "Server = http://catalyst.wirephire.com/repo/catalyst/\$arch" >> /arch/etc/pacman.conf
@@ -519,12 +530,14 @@ EOL
 chroot /arch pacman --noconfirm --needed -S awesome vicious
 chroot /arch mkdir -p /home/user/.config/awesome/themes/default
 chroot /arch cp /etc/xdg/awesome/rc.lua /home/user/.config/awesome
-chroot /arch cp -rf /usr/share/awesome/themes/default \
+chroot /arch cp -rf /usr/share/awesome/themes/default/* \
                     /home/user/.config/awesome/themes/default
 chroot /arch sed -i "s/beautiful.init(\"\/usr\/share\/awesome\/themes\/default\/theme.lua\")/beautiful.init(awful.util.getdir(\"config\") .. \"\/themes\/default\/theme.lua\")/" \
-      /home/user/.config/awesome/rc.lua
+                  /home/user/.config/awesome/rc.lua
 chroot /arch sed -i "s/xterm/xfce4-terminal/" /home/user/.config/awesome/rc.lua
 chroot /arch sed -i "s/nano/vim/" /home/user/.config/awesome/rc.lua
+chroot /arch sed -i '1s/^/vicious = require("vicious")\n/' \
+                  /home/user/.config/awesome/rc.lua
 
 ###############################################################################
 # Setup oh-my-zsh
@@ -629,7 +642,10 @@ mount /dev/sdb /mnt/archlinux
 ###############################################################################
 echo "Syncing system to your drive. This will take a couple minutes. (or significantly longer if using USB)"
 
-rsync -aAXv --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} /arch/* /mnt/archlinux
+rsync -aAX --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} /arch/* /mnt/archlinux
+
+# Not sure if this is needed but to be safe.
+sync
 
 ###############################################################################
 # Unmount physical drive
