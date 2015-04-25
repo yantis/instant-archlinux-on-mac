@@ -46,6 +46,7 @@ mount -o bind /dev /arch/dev
 mount -o bind /dev/pts /arch/dev/pts
 
 chroot /arch mkdir /root/.gnupg
+chroot /arch touch /root/.gnupg/dirmngr_ldapservers.conf
 
 ###############################################################################
 # Use Google's nameservers though I believe we may be able to simply copy the
