@@ -12,6 +12,7 @@
 # takes to long to run Dockerhub will fail to build it so
 # breaking them down into smaller chunks even if more redundant.
 # Dockerhub also can not handle lots of pacman signature checks
+# As it times out at exactly two hours.
 
 FROM yantis/archlinux-small
 MAINTAINER Jonathan Yantis <yantis@yantis.net>
