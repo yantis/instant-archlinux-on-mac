@@ -87,6 +87,23 @@ sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /arch/et
 sed -i 's/#\[multilib\]/\[multilib\]/g' /arch/etc/pacman.conf
 
 ###############################################################################
+# Enable Infinality Fonts Repo
+# Update this after the database syncing because of the key failures.
+###############################################################################
+echo "[infinality-bundle-fonts]" >> /arch/etc/pacman.conf
+echo "Server = http://bohoomil.com/repo/fonts" >>/arch/etc/pacman.conf
+echo "[infinality-bundle]" >> /arch/etc/pacman.conf
+echo "Server = http://bohoomil.com/repo/x86_64" >>/arch/etc/pacman.conf
+echo "[infinality-bundle-multilib]" >> /arch/etc/pacman.conf
+echo "Server = http://bohoomil.com/repo/multilib/x86_64" >> /arch/etc/pacman.conf
+chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
+chroot /arch pacman-key --lsign 962DDE58
+
+# Temp disable signature checking 
+# because of GPGME error: Inapproropriate ioctrl for device
+echo "SigLevel = Never" >> /arch/etc/pacman.conf
+
+###############################################################################
 # Allow for colored output in pacman.conf
 ###############################################################################
 sed -i "s/#Color/Color/" /arch/etc/pacman.conf
@@ -116,7 +133,7 @@ mkdir -p /arch/var/cache/pacman/custom/
 cp /var/cache/pacman/custom/* /arch/var/cache/pacman/custom/
 
 ###############################################################################
-# Update pacman database 
+# Sync pacman database 
 ###############################################################################
 chroot /arch pacman -Syy --noconfirm
 
@@ -130,13 +147,51 @@ echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf
 ###############################################################################
 # Install general packages
 ###############################################################################
-chroot /arch bash -c "pacman --noconfirm --needed -U /var/cache/pacman/general/*.pkg.tar.xz"
+chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/*.pkg.tar.xz
 
 ###############################################################################
 # update after pushing packages from docker container to get the system 
 # in the most up to date state.
 ###############################################################################
 chroot /arch pacman -Su --noconfirm
+
+###############################################################################
+# Setup Infinality Fonts
+###############################################################################
+chroot /arch pacman -Rdd lib32-freetype2 lib32-fontconfig
+chroot /arch pacman --noconfirm -S infinality-bundle-multilib
+
+chroot /arch pacman -Rdd freetype2 cairo fontconfig
+chroot /arch pacman --noconfirm -S infinality-bundle
+
+chroot /arch pacman -Rdd ttf-dejavu
+chroot /arch pacman --noconfirm -S ibfonts-meta-base
+
+# Install ibfonts-meta-extended without the international fonts
+# If you want international its "ibfonts-meta-extended"
+chroot /arch pacman -Rdd cantarell-fonts
+chroot /arch pacman --noconfirm --needed -S \
+                      otf-cantarell-ib \
+                      ibfonts-meta-extended-lt \
+                      otf-oswald-ib \
+                      otf-quintessential-ib \
+                      otf-tex-gyre-ib \
+                      t1-cursor-ib \
+                      t1-urw-fonts-ib \
+                      ttf-caladea-ib \
+                      ttf-cantoraone-ib \
+                      ttf-carlito-ib \
+                      ttf-ddc-uchen-ib \
+                      ttf-droid-ib \
+                      ttf-gelasio-ib \
+                      ttf-lohit-odia-ib \
+                      ttf-lohit-punjabi-ib \
+                      ttf-merriweather-ib \
+                      ttf-merriweather-sans-ib \
+                      ttf-noto-serif-multilang-ib \
+                      ttf-opensans-ib \
+                      ttf-signika-family-ib \
+                      ttf-ubuntu-font-family-ib
 
 ###############################################################################
 # Setup our initial_configuration service
@@ -175,7 +230,7 @@ sed -i "s/MODULES=\"\"/MODULES=\"ahci sd_mod\"/" /arch/etc/mkinitcpio.conf
 if grep -i -A1 "Intel" /systeminfo | grep -qi "GPU" ; then
   echo "Machine has an Intel graphics card."
   sed -i "s/MODULES=\"/MODULES=\"i915 /" /arch/etc/mkinitcpio.conf
-  chroot /arch bash -c "pacman --noconfirm --needed -U /var/cache/pacman/custom/xf86-video-intel*.pkg.tar.xz"
+  chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/xf86-video-intel*.pkg.tar.xz
 
   # http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/
   echo "options i915 enable_rc6=1 enable_fbc=1 lvds_downclock=1" >> /arch/etc/modprobe.d/i915.conf
@@ -208,8 +263,8 @@ if grep -i -A1 "AMD" /systeminfo | grep -qi "GPU" ; then
   echo "Server = http://catalyst.wirephire.com/repo/catalyst/\$arch" >> /arch/etc/pacman.conf
 
   # Add the catalyst repo key for later when we re-enable security
-  chroot /arch bash pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
-  chroot /arch bash pacman-key --lsign 653C3094
+  chroot /arch pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
+  chroot /arch pacman-key --lsign 653C3094
 
   # I can't get the keys to work in the chroot in the docker container. TEMP disable.
   echo "SigLevel = Never" >> /arch/etc/pacman.conf
@@ -273,7 +328,7 @@ fi
 # Install the fan daemon
 # TODO: The new macbook April 2015 is fanless so this might not work on that. Need to check.
 ###############################################################################
-chroot /arch bash -c "pacman --noconfirm --needed -U /var/cache/pacman/custom/mbpfan*.pkg.tar.xz"
+chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/mbpfan*.pkg.tar.xz
 
 ###############################################################################
 # Powersaving 
@@ -288,7 +343,7 @@ echo "options usbcore autosuspend=1" >> /arch/etc/modprobe.d/usbcore.conf
 if grep -i -A1 "Broadcom" /systeminfo | grep -qi "MAC" ; then
   echo "Machine has an Broadcom network card."
 
-  chroot /arch bash -c "pacman --noconfirm --needed -U /var/cache/pacman/custom/broadcom-wl-dkms*.pkg.tar.xz"
+  chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/broadcom-wl-dkms*.pkg.tar.xz
 
   # Install the Broadcom b43 firmware just in case the user needs it.
   # https://wiki.archlinux.org/index.php/Broadcom_wireless
@@ -399,9 +454,11 @@ mkdir -p /media/mac
 echo "/dev/sda2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/fstab
 
 ###############################################################################
-# Enable SDDM Display Manger
+# Enable and setup SDDM Display Manger
 ###############################################################################
 chroot /arch systemctl enable sddm
+chroot /arch bash -c "sddm --example-conf > /etc/sddm.conf"
+chroot /arch sed -i "s/Current=maui/Current=archlinux/" /etc/sddm.conf
 
 ###############################################################################
 # Enable network manager
@@ -456,7 +513,7 @@ EOL
 # Mac Retina doesn't have a trackpad
 if [[ $MODEL == *"MacBook"* ]]
 then
-  chroot /arch bash -c "pacman --noconfirm --needed -U /var/cache/pacman/custom/xf86-input-mtrack*.pkg.tar.xz"
+  chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/xf86-input-mtrack*.pkg.tar.xz
   cat >/arch/usr/share/X11/xorg.conf.d/10-mtrack.conf <<EOL
   Section "InputClass"
   MatchIsTouchpad "on"
@@ -525,7 +582,7 @@ chroot /arch cp -rf /usr/share/awesome/themes/default \
 chroot /arch sed -i "s/beautiful.init(\"\/usr\/share\/awesome\/themes\/default\/theme.lua\")/beautiful.init(awful.util.getdir(\"config\") .. \"\/themes\/default\/theme.lua\")/" \
                   /home/user/.config/awesome/rc.lua
 chroot /arch sed -i "s/xterm/xfce4-terminal/" /home/user/.config/awesome/rc.lua
-chroot /arch sed -i "s/nano/vim/" /home/user/.config/awesome/rc.lua
+# chroot /arch sed -i "s/nano/vim/" /home/user/.config/awesome/rc.lua
 chroot /arch sed -i '1s/^/vicious = require("vicious")\n/' \
                   /home/user/.config/awesome/rc.lua
 
@@ -583,7 +640,6 @@ chroot /arch sed -i "s/SigLevel = Never/#SigLevel = Never/g" /etc/pacman.conf
 
 ###############################################################################
 # Delete the arch user
-# TODO figure out where this user came from...maybe a typo somewhere?
 ###############################################################################
 echo "Deleting arch user."
 chroot /arch userdel -rf arch
@@ -603,17 +659,6 @@ mv /arch/var/cache/pacman/custom/* /arch/var/cache/pacman/pkg/
 ###############################################################################
 echo "Updating Databases"
 chroot /arch runuser -l user -c "yaourt -Syy"
-
-###############################################################################
-# Enable Infinality Fonts Repo
-# Update this after the database syncing because of the key failures.
-###############################################################################
-echo "[infinality-bundle-fonts]" >> /arch/etc/pacman.conf
-echo "Server = http://bohoomil.com/repo/fonts" >>/arch/etc/pacman.conf
-echo "[infinality-bundle]" >> /arch/etc/pacman.conf
-echo "Server = http://bohoomil.com/repo/x86_64" >>/arch/etc/pacman.conf
-chroot /arch bash pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
-chroot /arch bash pacman-key --lsign 962DDE58
 
 ###############################################################################
 # Lets make sure that any config files etc our user has full ownership of.
@@ -650,7 +695,7 @@ mount /dev/sdb /mnt/archlinux
 ###############################################################################
 echo "Syncing system to your drive. This will take a couple minutes. (or significantly longer if using USB)"
 
-rsync -aAX --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} /arch/* /mnt/archlinux
+time rsync -aAX --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} /arch/* /mnt/archlinux
 
 # Not sure if this is needed but to be safe.
 sync
