@@ -642,12 +642,6 @@ until \
 done
 
 ###############################################################################
-# Restore pacman's security
-###############################################################################
-echo "Restoring pacman's security"
-chroot /arch sed -i "s/SigLevel = Never/#SigLevel = Never/g" /etc/pacman.conf
-
-###############################################################################
 # Delete the arch user
 ###############################################################################
 echo "Deleting arch user."
@@ -668,6 +662,12 @@ mv /arch/var/cache/pacman/custom/* /arch/var/cache/pacman/pkg/
 ###############################################################################
 echo "Updating Databases"
 chroot /arch runuser -l user -c "yaourt -Syy"
+
+###############################################################################
+# Restore pacman's security
+###############################################################################
+echo "Restoring pacman's security"
+chroot /arch sed -i "s/SigLevel = Never/#SigLevel = Never/g" /etc/pacman.conf
 
 ###############################################################################
 # Lets make sure that any config files etc our user has full ownership of.
