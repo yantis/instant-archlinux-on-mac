@@ -463,8 +463,8 @@ chroot /arch systemctl enable sddm
 
 # Create sddm example config 
 # do not write directly to /etc/sddm.conf or it locks up.
-chroot /arch bash -c "sddm --example-conf > /root/sddm.conf"
-chroot /arch mv /root/sddm.conf /etc/sddm.conf
+chroot /arch touch /etc/sddm.conf
+chroot /arch bash -c "sddm --example-conf > /etc/sddm.conf"
 chroot /arch sed -i "s/Current=maui/Current=archlinux/" /etc/sddm.conf
 
 ###############################################################################
