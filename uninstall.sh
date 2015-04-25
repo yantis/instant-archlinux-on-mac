@@ -29,12 +29,8 @@ if hash vboxmanage 2> /dev/null; then
   fi
 
   hdiutil mount VirtualBox-4.3.26-98988-OSX.dmg
-
-  # VirtualBox uninstall says to click the icon =(.
-  # https://www.virtualbox.org/manual/ch02.html#idp50285088
-  read -p "Double Click the Uninstall Icon in the VirtualBox Volume then hit [ENTER]"
-
-  # hdiutil unmount /Volumes/VirtualBox/
+  sudo sh /Volumes/VirtualBox/VirtualBox_Uninstall.tool --unattended
+  hdiutil unmount /Volumes/VirtualBox/
 
   # Unrem this to remove the downloaded install file.
   # rm VirtualBox-4.3.26-98988-OSX.dmg
