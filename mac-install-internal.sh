@@ -162,14 +162,12 @@ chroot /arch pacman -Su --noconfirm
 ###############################################################################
 # Setup Infinality Fonts
 ###############################################################################
-# chroot /arch pacman -Rdd lib32-freetype2 lib32-fontconfig
-chroot /arch pacman --noconfirm -S infinality-bundle-multilib
-
 chroot /arch pacman -Rdd freetype2 cairo fontconfig
-chroot /arch pacman --noconfirm -S infinality-bundle
+chroot /arch pacman --noconfirm --needed -S infinality-bundle-multilib
+chroot /arch pacman --noconfirm --needed -S infinality-bundle
 
 chroot /arch pacman -Rdd ttf-dejavu
-chroot /arch pacman --noconfirm -S ibfonts-meta-base
+chroot /arch pacman --noconfirm --needed -S ibfonts-meta-base
 
 # Install ibfonts-meta-extended without the international fonts
 # If you want international its "ibfonts-meta-extended"
