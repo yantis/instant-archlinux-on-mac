@@ -210,6 +210,14 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     mv /tmp/zaw-git/*.xz /var/cache/pacman/general/ && \
     rm -r /tmp/* && \
 
+    # Download and cache sddm-archlinux-theme-git
+    wget -P /tmp https://aur.archlinux.org/packages/sd/sddm-archlinux-theme-git/sddm-archlinux-theme-git.tar.gz && \
+    tar -xvf /tmp/sddm-archlinux-theme-git.tar.gz -C /tmp && \
+    chown -R docker:docker /tmp/sddm-archlinux-theme-git && \
+    runuser -l docker -c "(cd /tmp/sddm-archlinux-theme-git && makepkg -sc --noconfirm)" && \
+    mv /tmp/sddm-archlinux-theme-git/*.xz /var/cache/pacman/general/ && \
+    rm -r /tmp/* && \
+
     # Remove anything we added that we do not need
     pacman --noconfirm -Rs dbus-glib dri2proto dri3proto fontsproto glproto \
     libxml2 libxss mesa pixman presentproto randrproto renderproto flex \
