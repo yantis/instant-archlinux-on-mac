@@ -612,18 +612,11 @@ mount /dev/sdb /mnt/archlinux
 
 ###############################################################################
 # Sync to the physical drive
+#
+# On very slow USBs docker can time out This has only happened on one USB
+# drive so far and appears to be more of a boot2docker issue than anything else.
 ###############################################################################
 echo "Syncing system to your drive. This will take a couple minutes. (or significantly longer if using USB)"
-
-# USB can time out so lets break this up a bit.
-mkdir -p /mnt/archlinux/usr/lib
-rsync -aAXv /arch/usr/lib/* /mnt/archlinux/usr/lib
-
-mkdir -p /mnt/archlinux/usr/bin
-rsync -aAXv /arch/usr/bin/* /mnt/archlinux/usr/bin
-
-mkdir -p /mnt/archlinux/usr/share
-rsync -aAXv /arch/usr/share/* /mnt/archlinux/usr/share
 
 rsync -aAXv --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} /arch/* /mnt/archlinux
 
