@@ -10,6 +10,9 @@
 
 # Usage:
 # curl -sL goo.gl/yWkbhe | sh
+# curl -SL bit.ly/1FkQz48 | sh
+
+echo "hello from bitly"
 
 ###############################################################################
 # Uninstall Boot2Docker
