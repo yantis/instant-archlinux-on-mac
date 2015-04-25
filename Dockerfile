@@ -265,6 +265,7 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
 # Make sure none of these are in the list above.
 # This is broken into several layers because dockerhub can not handle it
 ###############################################################################
+
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             base-devel \
             acpi \
@@ -275,7 +276,12 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             cpupower \
             ctags \
             dkms \
-            feh \
+            feh && \
+
+            # Clean up pacman
+            rm -r /var/lib/pacman/sync/*
+
+RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             git \
             haveged \
             htop \
@@ -284,9 +290,6 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             google-chrome  && \
 
             # Clean up pacman
-            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
-            paccache -rk0 >/dev/null 2>&1 &&  \
-            pacman-optimize && \
             rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
@@ -294,9 +297,6 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             linux-headers && \
 
             # Clean up pacman
-            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
-            paccache -rk0 >/dev/null 2>&1 &&  \
-            pacman-optimize && \
             rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
@@ -315,9 +315,6 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             pulseaudio && \
 
             # Clean up pacman
-            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
-            paccache -rk0 >/dev/null 2>&1 &&  \
-            pacman-optimize && \
             rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
@@ -325,9 +322,6 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             konsole && \
 
             # Clean up pacman
-            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
-            paccache -rk0 >/dev/null 2>&1 &&  \
-            pacman-optimize && \
             rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
@@ -343,9 +337,6 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             sddm && \
 
             # Clean up pacman
-            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
-            paccache -rk0 >/dev/null 2>&1 &&  \
-            pacman-optimize && \
             rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
@@ -356,18 +347,12 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             vim  && \
 
             # Clean up pacman
-            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
-            paccache -rk0 >/dev/null 2>&1 &&  \
-            pacman-optimize && \
             rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             xfce4 && \
 
             # Clean up pacman
-            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
-            paccache -rk0 >/dev/null 2>&1 &&  \
-            pacman-optimize && \
             rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
@@ -381,9 +366,6 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             zsh-syntax-highlighting && \
 
             # Clean up pacman
-            bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
-            paccache -rk0 >/dev/null 2>&1 &&  \
-            pacman-optimize && \
             rm -r /var/lib/pacman/sync/*
 
 CMD /bin/zsh
