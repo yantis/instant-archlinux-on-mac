@@ -130,7 +130,7 @@ if ! hash vboxmanage 2> /dev/null; then
   sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
   sleep 2
   hdiutil unmount /Volumes/VirtualBox/
-  rm VirtualBox-4.3.26-98988-OSX.dmg
+  # rm VirtualBox-4.3.26-98988-OSX.dmg
 fi
 
 ###############################################################################
@@ -143,7 +143,7 @@ fi
 ###############################################################################
 # Initialize Boot2Docker
 ###############################################################################
-if ! boot2docker status; then
+if ! boot2docker status 2> /dev/null; then
   boot2docker init
 fi
 
