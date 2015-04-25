@@ -26,6 +26,16 @@ RUN pacman --noconfirm -Syyu && \
     bash -c "echo 'curl -L \$1 | sh' > /bin/run-remote-script" && \
     chmod +x /bin/run-remote-script && \
 
+
+    # Disable sig checking on the main repos since that is what times it out.
+    # Not really want I want to do but with the 100+ build errors on dockerhub
+    # This is the only solution that works.
+    # It gets it all from mirrors.kernel.org so it should be fine.
+
+    sed -i "s/\[core\]/\[core\]\nSigLevel = Never/" /etc/pacman.conf && \
+    sed -i "s/\[extra\]/\[extra\]\nSigLevel = Never/" /etc/pacman.conf && \
+    sed -i "s/\[community\]/\[community\]\nSigLevel = Never/" /etc/pacman.conf && \
+
     # Remove the texinfo-fake package since we are installing perl for rsync.
     pacman --noconfirm -Rdd texinfo-fake && \
 
@@ -263,82 +273,52 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
 ###############################################################################
 # Just download these since we don't actually need them for the docker container.
 # Make sure none of these are in the list above.
-# This is broken into several layers because dockerhub can not handle it
+# Broke into two layers for better download speeds on the container.
 ###############################################################################
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-            base-devel \
-            acpi \
-            alsa-utils \
-            arch-install-scripts \
-            aria2 \
-            c-ares \
-            cpupower \
-            ctags \
-            dkms \
-            feh && \
+                base-devel \
+                acpi \
+                alsa-utils \
+                arch-install-scripts \
+                aria2 \
+                c-ares \
+                cpupower \
+                ctags \
+                dkms \
+                feh \
+                git \
+                haveged \
+                htop \
+                gnome-keyring \
+                gnome-terminal \
+                google-chrome  \
+                linux \
+                linux-headers \
+                hfsprogs \
+                intel-ucode \
+                imagemagick \
+                lm_sensors \
+                mlocate \
+                networkmanager \
+                network-manager-applet \
+                pavucontrol \
+                package-query \
+                pciutils \
+                powertop \
+                pulseaudio-alsa \
+                pulseaudio && \
 
-            # Clean up pacman
-            rm -r /var/lib/pacman/sync/*
-
-RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-            git \
-            haveged \
-            htop \
-            gnome-keyring \
-            gnome-terminal \
-            google-chrome  && \
-
-            # Clean up pacman
-            rm -r /var/lib/pacman/sync/*
-
-RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-            linux \
-            linux-headers && \
-
-            # Clean up pacman
-            rm -r /var/lib/pacman/sync/*
-
-RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-            hfsprogs \
-            intel-ucode \
-            imagemagick \
-            lm_sensors \
-            mlocate \
-            networkmanager \
-            network-manager-applet && \
-
-            # Clean up pacman
-            rm -r /var/lib/pacman/sync/*
-
-RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-            pavucontrol \
-            package-query \
-            pciutils \
-            powertop \
-            pulseaudio-alsa \
-            pulseaudio && \
-
-            # Clean up pacman
-            rm -r /var/lib/pacman/sync/*
+    # Clean up pacman
+    rm -r /var/lib/pacman/sync/*
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             libical \
             solid \
             gamin \
-            bluez && \
-
-            # Clean up pacman
-            rm -r /var/lib/pacman/sync/*
-
-RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
+            bluez \
             plasma \
-            konsole && \
-
-            # Clean up pacman
-            rm -r /var/lib/pacman/sync/*
-
-RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
+            konsole \
             python-dateutil \
             python-docutils \
             python-pyasn1\
@@ -348,28 +328,13 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             reflector \
             rsync \
             sqlite \
-            sddm && \
-
-            # Clean up pacman
-            rm -r /var/lib/pacman/sync/*
-
-RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
+            sddm \
             systemd \
             terminus-font \
             tree \
             tmux \
-            vim  && \
-
-            # Clean up pacman
-            rm -r /var/lib/pacman/sync/*
-
-RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-            xfce4 && \
-
-            # Clean up pacman
-            rm -r /var/lib/pacman/sync/*
-
-RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
+            vim  \
+            xfce4 \
             xfce4-whiskermenu-plugin \
             xorg-server \
             xorg-server-utils \
