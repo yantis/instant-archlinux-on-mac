@@ -560,13 +560,20 @@ chroot /arch mkinitcpio -p linux
 
 ###############################################################################
 # Rank mirrors by speed and only use https mirrors
+# Sometimes the mirrors page is down so this would break the script so
+# lets give it up to five minutes before timing out.
 ###############################################################################
-chroot /arch reflector \
+timeout=$(($(date +%s) + 360))
+until \
+  chroot /arch reflector \
   --verbose \
   -l 10 \
   --protocol https \
   --sort rate \
-  --save /etc/pacman.d/mirrorlist
+  --save /etc/pacman.d/mirrorlist \
+  2>/dev/null || [[ $(date +%s) -gt $timeout ]]; do
+  :
+done
 
 ###############################################################################
 # Restore pacman's security
