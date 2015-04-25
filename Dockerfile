@@ -11,6 +11,7 @@
 # The layers time out on upload. Also, if a single RUN command
 # takes to long to run Dockerhub will fail to build it so
 # breaking them down into smaller chunks even if more redundant.
+# Dockerhub also can not handle lots of pacman signature checks
 
 FROM yantis/archlinux-small
 MAINTAINER Jonathan Yantis <yantis@yantis.net>
@@ -31,7 +32,6 @@ RUN pacman --noconfirm -Syyu && \
     # Not really want I want to do but with the 100+ build errors on dockerhub
     # This is the only solution that works.
     # It gets it all from mirrors.kernel.org so it should be fine.
-
     sed -i "s/\[core\]/\[core\]\nSigLevel = Never/" /etc/pacman.conf && \
     sed -i "s/\[extra\]/\[extra\]\nSigLevel = Never/" /etc/pacman.conf && \
     sed -i "s/\[community\]/\[community\]\nSigLevel = Never/" /etc/pacman.conf && \
@@ -277,37 +277,37 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
 ###############################################################################
 
 RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-                base-devel \
-                acpi \
-                alsa-utils \
-                arch-install-scripts \
-                aria2 \
-                c-ares \
-                cpupower \
-                ctags \
-                dkms \
-                feh \
-                git \
-                haveged \
-                htop \
-                gnome-keyring \
-                gnome-terminal \
-                google-chrome  \
-                linux \
-                linux-headers \
-                hfsprogs \
-                intel-ucode \
-                imagemagick \
-                lm_sensors \
-                mlocate \
-                networkmanager \
-                network-manager-applet \
-                pavucontrol \
-                package-query \
-                pciutils \
-                powertop \
-                pulseaudio-alsa \
-                pulseaudio && \
+            base-devel \
+            acpi \
+            alsa-utils \
+            arch-install-scripts \
+            aria2 \
+            c-ares \
+            cpupower \
+            ctags \
+            dkms \
+            feh \
+            git \
+            haveged \
+            htop \
+            gnome-keyring \
+            gnome-terminal \
+            google-chrome  \
+            linux \
+            linux-headers \
+            hfsprogs \
+            intel-ucode \
+            imagemagick \
+            lm_sensors \
+            mlocate \
+            networkmanager \
+            network-manager-applet \
+            pavucontrol \
+            package-query \
+            pciutils \
+            powertop \
+            pulseaudio-alsa \
+            pulseaudio && \
 
     # Clean up pacman
     rm -r /var/lib/pacman/sync/*
