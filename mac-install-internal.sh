@@ -96,6 +96,9 @@ echo "Server = http://bohoomil.com/repo/x86_64" >>/arch/etc/pacman.conf
 chroot /arch bash pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
 chroot /arch bash pacman-key --lsign 962DDE58
 
+#  keys don't work in chroot jail in the docker container. TEMP disable.
+echo "SigLevel = Never" >> /arch/etc/pacman.conf
+
 ###############################################################################
 # Allow for colored output in pacman.conf
 ###############################################################################
