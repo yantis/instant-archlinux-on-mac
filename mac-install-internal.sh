@@ -514,6 +514,19 @@ ExecStart=
 ExecStart=-/sbin/agetty --noclear %I 38400 linux
 EOL
 
+
+###############################################################################
+# Setup Awesome Tiling Windows Manager
+###############################################################################
+chroot /arch pacman --noconfirm --needed awesome vicious
+chroot /arch mkdir -p /home/user/.config/awesome
+chroot /arch cp -rf /usr/share/awesome/themes/default \
+                    /home/user/.config/awesome/themes/default
+sed -i "s/beautiful.init(\"\/usr\/share\/awesome\/themes\/default\/theme.lua\")/beautiful.init(awful.util.getdir(\"config\") .. \"\/themes\/default\/theme.lua\")/" \
+      /home/user/.config/awesome/rc.lua
+sed -i "s/xterm/xfce4-terminal/" /home/user/.config/awesome/rc.lua
+sed -i "s/nano/vim/" /home/user/.config/awesome/rc.lua
+
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 # Final things before syncing to the physical drive.
