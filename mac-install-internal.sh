@@ -61,7 +61,7 @@ chroot /arch haveged
 ###############################################################################
 # Init pacman
 ###############################################################################
-cp -R /etc/pacman.d/gnupg /arch/etc/pacman.d/gnupg
+cp -R /etc/pacman.d/gnupg /arch/etc/pacman.d/
 chroot /arch  pacman-key --init
 chroot /arch  pacman-key --populate archlinux
 
