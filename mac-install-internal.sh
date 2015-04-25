@@ -240,15 +240,14 @@ if grep -i -A1 "NVIDIA" /systeminfo | grep -qi "GPU" ; then
   # Install Nvidia drivers with automatic re-compilation of the NVIDIA module with kernel update 
   HOOKS="base udev autodetect modconf block filesystems keyboard fsck"
 
+  # Uninstall mesa-libgl since it will conflict with nividia-libgl
+  chroot /arch pacman --noconfirm -Rdd mesa-libgl
+
   # Install Nvidia DKMS and Utils 
   chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/nvidia-*-3*.pkg.tar.xz
 
   # Install Nvidia hook 
   chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/nvidia-hook*.pkg.tar.xz
-
-  # Uninstall mesa-libgl & install nvidia-libgl
-  chroot /arch pacman --noconfirm -Rdd mesa-libgl
-  chroot /arch pacman --noconfirm -S nvidia-libgl
 
   # Install Nvidia backlight stuff
   # dmesg says "No supported Nvidia graphics adapter found"
