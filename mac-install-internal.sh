@@ -462,10 +462,12 @@ echo "/dev/sda2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/
 chroot /arch systemctl enable sddm
 
 # Create sddm example config 
-# do not write directly to /etc/sddm.conf or it locks up.
-chroot /arch touch /etc/sddm.conf
-chroot /arch bash -c "sddm --example-conf > /etc/sddm.conf"
-chroot /arch sed -i "s/Current=maui/Current=archlinux/" /etc/sddm.conf
+# chroot /arch bash -c "sddm --example-conf > /etc/sddm.conf"
+# chroot /arch sed -i "s/Current=maui/Current=archlinux/" /etc/sddm.conf
+cat >/arch/etc/sddm.conf<<EOL
+[Theme]
+Current=archlinux
+EOL
 
 ###############################################################################
 # Enable network manager
