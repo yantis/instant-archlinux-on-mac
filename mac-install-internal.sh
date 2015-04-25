@@ -455,7 +455,7 @@ EOL
 # Mac Retina doesn't have a trackpad
 if [[ $MODEL == *"MacBook"* ]]
 then
-  chroot /arch bash -c "pacman --noconfirm --needed -U /var/cache/pacman/custom/xf86-input-mtrack*.pkg.tar.xz"
+  chroot /arch bash -c "pacman --noconfirm -U /var/cache/pacman/custom/xf86-input-mtrack*.pkg.tar.xz"
   cat >/arch/usr/share/X11/xorg.conf.d/10-mtrack.conf <<EOL
   Section "InputClass"
   MatchIsTouchpad "on"
