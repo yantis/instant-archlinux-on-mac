@@ -64,9 +64,9 @@ curl -O https://raw.githubusercontent.com/yantis/instant-archlinux-on-mac/master
 * Boot2docker launches VirtualBox with our physical volumes mapped.
 * A [docker container](https://registry.hub.docker.com/u/yantis/instant-archlinux-on-mac) gets launched which then downloads
 this [script](https://github.com/yantis/instant-archlinux-on-mac/blob/master/mac-install-internal.sh) to dynamically setup Arch Linux.
-* It unsquashes a [rootfs image](http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/) into a chroot jail.
-* Everything gets installed and setup in that chroot jail.
-* Once completed everything in that chroot jail gets rsynced over to the virtual mapped physical drive.
+* It unsquashes a [rootfs image](http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/) into a chroot environment.
+* Everything gets installed and setup in that chroot environment.
+* Once completed everything in that chroot environment gets rsynced over to the virtual mapped physical drive.
 * rEFInd is installed for dual booting Mac OSX & Linux As well as a very sexy [rEFInd Minimal Theme](https://github.com/EvanPurkhiser/rEFInd-minimal)
 * Nothing actually gets written unless everything is successful.
 
