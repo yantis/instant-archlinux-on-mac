@@ -87,19 +87,6 @@ sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /arch/et
 sed -i 's/#\[multilib\]/\[multilib\]/g' /arch/etc/pacman.conf
 
 ###############################################################################
-# Enable Infinality Fonts Repo
-###############################################################################
-echo "[infinality-bundle-fonts]" >> /arch/etc/pacman.conf
-echo "Server = http://bohoomil.com/repo/fonts" >>/arch/etc/pacman.conf
-echo "[infinality-bundle]" >> /arch/etc/pacman.conf
-echo "Server = http://bohoomil.com/repo/x86_64" >>/arch/etc/pacman.conf
-# chroot /arch bash pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
-# chroot /arch bash pacman-key --lsign 962DDE58
-
-#  keys don't work in chroot jail in the docker container. TEMP disable.
-echo "SigLevel = Never" >> /arch/etc/pacman.conf
-
-###############################################################################
 # Allow for colored output in pacman.conf
 ###############################################################################
 sed -i "s/#Color/Color/" /arch/etc/pacman.conf
@@ -609,6 +596,17 @@ mv /arch/var/cache/pacman/custom/* /arch/var/cache/pacman/pkg/
 ###############################################################################
 echo "Updating Databases"
 chroot /arch runuser -l user -c "yaourt -Syy"
+
+###############################################################################
+# Enable Infinality Fonts Repo
+# Update this after the database syncing because of the key failures.
+###############################################################################
+echo "[infinality-bundle-fonts]" >> /arch/etc/pacman.conf
+echo "Server = http://bohoomil.com/repo/fonts" >>/arch/etc/pacman.conf
+echo "[infinality-bundle]" >> /arch/etc/pacman.conf
+echo "Server = http://bohoomil.com/repo/x86_64" >>/arch/etc/pacman.conf
+chroot /arch bash pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
+chroot /arch bash pacman-key --lsign 962DDE58
 
 ###############################################################################
 # Lets make sure that any config files etc our user has full ownership of.
