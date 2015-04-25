@@ -214,7 +214,7 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     wget -P /tmp https://aur.archlinux.org/packages/sd/sddm-archlinux-theme-git/sddm-archlinux-theme-git.tar.gz && \
     tar -xvf /tmp/sddm-archlinux-theme-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/sddm-archlinux-theme-git && \
-    runuser -l docker -c "(cd /tmp/sddm-archlinux-theme-git && makepkg -sc --noconfirm)" && \
+    runuser -l docker -c "(cd /tmp/sddm-archlinux-theme-git && makepkg -sdc --noconfirm)" && \
     mv /tmp/sddm-archlinux-theme-git/*.xz /var/cache/pacman/general/ && \
     rm -r /tmp/* && \
 
