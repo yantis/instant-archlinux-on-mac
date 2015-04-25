@@ -460,7 +460,11 @@ echo "/dev/sda2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/
 # Enable and setup SDDM Display Manger
 ###############################################################################
 chroot /arch systemctl enable sddm
-chroot /arch bash -c "sddm --example-conf > /etc/sddm.conf"
+
+# Create sddm example config 
+# do not write directly to /etc/sddm.conf or it locks up.
+chroot /arch bash -c "sddm --example-conf > /root/sddm.conf"
+chroot /arch mv /root/sddm.conf /etc/sddm.conf
 chroot /arch sed -i "s/Current=maui/Current=archlinux/" /etc/sddm.conf
 
 ###############################################################################
