@@ -45,9 +45,6 @@ mount -o bind /dev /arch/dev
 # (Doesn't seem to matter at all they are still messed up.)
 mount -o bind /dev/pts /arch/dev/pts
 
-chroot /arch mkdir /root/.gnupg
-chroot /arch touch /root/.gnupg/dirmngr_ldapservers.conf
-
 ###############################################################################
 # Use Google's nameservers though I believe we may be able to simply copy the
 # /etc/resolv.conf over since Docker magages that and it "should" be accurate.
@@ -68,7 +65,10 @@ chroot /arch  pacman-key --init
 chroot /arch  pacman-key --populate archlinux
 
 # Fix for failed: IPC connect call failed
-chroot /arch bash -c "dirmngr </dev/null > /dev/null 2>&1"
+# chroot /arch bash -c "dirmngr </dev/null > /dev/null 2>&1"
+chroot /arch mkdir /root/.gnupg
+chroot /arch touch /root/.gnupg/dirmngr_ldapservers.conf
+
 
 ###############################################################################
 # Temp bypass sigchecks because of 
