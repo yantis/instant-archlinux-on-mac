@@ -1,34 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
+    <meta charset="UTF-8">
     <title>Instant-archlinux-on-mac by yantis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Instant-archlinux-on-mac</h1>
-        <h2>Instant Arch Linux on Mac &amp; MacBook</h2>
-        <a href="https://github.com/yantis/instant-archlinux-on-mac" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+    <section class="page-header">
+      <h1 class="project-name">Instant-archlinux-on-mac</h1>
+      <h2 class="project-tagline">Instant Arch Linux on Mac &amp; MacBook</h2>
+      <a href="https://github.com/yantis/instant-archlinux-on-mac" class="btn">View on GitHub</a>
+      <a href="https://github.com/yantis/instant-archlinux-on-mac/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/yantis/instant-archlinux-on-mac/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
+    <section class="main-content">
+      <h1>
 <a id="instant-arch-linux-on-macs--macbooks" class="anchor" href="#instant-arch-linux-on-macs--macbooks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instant Arch Linux on Macs &amp; MacBooks</h1>
 
 <p>This will setup Arch Linux on your Mac or MacBook all from Mac OSX. No need for any USB drives or figuring out the proper network/video drivers to get your
@@ -105,9 +96,9 @@ do that type:</p>
 <li>Boot2docker launches VirtualBox with our physical volumes mapped.</li>
 <li>A <a href="https://registry.hub.docker.com/u/yantis/instant-archlinux-on-mac">docker container</a> gets launched which then downloads
 this <a href="https://github.com/yantis/instant-archlinux-on-mac/blob/master/mac-install-internal.sh">script</a> to dynamically setup Arch Linux.</li>
-<li>It unsquashes a <a href="http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/">rootfs image</a> into a chroot jail.</li>
-<li>Everything gets installed and setup in that chroot jail.</li>
-<li>Once completed everything in that chroot jail gets rsynced over to the virtual mapped physical drive.</li>
+<li>It unsquashes a <a href="http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/">rootfs image</a> into a chroot environment.</li>
+<li>Everything gets installed and setup in that chroot environment.</li>
+<li>Once completed everything in that chroot environment gets rsynced over to the virtual mapped physical drive.</li>
 <li>rEFInd is installed for dual booting Mac OSX &amp; Linux As well as a very sexy <a href="https://github.com/EvanPurkhiser/rEFInd-minimal">rEFInd Minimal Theme</a>
 </li>
 <li>Nothing actually gets written unless everything is successful.</li>
@@ -247,24 +238,14 @@ this <a href="https://github.com/yantis/instant-archlinux-on-mac/blob/master/mac
 </ul>
 
 <p><a href="http://yantis.github.io/instant-archlinux-on-mac/">Github Pages</a></p>
-        </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/yantis/instant-archlinux-on-mac/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/yantis/instant-archlinux-on-mac/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/yantis/instant-archlinux-on-mac">Instant-archlinux-on-mac</a> is maintained by <a href="https://github.com/yantis">yantis</a>.</span>
 
-          <p class="repo-owner"><a href="https://github.com/yantis/instant-archlinux-on-mac"></a> is maintained by <a href="https://github.com/yantis">yantis</a>.</p>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
+    </section>
 
             <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -279,3 +260,4 @@ this <a href="https://github.com/yantis/instant-archlinux-on-mac/blob/master/mac
 
   </body>
 </html>
+
