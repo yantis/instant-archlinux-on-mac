@@ -15,7 +15,16 @@ Will this work with your iMac or MacBook? Possibly. It worked with all the ones 
 you will be in a much better place than trying to do it by hand. I do know for a fact that I haven't set it up to work with fusion drives yet
 so if your drive is a fusion drive it won't work without some minor changes.
 
-If you have any problems feel free to shoot me an email at yantis@yantis.net and we can see if we can solve them together.
+If you have any problems feel free to shoot me an email at yantis@yantis.net
+
+## Features
+* Installs without USB.
+* Installs without needing network drivers.
+* Installs without needing video drivers.
+* Installs 100% in Mac OSX with no rebooting neeed.
+* When you do choose to use Arch Linux it should be 100% usable by simply rebooting.
+* Very quick install. If your bandwidth is fast enough the whole install takes under 10 minutes.
+* Easy to remove and revert back to normal.
 
 ## Tested Working
 * Mountain Lion, Lion, Yosemite
