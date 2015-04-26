@@ -66,7 +66,6 @@ chroot /arch bash -c "dirmngr </dev/null > /dev/null 2>&1"
 chroot /arch pacman-key --init
 chroot /arch pacman-key --populate
 
-
 ###############################################################################
 # Temp bypass sigchecks because of 
 # GPGME error: Inapproropriate ioctrl for device
@@ -104,8 +103,8 @@ echo "SigLevel = Never" >> /arch/etc/pacman.conf
 
 chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign 962DDE58
-chroot /arch pacman-key -r AE6866C7962DDE58 --keyserver hkp://subkeys.pgp.net
-chroot /arch pacman-key --lsign AE6866C7962DDE58
+# chroot /arch pacman-key -r AE6866C7962DDE58 --keyserver hkp://subkeys.pgp.net
+# chroot /arch pacman-key --lsign AE6866C7962DDE58
 
 ###############################################################################
 # Allow for colored output in pacman.conf
@@ -129,7 +128,8 @@ echo "Server = http://mirrors.kernel.org/archlinux/\$repo/os/\$arch" > /arch/etc
 mkdir -p /arch/var/cache/pacman/general/
 
 # Remove any development packages.
-rm  /var/cache/pacman/general/*devel*
+rm /var/cache/pacman/general/*devel*
+rm /var/cache/pacman/general/*-dev-*
 
 cp /var/cache/pacman/general/* /arch/var/cache/pacman/general/
 
@@ -681,7 +681,19 @@ chroot /arch chown -R user:users /home/user/
 ###############################################################################
 # chroot /arch  pacman-key --populate archlinux
 
+###############################################################################
+# Re-Import any keys we imported above.
+# We already did this above but for some reason we need to do it now or it
+# there will be db issues with pacman when ran.
+###############################################################################
+chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
+chroot /arch pacman-key --lsign 962DDE58
+chroot /arch pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
+chroot /arch pacman-key --lsign 653C3094
+
+###############################################################################
 # Force root user to change password on next login.
+###############################################################################
 chroot /arch chage -d 0 root
 
 #------------------------------------------------------------------------------
