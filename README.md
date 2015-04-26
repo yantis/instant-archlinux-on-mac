@@ -26,7 +26,7 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net
 * Very quick install. If your bandwidth is fast enough the whole install takes under 10 minutes.
 * Easy to remove and revert back to normal.
 
-## Installed Features
+## Installed Programs
 * rEFInd with rEFInd minimal theme.
 * KDE Plasma, XCFE4, and Awesome window desktop managers.
 * SDDM with Archlinux Theme
