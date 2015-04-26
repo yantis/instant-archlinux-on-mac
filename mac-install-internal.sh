@@ -226,10 +226,19 @@ chroot /arch systemctl enable initial_configuration.service
 ###############################################################################
 echo "FONT=ter-132n" >> /arch/etc/vconsole.conf
 
-###############################################################################
-# ahci and sd_mod per this post: https://wiki.archlinux.org/index.php/MacBook
-sed -i "s/MODULES=\"\"/MODULES=\"ahci sd_mod\"/" /arch/etc/mkinitcpio.conf
-###############################################################################
+
+if [ $MODEL == "MacBook8,1" ]; then
+  ###############################################################################
+  # Experimental
+  ###############################################################################
+  sed -i "s/MODULES=\"\"/MODULES=\"ahci sd_mod libahci\"/" /arch/etc/mkinitcpio.conf
+
+else
+  ###############################################################################
+  # ahci and sd_mod per this post: https://wiki.archlinux.org/index.php/MacBook
+  sed -i "s/MODULES=\"\"/MODULES=\"ahci sd_mod\"/" /arch/etc/mkinitcpio.conf
+  ###############################################################################
+fi
 
 ###############################################################################
 # Setup Intel GPU
