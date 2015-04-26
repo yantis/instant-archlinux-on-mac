@@ -460,10 +460,6 @@ echo "/dev/sda2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/
 # Enable and setup SDDM Display Manger
 ###############################################################################
 chroot /arch systemctl enable sddm
-
-# Create sddm example config 
-# chroot /arch bash -c "sddm --example-conf > /etc/sddm.conf"
-# chroot /arch sed -i "s/Current=maui/Current=archlinux/" /etc/sddm.conf
 cat >/arch/etc/sddm.conf<<EOL
 [Theme]
 Current=archlinux
@@ -686,9 +682,10 @@ chroot /arch chown -R user:users /home/user/
 # We already did this above but for some reason we need to do it now or it
 # there will be db issues with pacman when ran.
 ###############################################################################
-chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
+echo "Locally Signing Keys"
+# chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign 962DDE58
-chroot /arch pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
+# chroot /arch pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign 653C3094
 
 ###############################################################################
