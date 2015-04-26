@@ -691,6 +691,7 @@ if grep -i -A1 "AMD" /systeminfo | grep -qi "GPU" ; then
   chroot /arch pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
   chroot /arch pacman-key --lsign 653C3094
 fi
+chroot /arch pacman-key -u
 
 ###############################################################################
 # Force root user to change password on next login.
