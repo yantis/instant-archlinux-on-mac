@@ -103,9 +103,11 @@ echo "SigLevel = Never" >> /arch/etc/pacman.conf
 
 chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign 962DDE58
-chroot /arch pacman-key -r AE6866C7962DDE58 --keyserver hkp://subkeys.pgp.net
-chroot /arch pacman-key --lsign AE6866C7962DDE58
-chroot /arch pacman-key -u
+
+# For whatever reason when the system comes back up it won't remember these keys.
+# So lets cache them and import them on first run.
+chroot /arch mkdir -p /var/cache/keys
+chroot /arch bash -c "pacman-key -e 962DDE58 > /var/cache/keys/962DDE58.pub"
 
 ###############################################################################
 # Allow for colored output in pacman.conf
@@ -269,7 +271,11 @@ if grep -i -A1 "AMD" /systeminfo | grep -qi "GPU" ; then
   # Add the catalyst repo key for later when we re-enable security
   chroot /arch pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
   chroot /arch pacman-key --lsign 653C3094
-  chroot /arch pacman-key -u
+
+  # For whatever reason when the system comes back up it won't remember these keys.
+  # So lets cache them and import them on first run.
+  chroot /arch mkdir -p /var/cache/keys
+  chroot /arch bash -c "pacman-key -e 653C3094 > /var/cache/keys/653C3094.pub"
 
   # I can't get the keys to work in the chroot in the docker container. TEMP disable.
   echo "SigLevel = Never" >> /arch/etc/pacman.conf
