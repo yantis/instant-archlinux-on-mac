@@ -105,6 +105,7 @@ chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign 962DDE58
 chroot /arch pacman-key -r AE6866C7962DDE58 --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign AE6866C7962DDE58
+chroot /arch pacman-key -u
 
 ###############################################################################
 # Allow for colored output in pacman.conf
@@ -268,6 +269,7 @@ if grep -i -A1 "AMD" /systeminfo | grep -qi "GPU" ; then
   # Add the catalyst repo key for later when we re-enable security
   chroot /arch pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
   chroot /arch pacman-key --lsign 653C3094
+  chroot /arch pacman-key -u
 
   # I can't get the keys to work in the chroot in the docker container. TEMP disable.
   echo "SigLevel = Never" >> /arch/etc/pacman.conf
@@ -682,16 +684,16 @@ chroot /arch chown -R user:users /home/user/
 # We already did this above but for some reason we need to do it now or it
 # there will be db issues with pacman when ran.
 ###############################################################################
-chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
-chroot /arch pacman-key --lsign 962DDE58
-chroot /arch pacman-key -r AE6866C7962DDE58 --keyserver hkp://subkeys.pgp.net
-chroot /arch pacman-key --lsign AE6866C7962DDE58
+# chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
+# chroot /arch pacman-key --lsign 962DDE58
+# chroot /arch pacman-key -r AE6866C7962DDE58 --keyserver hkp://subkeys.pgp.net
+# chroot /arch pacman-key --lsign AE6866C7962DDE58
 
-if grep -i -A1 "AMD" /systeminfo | grep -qi "GPU" ; then
-  chroot /arch pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
-  chroot /arch pacman-key --lsign 653C3094
-fi
-chroot /arch pacman-key -u
+# if grep -i -A1 "AMD" /systeminfo | grep -qi "GPU" ; then
+#   chroot /arch pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
+#   chroot /arch pacman-key --lsign 653C3094
+# fi
+# chroot /arch pacman-key -u
 
 ###############################################################################
 # Force root user to change password on next login.
