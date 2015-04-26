@@ -563,12 +563,7 @@ fi
 cp /systeminfo /arch/systeminfo.txt
 
 ###############################################################################
-# Update mlocate
-###############################################################################
-chroot /arch updatedb
-
-###############################################################################
-# Disable autologin for root and have root user change password on next login
+# Disable autologin for root
 ###############################################################################
 cat >/arch/etc/systemd/system/getty@tty1.service.d/override.conf<<EOL
 [Service]
@@ -602,6 +597,11 @@ chroot /arch sed -i "s/plugins=(git)/plugins=(git git-extras pip tmux python rsy
 echo "BULLETTRAIN_CONTEXT_SHOW=\"true\"" >> /arch/home/user/.zshrc
 echo "BULLETTRAIN_CONTEXT_BG=\"31\"" >> /arch/home/user/.zshrc
 echo "BULLETTRAIN_CONTEXT_FG=\"231\"" >> /arch/home/user/.zshrc
+
+###############################################################################
+# Update mlocate
+###############################################################################
+chroot /arch updatedb
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
