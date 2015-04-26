@@ -682,11 +682,10 @@ chroot /arch chown -R user:users /home/user/
 # We already did this above but for some reason we need to do it now or it
 # there will be db issues with pacman when ran.
 ###############################################################################
-echo "Locally Signing Keys"
-# chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
+chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign 962DDE58
-# chroot /arch pacman-key -r 653C3094 --keyserver hkp://subkeys.pgp.net
-chroot /arch pacman-key --lsign 653C3094
+chroot /arch pacman-key -r AE6866C7962DDE58 --keyserver hkp://subkeys.pgp.net
+chroot /arch pacman-key --lsign AE6866C7962DDE58
 
 ###############################################################################
 # Force root user to change password on next login.
