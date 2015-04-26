@@ -41,6 +41,7 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net
 * Mac OSX Drive is shared read only
 * Development Tools plus python2, python3, & ruby.
 * Thermald and cpupower
+* Mac Fan control daemon
 * Terminals: xfce4-terminal, konsole, gnome-terminal, vte3
 * xf86-input-mtrack package installed and configured.
 * Yaourt for AUR
