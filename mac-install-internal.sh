@@ -164,40 +164,41 @@ chroot /arch pacman -Su --noconfirm
 
 ###############################################################################
 # Setup Infinality Fonts
+# Moved to DOCKERFILE
 ###############################################################################
-chroot /arch pacman --noconfirm -Rdd freetype2 cairo fontconfig
-chroot /arch pacman --noconfirm --needed -S infinality-bundle
-# chroot /arch pacman --noconfirm --needed -S infinality-bundle-multilib
+# chroot /arch pacman --noconfirm -Rdd freetype2 cairo fontconfig
+# chroot /arch pacman --noconfirm --needed -S infinality-bundle
+# # chroot /arch pacman --noconfirm --needed -S infinality-bundle-multilib
 
-# Instal fonts
-chroot /arch pacman --noconfirm -Rdd ttf-dejavu
-chroot /arch pacman --noconfirm --needed -S ibfonts-meta-base
+# # Instal fonts
+# chroot /arch pacman --noconfirm -Rdd ttf-dejavu
+# chroot /arch pacman --noconfirm --needed -S ibfonts-meta-base
 
-# Install ibfonts-meta-extended without the international fonts
-# If you want international its "ibfonts-meta-extended"
-chroot /arch pacman --noconfirm -Rdd cantarell-fonts
-chroot /arch pacman --noconfirm --needed -S \
-                      otf-cantarell-ib \
-                      ibfonts-meta-extended-lt \
-                      otf-oswald-ib \
-                      otf-quintessential-ib \
-                      otf-tex-gyre-ib \
-                      t1-cursor-ib \
-                      t1-urw-fonts-ib \
-                      ttf-caladea-ib \
-                      ttf-cantoraone-ib \
-                      ttf-carlito-ib \
-                      ttf-ddc-uchen-ib \
-                      ttf-droid-ib \
-                      ttf-gelasio-ib \
-                      ttf-lohit-odia-ib \
-                      ttf-lohit-punjabi-ib \
-                      ttf-merriweather-ib \
-                      ttf-merriweather-sans-ib \
-                      ttf-noto-serif-multilang-ib \
-                      ttf-opensans-ib \
-                      ttf-signika-family-ib \
-                      ttf-ubuntu-font-family-ib
+# # Install ibfonts-meta-extended without the international fonts
+# # If you want international its "ibfonts-meta-extended"
+# chroot /arch pacman --noconfirm -Rdd cantarell-fonts
+# chroot /arch pacman --noconfirm --needed -S \
+#                       otf-cantarell-ib \
+#                       ibfonts-meta-extended-lt \
+#                       otf-oswald-ib \
+#                       otf-quintessential-ib \
+#                       otf-tex-gyre-ib \
+#                       t1-cursor-ib \
+#                       t1-urw-fonts-ib \
+#                       ttf-caladea-ib \
+#                       ttf-cantoraone-ib \
+#                       ttf-carlito-ib \
+#                       ttf-ddc-uchen-ib \
+#                       ttf-droid-ib \
+#                       ttf-gelasio-ib \
+#                       ttf-lohit-odia-ib \
+#                       ttf-lohit-punjabi-ib \
+#                       ttf-merriweather-ib \
+#                       ttf-merriweather-sans-ib \
+#                       ttf-noto-serif-multilang-ib \
+#                       ttf-opensans-ib \
+#                       ttf-signika-family-ib \
+#                       ttf-ubuntu-font-family-ib
 
 ###############################################################################
 # Setup our initial_configuration service
