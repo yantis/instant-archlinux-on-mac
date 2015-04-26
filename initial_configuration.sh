@@ -14,9 +14,14 @@
 timedatectl set-timezone America/Los_Angeles
 
 ###############################################################################
-# Import any public keys that we need
+# Import any public keys that we need and initalize
+# For some reason this wouldn't stick in the docker container.
 ###############################################################################
-pacman-key -a /var/cache/keys/*.pub
+pacman-key --init
+
+# Import infinality repo key
+pacman-key -a /var/cache/keys/962DDE58.pub
+chroot /arch pacman-key --lsign 962DDE58
 
 ###############################################################################
 # Set the keyboard LEDs to light up
@@ -54,6 +59,11 @@ if hash aticonfig 2> /dev/null; then
   aticonfig \
     --initial \
     --output /usr/share/X11/xorg.conf.d/20-radeon.conf
+
+  # Import catalyst repo key
+  pacman-key -a /var/cache/keys/653C3094.pub
+  chroot /arch pacman-key --lsign 653C3094
+
 fi
 
 ###############################################################################
