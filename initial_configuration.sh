@@ -21,7 +21,7 @@ pacman-key --init
 
 # Import infinality repo key
 pacman-key -a /var/cache/keys/962DDE58.pub
-chroot /arch pacman-key --lsign 962DDE58
+pacman-key --lsign 962DDE58
 
 ###############################################################################
 # Set the keyboard LEDs to light up
@@ -62,7 +62,7 @@ if hash aticonfig 2> /dev/null; then
 
   # Import catalyst repo key
   pacman-key -a /var/cache/keys/653C3094.pub
-  chroot /arch pacman-key --lsign 653C3094
+  pacman-key --lsign 653C3094
 
 fi
 
