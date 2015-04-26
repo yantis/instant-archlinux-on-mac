@@ -14,6 +14,11 @@
 timedatectl set-timezone America/Los_Angeles
 
 ###############################################################################
+# Import any public keys that we need
+###############################################################################
+pacman-key -a /var/cache/keys/*.pub
+
+###############################################################################
 # Set the keyboard LEDs to light up
 # change this to 0 or your desired brightness level
 ###############################################################################
