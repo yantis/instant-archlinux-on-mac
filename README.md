@@ -26,6 +26,25 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net
 * Very quick install. If your bandwidth is fast enough the whole install takes under 10 minutes.
 * Easy to remove and revert back to normal.
 
+## Installed Features
+* rEFInd with rEFInd minimal theme.
+* KDE Plasma, XCFE4, and Awesome window desktop managers.
+* SDDM with Archlinux Theme
+* Infinality Fonts preconfigured and installed.
+* Latest Intel, Nvidia, and AMD/ATI Radeon drivers (DKMS)
+* Network Drivers and Broadcom firmware preinstalled and setup.
+* Network manager and applets setup for lan or wifi use.
+* Powerline with Powerline fonts installed
+* ZSH, Oh-my-zsh, tmux, vim preinstalled.
+* Google Chrome
+* Sound system preconfigured (Alsa/Pulseaudio)
+* Mac OSX Drive is shared read only
+* Development Tools plus python2, python3, & ruby.
+* Thermald and cpupower
+* Terminals: xfce4-terminal, konsole, gnome-terminal, vte3
+* xf86-input-mtrack package installed and configured.
+* Yaourt for AUR
+
 ## Tested Working
 * Mountain Lion, Lion, Yosemite
 * [MacBookPro10,1] - MacBook Pro (Retina, Mid 2012)
