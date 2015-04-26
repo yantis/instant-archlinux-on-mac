@@ -199,7 +199,7 @@ else
   if diskutil list ${ROOTDISK} | grep -q "Microsoft Basic Data"  ; then
     echo "Skipping disk resize and ext4 volume creation since already done."
     echo "Formating Disk."
-    diskutil eraseDISK UFSD_EXTFS4 "1" ${ROOTDISK}s4
+    diskutil eraseVolume UFSD_EXTFS4 "1" ${ROOTDISK}s4
   else
     sudo diskutil resizeVolume ${ROOTDISK}s2 ${1}g 1 UFSD_EXTFS4 "1" 0g
   fi
