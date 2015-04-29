@@ -761,7 +761,7 @@ umount /mnt/archlinux
 # Consider zram/zswap https://wiki.archlinux.org/index.php/Maximizing_performance
 # Looks like a ton of goodies in helmuthdu's script. https://github.com/helmuthdu/aui
 # Reverse Engineer iMac Retina's 5K. I notice that with rEFInd installed it defaults to 4k.
-
+# - Possible this can solve that: https://github.com/0xbb/apple_set_os.efi
 echo "*** FINISHED ***"
 
 # vim:set ts=2 sw=2 et:
