@@ -194,4 +194,13 @@ $ diskutil list
 #### SquashFS
 * http://askubuntu.com/questions/95392/how-to-create-a-bootable-system-with-a-squashfs-root
 
+#### Macbook Retina 12" 2015
+* https://github.com/SicVolo/hid-apple-4.1.2
+* https://bugzilla.kernel.org/show_bug.cgi?id=96771
+* https://forums.opensuse.org/showthread.php/507933-openSUSE-on-the-2015-Apple-12-Inch-Retina-MacBook/page2
+* https://en.wiki2.org/wiki/NVM_Express
+* http://www.nvmexpress.org/resources/linux-driver-information/
+* http://www.anandtech.com/show/9136/the-2015-macbook-review/8
+* http://ubuntuforums.org/showthread.php?t=2283423
+
 [Github Pages](http://yantis.github.io/instant-archlinux-on-mac/)
