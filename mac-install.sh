@@ -124,12 +124,15 @@ fi
 # TODO: I am still getting asked for a password here.
 ###############################################################################
 if ! hash vboxmanage 2> /dev/null; then
-  # wget http://download.virtualbox.org/virtualbox/4.3.26/VirtualBox-4.3.26-98988-OSX.dmg
-  curl -OL http://download.virtualbox.org/virtualbox/4.3.26/VirtualBox-4.3.26-98988-OSX.dmg
-  hdiutil mount VirtualBox-4.3.26-98988-OSX.dmg
+  echo "Installing VirtualBox"
+  # curl -OL http://download.virtualbox.org/virtualbox/4.3.26/VirtualBox-4.3.26-98988-OSX.dmg
+  # hdiutil mount VirtualBox-4.3.26-98988-OSX.dmg
+  curl -OL http://download.virtualbox.org/virtualbox/5.0.0/VirtualBox-5.0.0-101573-OSX.dmg
+  hdiutil mount VirtualBox-5.0.0-101573-OSX.dmg
   sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
   sleep 2
   hdiutil unmount /Volumes/VirtualBox/
+  # rm VirtualBox-5.0.0-101573-OSX.dmg
   # rm VirtualBox-4.3.26-98988-OSX.dmg
 fi
 
@@ -213,6 +216,7 @@ if echo $EXT4VOL | grep -q "${ROOTDISK}s"  ; then
   echo "Our ext4 volume is $EXT4VOL"
 else
   echo "Could not find our ext4 volume. Try deleting all the volumes except Macintosh HD and restarting your computer."
+  echo "It is also possible that your Paragon ExtFS Trial has expired."
   exit 1
 fi
 
