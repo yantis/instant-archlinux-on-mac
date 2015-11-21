@@ -199,7 +199,8 @@ if [ $INSTALL_TYPE  == "usb" ]; then
 else
   # Resize MacOs drive to X gb and create ext4 volume
   # TODO: This could be improved to detect disks like we do with the USB above.
-  if diskutil list ${ROOTDISK} | grep -q "Microsoft Basic Data"  ; then
+  # if diskutil list ${ROOTDISK} | grep -q "Microsoft Basic Data"  ; then
+  if diskutil list ${ROOTDISK} | grep -q "Linux Filesystem"  ; then
     echo "Skipping disk resize and ext4 volume creation since already done."
     echo "Formating Disk."
     diskutil eraseVolume UFSD_EXTFS4 "1" ${ROOTDISK}s4
@@ -209,7 +210,8 @@ else
 fi
 
 # Get our ext4 volume. It should always be at disk0s4. But just in case.
-EXT4VOL=$(diskutil list ${ROOTDISK} | grep "Microsoft Basic Data" | awk '{print $8}')
+# EXT4VOL=$(diskutil list ${ROOTDISK} | grep "Microsoft Basic Data" | awk '{print $8}')
+EXT4VOL=$(diskutil list ${ROOTDISK} | grep "Linux Filesystem | awk '{print $8}')
 
 # Sanity Check
 if echo $EXT4VOL | grep -q "${ROOTDISK}s"  ; then
