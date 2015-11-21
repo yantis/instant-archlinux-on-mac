@@ -202,5 +202,6 @@ $ diskutil list
 * http://www.nvmexpress.org/resources/linux-driver-information/
 * http://www.anandtech.com/show/9136/the-2015-macbook-review/8
 * http://ubuntuforums.org/showthread.php?t=2283423
+* https://bbs.archlinux.org/viewtopic.php?id=198051
 
 [Github Pages](http://yantis.github.io/instant-archlinux-on-mac/)
