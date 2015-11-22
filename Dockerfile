@@ -74,7 +74,8 @@ RUN pacman --noconfirm -Sy binutils gcc make autoconf fakeroot && \
     mkdir -p /var/cache/pacman/custom && \
 
     # build and cache nvidia-346xx-dkms package
-    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-346xx-dkms/nvidia-346xx-dkms.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-346xx-dkms/nvidia-346xx-dkms.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/nvidia-346xx-dkms.tar.gz && \
     tar -xvf /tmp/nvidia-346xx-dkms.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/nvidia-346xx-dkms && \
     runuser -l docker -c "(cd /tmp/nvidia-346xx-dkms && makepkg -scd --noconfirm)" && \
@@ -82,7 +83,8 @@ RUN pacman --noconfirm -Sy binutils gcc make autoconf fakeroot && \
     rm -r /tmp/* && \
 
     # build and cache nvidia-346xx-utils package
-    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-346xx-utils/nvidia-346xx-utils.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-346xx-utils/nvidia-346xx-utils.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/nvidia-346xx-utils.tar.gz && \
     tar -xvf /tmp/nvidia-346xx-utils.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/nvidia-346xx-utils && \
     runuser -l docker -c "(cd /tmp/nvidia-346xx-utils && makepkg -scd --noconfirm)" && \
@@ -90,7 +92,8 @@ RUN pacman --noconfirm -Sy binutils gcc make autoconf fakeroot && \
     rm -r /tmp/* && \
 
     # build and cache nvidia-hook package
-    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-hook/nvidia-hook.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-hook/nvidia-hook.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/nvidia-hook.tar.gz && \
     tar -xvf /tmp/nvidia-hook.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/nvidia-hook && \
     runuser -l docker -c "(cd /tmp/nvidia-hook && makepkg -scd --noconfirm)" && \
@@ -117,18 +120,19 @@ RUN pacman --noconfirm -Sy binutils gcc make autoconf fakeroot && \
 RUN pacman --noconfirm --needed -Sy base-devel && \
 
     # Build & cache xf86-input-mtrack-git package
-    wget -P /tmp https://aur.archlinux.org/packages/xf/xf86-input-mtrack-git/xf86-input-mtrack-git.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/xf/xf86-input-mtrack-git/xf86-input-mtrack-git.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/xf86-input-mtrack-git.tar.gz && \
     tar -xvf /tmp/xf86-input-mtrack-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/xf86-input-mtrack-git && \
     runuser -l docker -c "(cd /tmp/xf86-input-mtrack-git && makepkg -sc --noconfirm)" && \
     mv /tmp/xf86-input-mtrack-git/*.xz /var/cache/pacman/custom/ && \
 
     # Build & cache nvidia-bl-dkms package
-    wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-bl-dkms/nvidia-bl-dkms.tar.gz && \
-    tar -xvf /tmp/nvidia-bl-dkms.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/nvidia-bl-dkms && \
-    runuser -l docker -c "(cd /tmp/nvidia-bl-dkms && makepkg -sc --noconfirm)" && \
-    mv /tmp/nvidia-bl-dkms/*.xz /var/cache/pacman/custom/ && \
+    # wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-bl-dkms/nvidia-bl-dkms.tar.gz && \
+    # tar -xvf /tmp/nvidia-bl-dkms.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/nvidia-bl-dkms && \
+    # runuser -l docker -c "(cd /tmp/nvidia-bl-dkms && makepkg -sc --noconfirm)" && \
+    # mv /tmp/nvidia-bl-dkms/*.xz /var/cache/pacman/custom/ && \
 
     # extract the firmware for the b43 (even if the user doesn't need it. It doesn't hurt)
     # https://wiki.archlinux.org/index.php/Broadcom_wireless
@@ -144,14 +148,16 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     mkdir -p /var/cache/pacman/general && \
 
     # Build & cache thermald package
-    wget -P /tmp https://aur.archlinux.org/packages/th/thermald/thermald.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/th/thermald/thermald.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/thermald.tar.gz && \
     tar -xvf /tmp/thermald.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/thermald && \
     runuser -l docker -c "(cd /tmp/thermald && makepkg -sc --noconfirm)" && \
     mv /tmp/thermald/*.xz /var/cache/pacman/general/ && \
 
     # build and cache mbpfan-git package
-    wget -P /tmp https://aur.archlinux.org/packages/mb/mbpfan-git/mbpfan-git.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/mb/mbpfan-git/mbpfan-git.tr.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/mbpfan-git.tar.gz && \
     tar -xvf /tmp/mbpfan-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/mbpfan-git && \
     runuser -l docker -c "(cd /tmp/mbpfan-git && makepkg -sc --noconfirm)" && \
@@ -164,7 +170,8 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
             xf86-video-intel && \
 
     # Download and cache Liberation TTF Mono Powerline Fonts
-    wget -P /tmp https://aur.archlinux.org/packages/tt/ttf-liberation-mono-powerline-git/ttf-liberation-mono-powerline-git.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/tt/ttf-liberation-mono-powerline-git/ttf-liberation-mono-powerline-git.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/ttf-literation-mono-powerline-git.tar.gz && \
     tar -xvf /tmp/ttf-liberation-mono-powerline-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/ttf-liberation-mono-powerline-git && \
     runuser -l docker -c "(cd /tmp/ttf-liberation-mono-powerline-git && makepkg -sc --noconfirm)" && \
@@ -172,7 +179,8 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     rm -r /tmp/* && \
 
     # Download and cache oh-my-zsh
-    wget -P /tmp https://aur.archlinux.org/packages/oh/oh-my-zsh-git/oh-my-zsh-git.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/oh/oh-my-zsh-git/oh-my-zsh-git.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/oh-my-zsh-git.tar.gz && \
     tar -xvf /tmp/oh-my-zsh-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/oh-my-zsh-git && \
     runuser -l docker -c "(cd /tmp/oh-my-zsh-git && makepkg -sc --noconfirm)" && \
@@ -180,7 +188,8 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     rm -r /tmp/* && \
 
     # Download and cache bullet-train-oh-my-zsh-theme-git
-    wget -P /tmp https://aur.archlinux.org/packages/bu/bullet-train-oh-my-zsh-theme-git/bullet-train-oh-my-zsh-theme-git.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/bu/bullet-train-oh-my-zsh-theme-git/bullet-train-oh-my-zsh-theme-git.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/bullet-train-oh-my-zsh-theme-git.tar.gz && \
     tar -xvf /tmp/bullet-train-oh-my-zsh-theme-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/bullet-train-oh-my-zsh-theme-git && \
     runuser -l docker -c "(cd /tmp/bullet-train-oh-my-zsh-theme-git && makepkg -sc --noconfirm)" && \
@@ -188,7 +197,8 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     rm -r /tmp/* && \
 
     # Download and cache fasd
-    wget -P /tmp https://aur.archlinux.org/packages/fa/fasd-git/fasd-git.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/fa/fasd-git/fasd-git.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/fasd-git.tar.gz && \
     tar -xvf /tmp/fasd-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/fasd-git && \
     runuser -l docker -c "(cd /tmp/fasd-git && makepkg -sc --noconfirm)" && \
@@ -196,7 +206,8 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     rm -r /tmp/* && \
 
     # Download and cache zsh-dwim-git
-    wget -P /tmp https://aur.archlinux.org/packages/zs/zsh-dwim-git/zsh-dwim-git.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/zs/zsh-dwim-git/zsh-dwim-git.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/zsh-dwim-git.tar.gz && \
     tar -xvf /tmp/zsh-dwim-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/zsh-dwim-git && \
     runuser -l docker -c "(cd /tmp/zsh-dwim-git && makepkg -sc --noconfirm)" && \
@@ -204,7 +215,8 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     rm -r /tmp/* && \
 
     # Download and cache zaw
-    wget -P /tmp https://aur.archlinux.org/packages/za/zaw-git/zaw-git.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/za/zaw-git/zaw-git.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/zaw-git.tar.gz && \
     tar -xvf /tmp/zaw-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/zaw-git && \
     runuser -l docker -c "(cd /tmp/zaw-git && makepkg -sc --noconfirm)" && \
@@ -212,7 +224,8 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     rm -r /tmp/* && \
 
     # Download and cache sddm-archlinux-theme-git
-    wget -P /tmp https://aur.archlinux.org/packages/sd/sddm-archlinux-theme-git/sddm-archlinux-theme-git.tar.gz && \
+    # wget -P /tmp https://aur.archlinux.org/packages/sd/sddm-archlinux-theme-git/sddm-archlinux-theme-git.tar.gz && \
+    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/sddm-archlinux-theme-git.tar.gz && \
     tar -xvf /tmp/sddm-archlinux-theme-git.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/sddm-archlinux-theme-git && \
     runuser -l docker -c "(cd /tmp/sddm-archlinux-theme-git && makepkg -sdc --noconfirm)" && \
