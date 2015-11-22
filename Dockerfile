@@ -405,7 +405,7 @@ RUN bash -c "echo \"[infinality-bundle-fonts]\" >> /etc/pacman.conf" && \
             ttf-lohit-punjabi-ib \
             ttf-merriweather-ib \
             ttf-merriweather-sans-ib \
-            ttf-noto-serif-multilang-ib \
+            # ttf-noto-serif-multilang-ib \
             ttf-opensans-ib \
             ttf-signika-family-ib \
             ttf-ubuntu-font-family-ib && \
