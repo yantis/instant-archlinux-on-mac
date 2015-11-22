@@ -127,8 +127,13 @@ if ! hash vboxmanage 2> /dev/null; then
   echo "Installing VirtualBox"
   # curl -OL http://download.virtualbox.org/virtualbox/4.3.26/VirtualBox-4.3.26-98988-OSX.dmg
   # hdiutil mount VirtualBox-4.3.26-98988-OSX.dmg
-  curl -OL http://download.virtualbox.org/virtualbox/5.0.0/VirtualBox-5.0.0-101573-OSX.dmg
-  hdiutil mount VirtualBox-5.0.0-101573-OSX.dmg
+
+  # curl -OL http://download.virtualbox.org/virtualbox/5.0.0/VirtualBox-5.0.0-101573-OSX.dmg
+  # hdiutil mount VirtualBox-5.0.0-101573-OSX.dmg
+
+  curl -OL http://download.virtualbox.org/virtualbox/5.0.10/VirtualBox-5.0.10-104061-OSX.dmg  
+  hdiutil mount VirtualBox-5.0.10-104061-OSX.dmg  
+
   sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
   sleep 2
   hdiutil unmount /Volumes/VirtualBox/
@@ -137,17 +142,17 @@ if ! hash vboxmanage 2> /dev/null; then
 fi
 
 ###############################################################################
-# Install boot2docker
+# Install docker-machine
 ###############################################################################
-if ! hash boot2docker 2> /dev/null; then
-  brew install boot2docker
+if ! hash docker-machine 2> /dev/null; then
+  brew install docker-machine 
 fi
 
 ###############################################################################
-# Initialize Boot2Docker
+echo "Initialize docker-machine"
 ###############################################################################
-if ! boot2docker status 2> /dev/null; then
-  boot2docker init
+if ! docker-machine status docker-vm 2> /dev/null; then
+  docker-machine create --driver virtualbox docker-vm
 fi
 
 ###############################################################################
@@ -172,7 +177,7 @@ if ! hash fsck_ufsd_ExtFS 2> /dev/null; then
 fi
 
 ###############################################################################
-# Resize Disk
+echo "Resize Disk"
 ###############################################################################
 # Did the user select USB, Usb, usb instead of a disk size?
 INSTALL_TYPE=$(echo $1 | tr '[:upper:]' '[:lower:]')
@@ -197,21 +202,25 @@ if [ $INSTALL_TYPE  == "usb" ]; then
   fi
 
 else
-  # Resize MacOs drive to X gb and create ext4 volume
+  echo "Resize MacOs drive to X gb and create ext4 volume"
   # TODO: This could be improved to detect disks like we do with the USB above.
   # if diskutil list ${ROOTDISK} | grep -q "Microsoft Basic Data"  ; then
   if diskutil list ${ROOTDISK} | grep -q "Linux Filesystem"  ; then
     echo "Skipping disk resize and ext4 volume creation since already done."
     echo "Formating Disk."
     diskutil eraseVolume UFSD_EXTFS4 "1" ${ROOTDISK}s4
+    echo "Disk formated"
   else
     sudo diskutil resizeVolume ${ROOTDISK}s2 ${1}g 1 UFSD_EXTFS4 "1" 0g
   fi
 fi
 
-# Get our ext4 volume. It should always be at disk0s4. But just in case.
+
+echo "Get our ext4 volume. It should always be at disk0s4. But just in case."
 # EXT4VOL=$(diskutil list ${ROOTDISK} | grep "Microsoft Basic Data" | awk '{print $8}')
-EXT4VOL=$(diskutil list ${ROOTDISK} | grep "Linux Filesystem | awk '{print $8}')
+EXT4VOL=$(diskutil list ${ROOTDISK} | grep "Linux Filesystem" | awk '{print $7}')
+
+echo $EXT4VOL
 
 # Sanity Check
 if echo $EXT4VOL | grep -q "${ROOTDISK}s"  ; then
@@ -223,12 +232,10 @@ else
 fi
 
 ###############################################################################
-# Setting up Virtual Disk to Physical Disk mapping
+echo "Setting up Virtual Disk to Physical Disk mapping"
 ###############################################################################
 # If boo2docker is already running then something went wrong and the user restarted the script
-if ! [ "$(boot2docker status)" = "running" ] ; then
-
-  echo "Setting up Virtual Disk to Physical Disk mapping"
+if ! [ "$(docker-machine status docker-vm)" = "running" ] ; then
 
   # Create some temp file names for our virtual disks.
   MAINDISK=`mktemp /tmp/main.vmdk.XXXXXX` || exit 1
@@ -240,20 +247,24 @@ if ! [ "$(boot2docker status)" = "running" ] ; then
     unmount $EXT4VOL
   fi
 
+  echo "Creating vmdk"
   sudo vboxmanage internalcommands createrawvmdk -filename $MAINDISK -rawdisk /dev/$EXT4VOL
   sudo chmod 666 $MAINDISK
   sudo chmod 666 /dev/$EXT4VOL
-  vboxmanage storageattach boot2docker-vm --storagectl "SATA" --port 2 --device 0 --type hdd --medium $MAINDISK
-  boot2docker up
+  echo "storageattach"
+  vboxmanage storageattach docker-vm --storagectl "SATA" --port 2 --device 0 --type hdd --medium $MAINDISK
+  echo "starting docker-vm"
+  docker-machine start docker-vm
 fi
 
 ###############################################################################
-# Get Boot2Docker exports
-$(boot2docker shellinit)
+echo "Get Boot2Docker exports"
+docker-machine regenerate-certs docker-vm --force
+eval "$(docker-machine env docker-vm)"
+# $(docker-machine env docker-vm)
 ###############################################################################
 
 ###############################################################################
-# Generate system profile
 # Generate system profile so we have information about this machine inside the VM
 # If it exists as a directory delete it. (why does this keep getting created?)
 ###############################################################################
@@ -276,11 +287,12 @@ if [ ! -f ~/airootfs.sfs ];
 then
   echo "Downloading rootfs image"
   cd ~
-  curl -OL http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs
+  # curl -OL http://mirror.rackspace.com/archlinux/iso/2015.04.01/arch/x86_64/airootfs.sfs
+  curl -OL http://mirror.rackspace.com/archlinux/iso/2015.11.01/arch/x86_64/airootfs.sfs
 fi
 
 ###############################################################################
-# Pull latest docker
+# Pull latest image
 # Not really needed for one time use but while working on the script it is nice.
 ###############################################################################
 docker pull yantis/instant-archlinux-on-mac
@@ -392,14 +404,14 @@ SUCCESSFUL_INSTALL=$?
 # Shut down the boo2docker virtual machine
 ###############################################################################
 timeout=$(($(date +%s) + 60))
-until boot2docker down 2>/dev/null || [[ $(date +%s) -gt $timeout ]]; do
+until docker-image stop 2>/dev/null || [[ $(date +%s) -gt $timeout ]]; do
   :
 done
 
 ###############################################################################
 # Remove our physical harddrive from the boot2docker virtualmachine
 ###############################################################################
-vboxmanage storageattach boot2docker-vm --storagectl "SATA" --port 2 --device 0 --type hdd --medium none
+vboxmanage storageattach docker-vm --storagectl "SATA" --port 2 --device 0 --type hdd --medium none
 
 ###############################################################################
 # Remove our docker image
