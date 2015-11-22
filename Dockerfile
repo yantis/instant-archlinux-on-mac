@@ -172,10 +172,10 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     # Download and cache Liberation TTF Mono Powerline Fonts
     # wget -P /tmp https://aur.archlinux.org/packages/tt/ttf-liberation-mono-powerline-git/ttf-liberation-mono-powerline-git.tar.gz && \
     wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/ttf-literation-mono-powerline-git.tar.gz && \
-    tar -xvf /tmp/ttf-liberation-mono-powerline-git.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/ttf-liberation-mono-powerline-git && \
-    runuser -l docker -c "(cd /tmp/ttf-liberation-mono-powerline-git && makepkg -sc --noconfirm)" && \
-    mv /tmp/ttf-liberation-mono-powerline-git/*.xz /var/cache/pacman/general/ && \
+    tar -xvf /tmp/ttf-literation-mono-powerline-git.tar.gz -C /tmp && \
+    chown -R docker:docker /tmp/ttf-literation-mono-powerline-git && \
+    runuser -l docker -c "(cd /tmp/ttf-literation-mono-powerline-git && makepkg -sc --noconfirm)" && \
+    mv /tmp/ttf-literation-mono-powerline-git/*.xz /var/cache/pacman/general/ && \
     rm -r /tmp/* && \
 
     # Download and cache oh-my-zsh
