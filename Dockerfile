@@ -236,10 +236,10 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     pacman --noconfirm -Rs dbus-glib dri2proto dri3proto fontsproto glproto \
     libxml2 libxss mesa pixman presentproto randrproto renderproto flex \
     resourceproto videoproto xf86driproto xineramaproto xorg-util-macros \
-    linux dkms gcc linux-headers binutils guile make libxfont xorg-bdftopcf \
-    xorg-font-utils fontconfig xorg-fonts-encodings libtool m4 git inputproto \
-    dbus systemd package-query automake libx32-flex bison autoconf \
-    automake1.11 freetype2 harfbuzz graphite libpng xorg-server-devel \
+    gcc binutils guile make libxfont xorg-bdftopcf \
+    xorg-font-utils fontconfig libtool m4 git inputproto \
+    dbus systemd package-query bison autoconf \
+    freetype2 harfbuzz graphite libpng xorg-server-devel \
     libunistring gettext && \
 
     # Clean up to make this as small as possible
