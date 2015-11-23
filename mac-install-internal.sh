@@ -36,6 +36,7 @@ wget -O /root/initial_configuration.sh \
 ###############################################################################
 mkdir /arch
 unsquashfs -d /squashfs-root /root/airootfs.sfs
+ls /squashfs-root
 mount -o loop /squashfs-root/airootfs.img /arch
 mount -t proc none /arch/proc
 mount -t sysfs none /arch/sys
