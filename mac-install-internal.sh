@@ -37,14 +37,31 @@ wget -O /root/initial_configuration.sh \
 mkdir /arch
 unsquashfs -d /squashfs-root /root/airootfs.sfs
 ls /squashfs-root
-mount -o loop /squashfs-root/airootfs.img /arch
-mount -t proc none /arch/proc
-mount -t sysfs none /arch/sys
-mount -o bind /dev /arch/dev
+
+# ls /root
+# mount -o loop /squashfs-root/airootfs.img /arch
+# mount -o loop -t squash/squashfs-root /arch
+# mv /squashfs-root /arch
+mount --bind /squashfs-root /arch
+mount --bind /dev /arch/dev
+ls /arch/boot
+chroot /arch ls /boot
+chroot /arch mount -t proc none /proc
+chroot /arch mount -t sysfs none /sys
+chroot /arch mount -t devpts none /dev/pts
+
+# bind /proc /arch/proc
+# mount -o bind /sys /arch/sys
+# mount -o bind /dev /arch/dev
+
+# mount -t proc none /arch/proc
+# mount -t sysfs none /arch/sys
+# mount -o bind /dev /arch/dev
 
 # Important for pacman (for signature check)
 # (Doesn't seem to matter at all they are still messed up.)
-mount -o bind /dev/pts /arch/dev/pts
+# mount -o bind /dev/pts /arch/dev/pts
+
 
 ###############################################################################
 # Use Google's nameservers though I believe we may be able to simply copy the
@@ -54,6 +71,8 @@ echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 echo "nameserver 8.8.8.4" >> /etc/resolv.conf
 cp /etc/resolv.conf /arch/etc/resolv.conf
 
+# chroot /arch export HOME=/dev/root
+# chroot /arch export LC_ALL=C
 ###############################################################################
 # Generate entropy
 ###############################################################################
@@ -102,7 +121,7 @@ echo "[infinality-bundle-multilib]" >> /arch/etc/pacman.conf
 echo "Server = http://bohoomil.com/repo/multilib/x86_64" >> /arch/etc/pacman.conf
 echo "SigLevel = Never" >> /arch/etc/pacman.conf
 
-chroot /arch pacman-key -r 962DDE58 --keyserver hkp://subkeys.pgp.net
+chroot /arch pacman-key -r 962DDE58 # --keyserver hkp://subkeys.pgp.net
 chroot /arch pacman-key --lsign 962DDE58
 
 # For whatever reason when the system comes back up it won't remember these keys.
@@ -133,7 +152,7 @@ mkdir -p /arch/var/cache/pacman/general/
 
 # Remove any development packages.
 rm /var/cache/pacman/general/*devel*
-rm /var/cache/pacman/general/*-dev-*
+# rm /var/cache/pacman/general/*-dev-*
 
 cp /var/cache/pacman/general/* /arch/var/cache/pacman/general/
 
@@ -155,7 +174,9 @@ echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf
 ###############################################################################
 # Install general packages
 ###############################################################################
+chroot /arch pacman --noconfirm -R vim-minimal
 chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/*.pkg.tar.xz
+
 
 ###############################################################################
 # update after pushing packages from docker container to get the system 
@@ -247,7 +268,9 @@ fi
 if grep -i -A1 "Intel" /systeminfo | grep -qi "GPU" ; then
   echo "Machine has an Intel graphics card."
   sed -i "s/MODULES=\"/MODULES=\"i915 /" /arch/etc/mkinitcpio.conf
-  chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/xf86-video-intel*.pkg.tar.xz
+  # chroot /arch pacman --noconfirm -R xorg-server
+  chroot /arch pacman --noconfirm -S xf86-video-intel
+  # chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/xf86-video-intel*.pkg.tar.xz
 
   # http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/
   echo "options i915 enable_rc6=1 enable_fbc=1 lvds_downclock=1" >> /arch/etc/modprobe.d/i915.conf
@@ -439,14 +462,16 @@ chroot /arch systemctl enable cpupower
 # Force reinstall microkernel updates so they appear in boot.
 ###############################################################################
 chroot /arch pacman -S --noconfirm intel-ucode
-
+echo "done ucode"
 ###############################################################################
 # Setup rEFInd to boot up using Intel Micokernel updates
 ###############################################################################
 # Hit F2 for these options
-# UUID=$(lsblk -no UUID /dev/sdc) # Doesn't work in a docker container
+ls /dev
+#UUID=$(lsblk -no UUID /dev/sdb1) # Doesn't work in a docker container
+echo "start refind setup"
 UUID=$(blkid /dev/sdb -o export | grep UUID | head -1)
-
+echo $UUID
 #if [ $MODEL == "MacBook8,1" ]; then
 if [ $MODEL == "EXPERIMENTAL" ]; then
   echo "\"1\" \"root=$UUID rootfstype=ext4 rw i915.i915_enable_rc6=1 i915.i915_enable_fbc=1 i915.lvds_downclock=1 usbcore.autosuspend=1 h initrd=/boot/initramfs-linux.img\" " >> /arch/boot/refind_linux.conf
@@ -458,7 +483,7 @@ else
   echo "\"Fallback with microkernel updates\" \"root=$UUID rootfstype=ext4 rw loglevel=6 initrd=/boot/intel-ucode.img initrd=/boot/initramfs-linux-fallback.img\" " >> /arch/boot/refind_linux.conf
   echo "\"Fallback without microkernel updates\" \"root=$UUID rootfstype=ext4 rw loglevel=6 initrd=/boot/initramfs-linux-fallback\" " >> /arch/boot/refind_linux.conf
 fi
-
+echo "end refind setup"
 ###############################################################################
 # Setup fstab
 # TODO look into not using discard. http://blog.neutrino.es/2013/howto-properly-activate-trim-for-your-ssd-on-linux-fstrim-lvm-and-dmcrypt/
@@ -466,7 +491,7 @@ fi
 echo "$UUID / ext4 discard,rw,relatime,data=ordered 0 1" > /arch/etc/fstab
 echo "efivarfs  /sys/firmware/efi/efivars efivarfs  rw,nosuid,nodev,noexec,relatime 0 0" >> /arch/etc/fstab
 echo "LABEL=EFI /boot/EFI vfat  rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro  0 2" >> /arch/etc/fstab
-
+echo "done fstab"
 ###############################################################################
 # Share our Mac drive with Arch Linux (though read only unless we disable journaling in Mac Os)
 # https://support.apple.com/en-us/HT204435
@@ -474,7 +499,7 @@ echo "LABEL=EFI /boot/EFI vfat  rw,relatime,fmask=0022,dmask=0022,codepage=437,i
 ###############################################################################
 mkdir -p /media/mac
 echo "/dev/sda2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/fstab
-
+echo "done sharing"
 ###############################################################################
 # Enable and setup SDDM Display Manger
 ###############################################################################
@@ -631,7 +656,10 @@ chroot /arch updatedb
 ###############################################################################
 # Create initial ramdisk enviroment. 
 ###############################################################################
-chroot /arch mkinitcpio -p linux
+# avoid fsck.aufs error
+chroot /arch ln -s /bin/true /sbin/fsck.aufs
+chroot /arch pacman --noconfirm -S linux
+# chroot /arch mkinitcpio -p linux
 
 # New Macbook Retina April 2015 Release
 # if [ $MODEL == "MacBook8,1" ]; then
@@ -644,23 +672,23 @@ chroot /arch mkinitcpio -p linux
 # Sometimes the mirrors page is down so this would break the script so
 # lets give it up to five minutes before timing out.
 ###############################################################################
-timeout=$(($(date +%s) + 360))
-until \
-  chroot /arch reflector \
-  --verbose \
-  -l 10 \
-  --protocol https \
-  --sort rate \
-  --save /etc/pacman.d/mirrorlist \
-  2>/dev/null || [[ $(date +%s) -gt $timeout ]]; do
-  :
-done
+# timeout=$(($(date +%s) + 360))
+# until \
+#   chroot /arch reflector \
+#   --verbose \
+#   -l 10 \
+#   --protocol https \
+#   --sort rate \
+#   --save /etc/pacman.d/mirrorlist \
+#   2>/dev/null || [[ $(date +%s) -gt $timeout ]]; do
+#   :
+# done
 
 ###############################################################################
 # Delete the arch user
 ###############################################################################
-echo "Deleting arch user."
-chroot /arch userdel -rf arch
+# echo "Deleting arch user."
+# chroot /arch userdel -rf arch
 
 ###############################################################################
 # Move any general or custom packages into the pacman cache

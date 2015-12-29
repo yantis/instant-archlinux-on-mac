@@ -235,7 +235,7 @@ fi
 echo "Setting up Virtual Disk to Physical Disk mapping"
 ###############################################################################
 # If boo2docker is already running then something went wrong and the user restarted the script
-if ! [ "$(docker-machine status docker-vm)" = "running" ] ; then
+if ! [ "$(docker-machine status docker-vm)" = "Running" ] ; then
 
   # Create some temp file names for our virtual disks.
   MAINDISK=`mktemp /tmp/main.vmdk.XXXXXX` || exit 1
