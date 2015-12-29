@@ -169,7 +169,7 @@ chroot /arch pacman -Syy --noconfirm
 # This is mostly to keep the script from breaking on pacman timeout errors.
 ###############################################################################
 chroot /arch bash -c "(cd /var/cache/pacman/general && pacman --noconfirm -U sqlite* aria2* c-ares*)"
-echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf \$NF}' && printf '...' && /usr/bin/aria2c -m99 -q --allow-overwrite=true -c --file-allocation=falloc --log-level=error --max-connection-per-server=2 --max-file-not-found=99 --min-split-size=5M --no-conf --remote-time=true --summary-interval=0 -t60 -d / -o %o %u && echo ' Complete!'" >> /etc/pacman.conf
+echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf \$NF}' && printf '...' && /usr/bin/aria2c -m0 -q --allow-overwrite=true -c --file-allocation=falloc --log-level=error --max-connection-per-server=2 --max-file-not-found=99 --min-split-size=5M --no-conf --remote-time=true --summary-interval=0 -t600 -d / -o %o %u && echo ' Complete!'" >> /etc/pacman.conf
 
 ###############################################################################
 # Install general packages
