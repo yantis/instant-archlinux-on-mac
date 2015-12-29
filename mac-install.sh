@@ -403,7 +403,7 @@ SUCCESSFUL_INSTALL=$?
 ###############################################################################
 # Shut down the boo2docker virtual machine
 ###############################################################################
-timeout=$(($(date +%s) + 60))
+timeout=$(($(date +%s) + 600))
 until docker-image stop 2>/dev/null || [[ $(date +%s) -gt $timeout ]]; do
   :
 done
@@ -411,6 +411,7 @@ done
 ###############################################################################
 # Remove our physical harddrive from the boot2docker virtualmachine
 ###############################################################################
+echo "Remove our physical harddrive from the boot2docker virtualmachine"
 vboxmanage storageattach docker-vm --storagectl "SATA" --port 2 --device 0 --type hdd --medium none
 
 ###############################################################################
