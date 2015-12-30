@@ -403,8 +403,9 @@ SUCCESSFUL_INSTALL=$?
 ###############################################################################
 # Shut down the boo2docker virtual machine
 ###############################################################################
-timeout=$(($(date +%s) + 600))
-until docker-image stop 2>/dev/null || [[ $(date +%s) -gt $timeout ]]; do
+timeout=$(($(date +%s) + 60))
+# until docker-image stop 2>/dev/null || [[ $(date +%s) -gt $timeout ]]; do
+until docker-machine stop docker-vm 2>/dev/null || [[ $(date +%s) -gt $timeout ]]; do
   :
 done
 
