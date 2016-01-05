@@ -47,7 +47,7 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net
 * Yaourt for AUR
 
 ## Tested Working
-* Mountain Lion, Lion, Yosemite
+* Mountain Lion, Lion, Yosemite and El Capitan 
 * [MacBookPro10,1] - MacBook Pro (Retina, Mid 2012)
 * [MacBookPro10,2] - MacBook Pro (Retina, 13-inch, Late 2012)
 * [iMac15,1] - iMac Retina 2014
@@ -56,6 +56,7 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net
 * [MacBook8,1] - MacBook 12" April 2015 (Setup works but so far no one that I know has any version of Linux on one of these. If you do please let me know so I can fix it)
 
 # Setup
+* If the OS is El Capitan then you need to disable System Integrity Protection by rebooting and at the chime hiting command+R and opening a terminal and typing: csrutil disable; reboot
 * Make sure FileVault encryption is [turned off](https://support.apple.com/kb/PH18674?locale=en_US). If it isn't you need to disable it and reboot.
 * Use ⌘ + space to open spotlight. Type in terminal and hit return.
 * Optionally, update your software either through the terminal or App store  Though if you do you may have to reboot though probably not.
@@ -203,5 +204,8 @@ $ diskutil list
 * http://www.anandtech.com/show/9136/the-2015-macbook-review/8
 * http://ubuntuforums.org/showthread.php?t=2283423
 * https://bbs.archlinux.org/viewtopic.php?id=198051
+
+#### El Capitan
+* http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/
 
 [Github Pages](http://yantis.github.io/instant-archlinux-on-mac/)
