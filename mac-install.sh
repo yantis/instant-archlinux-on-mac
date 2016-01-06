@@ -328,7 +328,7 @@ else
   # Install rEFInd
   # Just using my mirror since the sourceforge version is proving to be a pain in the ass
   # and you need to specify the exact mirror
-  # curl - O http://downloads.sourceforge.net/project/refind/0.8.7/refind-bin-0.8.7.zip
+  # curl - O http://downloads.sourceforge.net/project/refind-bin-0.8.7.zip
   # sha256sum a5caefac0ba1691a5c958a4d8fdb9d3e14e223acd3b1605a5b0e58860d9d76b4  refind-bin-0.8.7.zip
   # curl -O http://yantis-scripts.s3.amazonaws.com/refind-bin-0.8.7.zip
   curl -OL http://downloads.sourceforge.net/project/refind/0.10.1/refind-bin-0.10.1.zip
@@ -346,7 +346,7 @@ else
   else
     # (cd refind-bin-0.8.7 && sudo sh install.sh --alldrivers)
     # (cd refind-bin-0.10.1 && sudo sh refind-install --alldrivers)
-    sudo sh refind-bin-0.10.1/refind-install
+    sh refind-bin-0.10.1/refind-install --alldrivers --yes
   fi
 
   rm -r refind-bin-0.10.1
