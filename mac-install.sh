@@ -345,7 +345,8 @@ else
 
   else
     # (cd refind-bin-0.8.7 && sudo sh install.sh --alldrivers)
-    (cd refind-bin-0.10.1 && sudo sh refind-install --alldrivers)
+    # (cd refind-bin-0.10.1 && sudo sh refind-install --alldrivers)
+    (cd refind-bin-0.10.1 && sudo sh refind-install)
   fi
 
   rm -r refind-bin-0.10.1
