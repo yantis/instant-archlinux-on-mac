@@ -21,8 +21,8 @@ MAINTAINER Jonathan Yantis <yantis@yantis.net>
 ###############################################################################
 # Install permanent additions to the container.
 ###############################################################################
-    # Force a refresh of all the packages even if already up to date.
-RUN pacman --noconfirm -Syyu && \
+    # Don't update to avoid breaking things
+RUN pacman --noconfirm -Syy && \
 
     # create run remote script and make it exectutable
     bash -c "echo 'curl -L \$1 | sh' > /bin/run-remote-script" && \
@@ -74,7 +74,6 @@ RUN pacman --noconfirm -Sy binutils gcc make autoconf fakeroot && \
     mkdir -p /var/cache/pacman/custom && \
 
     # build and cache nvidia-346xx-dkms package
-    # wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-346xx-dkms/nvidia-346xx-dkms.tar.gz && \
     wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/nvidia-346xx-dkms.tar.gz && \
     tar -xvf /tmp/nvidia-346xx-dkms.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/nvidia-346xx-dkms && \
@@ -83,7 +82,6 @@ RUN pacman --noconfirm -Sy binutils gcc make autoconf fakeroot && \
     rm -r /tmp/* && \
 
     # build and cache nvidia-346xx-utils package
-    # wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-346xx-utils/nvidia-346xx-utils.tar.gz && \
     wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/nvidia-346xx-utils.tar.gz && \
     tar -xvf /tmp/nvidia-346xx-utils.tar.gz -C /tmp && \
     chown -R docker:docker /tmp/nvidia-346xx-utils && \
@@ -92,13 +90,13 @@ RUN pacman --noconfirm -Sy binutils gcc make autoconf fakeroot && \
     rm -r /tmp/* && \
 
     # build and cache nvidia-hook package
-    # wget -P /tmp https://aur.archlinux.org/packages/nv/nvidia-hook/nvidia-hook.tar.gz && \
-    wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/nvidia-hook.tar.gz && \
-    tar -xvf /tmp/nvidia-hook.tar.gz -C /tmp && \
-    chown -R docker:docker /tmp/nvidia-hook && \
-    runuser -l docker -c "(cd /tmp/nvidia-hook && makepkg -scd --noconfirm)" && \
-    mv /tmp/nvidia-hook/*.xz /var/cache/pacman/custom/ && \
-    rm -r /tmp/* && \
+    # Doesn't exit anymore. Lets hope it doesn't break things
+    # wget -P /tmp https://aur.archlinux.org/cgit/aur.git/snapshot/nvidia-hook.tar.gz && \
+    # tar -xvf /tmp/nvidia-hook.tar.gz -C /tmp && \
+    # chown -R docker:docker /tmp/nvidia-hook && \
+    # runuser -l docker -c "(cd /tmp/nvidia-hook && makepkg -scd --noconfirm)" && \
+    # mv /tmp/nvidia-hook/*.xz /var/cache/pacman/custom/ && \
+    # rm -r /tmp/* && \
 
     # Remove anything we added that we do not need
     pacman --noconfirm -Rs  binutils gcc make autoconf fakeroot && \
