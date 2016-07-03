@@ -120,25 +120,21 @@ fi
 
 ###############################################################################
 # Install Virtualbox 
-# (need to use wget not curl because of the 302)
 # TODO: I am still getting asked for a password here.
 ###############################################################################
 if ! hash vboxmanage 2> /dev/null; then
   echo "Installing VirtualBox"
-  # curl -OL http://download.virtualbox.org/virtualbox/4.3.26/VirtualBox-4.3.26-98988-OSX.dmg
-  # hdiutil mount VirtualBox-4.3.26-98988-OSX.dmg
 
-  # curl -OL http://download.virtualbox.org/virtualbox/5.0.0/VirtualBox-5.0.0-101573-OSX.dmg
-  # hdiutil mount VirtualBox-5.0.0-101573-OSX.dmg
+  # curl -OL http://download.virtualbox.org/virtualbox/5.0.10/VirtualBox-5.0.10-104061-OSX.dmg  
+  # hdiutil mount VirtualBox-5.0.10-104061-OSX.dmg
 
-  curl -OL http://download.virtualbox.org/virtualbox/5.0.10/VirtualBox-5.0.10-104061-OSX.dmg  
-  hdiutil mount VirtualBox-5.0.10-104061-OSX.dmg  
+  curl -OL http://download.virtualbox.org/virtualbox/5.0.24/VirtualBox-5.0.24-108355-OSX.dmg
+  hdiutil mount VirtualBox-5.0.24-108355-OSX.dmg
 
   sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
   sleep 2
   hdiutil unmount /Volumes/VirtualBox/
-  # rm VirtualBox-5.0.0-101573-OSX.dmg
-  # rm VirtualBox-4.3.26-98988-OSX.dmg
+  # rm VirtualBox-5.0.24-108355-OSX.dmg
 fi
 
 ###############################################################################
