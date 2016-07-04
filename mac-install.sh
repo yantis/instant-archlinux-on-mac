@@ -321,33 +321,21 @@ else
   fi
 
   # Install rEFInd
-  # Just using my mirror since the sourceforge version is proving to be a pain in the ass
-  # and you need to specify the exact mirror
-  # curl - O http://downloads.sourceforge.net/project/refind-bin-0.8.7.zip
-  # sha256sum a5caefac0ba1691a5c958a4d8fdb9d3e14e223acd3b1605a5b0e58860d9d76b4  refind-bin-0.8.7.zip
-  # curl -O http://yantis-scripts.s3.amazonaws.com/refind-bin-0.8.7.zip
-  curl -OL http://downloads.sourceforge.net/project/refind/0.10.1/refind-bin-0.10.1.zip
-  # unzip -o refind-bin-0.8.7.zip
-  unzip -o refind-bin-0.10.1.zip
+  curl -OL http://downloads.sourceforge.net/project/refind/0.10.3/refind-bin-0.10.3.zip
+  unzip -o refind-bin-0.10.3.zip
   if [ $INSTALL_TYPE  == "usb" ]; then
     # (cd refind-bin-0.8.7 && sudo sh install.sh --alldrivers --usedefault /dev/${ROOTDISK}s1 )
     echo "Installing rEFInd to USB"
     mkdir -p  /Volumes/ESP/EFI
-    # cp -R refind-bin-0.8.7/refind /Volumes/ESP/EFI
-    cp -R refind-bin-0.10.1/refind /Volumes/ESP/EFI
-    # cp refind-bin-0.8.7/refind/refind.conf-sample /Volumes/ESP/EFI/refind/refind.conf
-    cp refind-bin-0.10.1/refind/refind.conf-sample /Volumes/ESP/EFI/refind/refind.conf
+    cp -R refind-bin-0.10.3/refind /Volumes/ESP/EFI
+    cp refind-bin-0.10.3/refind/refind.conf-sample /Volumes/ESP/EFI/refind/refind.conf
 
   else
-    # (cd refind-bin-0.8.7 && sudo sh install.sh --alldrivers)
-    # (cd refind-bin-0.10.1 && sudo sh refind-install --alldrivers)
-    sh refind-bin-0.10.1/refind-install --alldrivers --yes
+    sh refind-bin-0.10.3/refind-install --alldrivers --yes
   fi
 
-  rm -r refind-bin-0.10.1
-  # rm -r refind-bin-0.8.7
-  rm refind-bin-0.10.1.zip
-  # rm refind-bin-0.8.7.zip
+  rm -r refind-bin-0.10.3
+  rm refind-bin-0.10.3.zip
 
   # Sometimes rEFInd fails to unmount /Volumes/ESP so lets use that if its already open
   if [ ! -d  /Volumes/ESP ];
