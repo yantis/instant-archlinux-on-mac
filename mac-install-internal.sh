@@ -410,10 +410,7 @@ chroot /arch locale-gen en_US.UTF-8
 ###############################################################################
 # Seems to not exist anymore
 # chroot /arch systemctl enable dkms.service
-# Now installing it over just to be safe
-chroot /arch pacman --noconfirm --needed dkms
 
-###############################################################################
 # Create new account that isn't root. user: user password: user
 # You can and should change this later https://wiki.archlinux.org/index.php/Change_username
 # Or just delete it and create another.
