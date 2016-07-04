@@ -502,7 +502,16 @@ echo "end refind setup"
 # Setup fstab
 # TODO look into not using discard. http://blog.neutrino.es/2013/howto-properly-activate-trim-for-your-ssd-on-linux-fstrim-lvm-and-dmcrypt/
 ###############################################################################
-echo "$UUID / ext4 discard,rw,relatime,data=ordered 0 1" > /arch/etc/fstab
+
+
+if [ $MODEL == "MacBook8,1" ]; then
+  # Macbook 12" 2015 uses nvme and should not use discards
+  # https://wiki.archlinux.org/index.php/Solid_State_Drives/NVMe
+  echo "$UUID / ext4 rw,relatime,data=ordered 0 1" > /arch/etc/fstab
+else
+  echo "$UUID / ext4 discard,rw,relatime,data=ordered 0 1" > /arch/etc/fstab
+fi
+
 echo "efivarfs  /sys/firmware/efi/efivars efivarfs  rw,nosuid,nodev,noexec,relatime 0 0" >> /arch/etc/fstab
 echo "LABEL=EFI /boot/EFI vfat  rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro  0 2" >> /arch/etc/fstab
 echo "done fstab"
