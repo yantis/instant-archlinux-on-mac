@@ -207,6 +207,7 @@ $ diskutil list
 * https://bbs.archlinux.org/viewtopic.php?id=198051
 * https://bugzilla.kernel.org/show_bug.cgi?id=99891
 * https://bugzilla.kernel.org/show_bug.cgi?id=110901
+* https://forums.opensuse.org/showthread.php/507933-openSUSE-on-the-2015-Apple-12-Inch-Retina-MacBook/page5
 
 #### El Capitan
 * http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/
