@@ -506,11 +506,8 @@ echo "end refind setup"
 # Setup fstab
 # TODO look into not using discard. http://blog.neutrino.es/2013/howto-properly-activate-trim-for-your-ssd-on-linux-fstrim-lvm-and-dmcrypt/
 ###############################################################################
-
-
 if [ $MODEL == "MacBook8,1" ]; then
-  # Macbook 12" 2015 uses nvme and should not use discards
-  # https://wiki.archlinux.org/index.php/Solid_State_Drives/NVMe
+# NVMe on 8,1 does't user discard
   echo "$UUID / ext4 rw,relatime,data=ordered 0 1" > /arch/etc/fstab
 else
   echo "$UUID / ext4 discard,rw,relatime,data=ordered 0 1" > /arch/etc/fstab
@@ -523,15 +520,16 @@ echo "done fstab"
 # Share our Mac drive with Arch Linux (though read only unless we disable journaling in Mac Os)
 # https://support.apple.com/en-us/HT204435
 # https://wiki.archlinux.org/index.php/MacBook
+# Disabled - user can share later. If issue it breaks the install and difficult to tell why`
 ###############################################################################
-mkdir -p /media/mac
-if [ $MODEL == "MacBook8,1" ]; then
+# mkdir -p /media/mac
+# if [ $MODEL == "MacBook8,1" ]; then
   # Macbook 12" 2015 uses nvme
-  echo "/dev/nvme0n1p2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/fstab
-else
-  echo "/dev/sda2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/fstab
-fi
-echo "done sharing"
+#  echo "/dev/nvme0n1p2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/fstab
+#else
+#  echo "/dev/sda2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/fstab
+#fi
+#echo "done sharing"
 ###############################################################################
 # Enable and setup SDDM Display Manger
 ###############################################################################
