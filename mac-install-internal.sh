@@ -266,7 +266,7 @@ fi
 # http://superuser.com/questions/769047/unable-to-find-root-device-on-a-fresh-archlinux-install
 ###############################################################################
 OLDLINE=`grep "^HOOKS" /arch/etc/mkinitcpio.conf`
-NEWLINE=`echo ${OLDLINE} | sed -e "s/autodetect block/block autodetect/"`
+NEWLINE=`echo ${OLDLINE} | sed -e "s/autodetect modconf block/block autodetect modconf/"`
 sed -i "s/${OLDLINE}/${NEWLINE}/" /arch/etc/mkinitcpio.conf
 
 ###############################################################################
