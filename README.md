@@ -53,8 +53,7 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net
 * [iMac15,1] - iMac Retina 2014
 
 ## Tested not working but in progress
-* [MacBook8,1] - MacBook 12" April 2015 (Setup works but so far no one that I know has any version of Linux on one of these. If you do please let me know so I can fix it)
-  July 4th, 2016 Update - Still no working keyboard drivers
+* [MacBook8,1] - MacBook 12" July 4th, 2016 Update - Still no working keyboard or bluetooth
 
 # Setup
 * If the OS is El Capitan then you need to disable System Integrity Protection by rebooting and at the chime hiting command+R and opening a terminal and typing: csrutil disable; reboot
@@ -206,6 +205,7 @@ $ diskutil list
 * http://ubuntuforums.org/showthread.php?t=2283423
 * https://bbs.archlinux.org/viewtopic.php?id=198051
 * https://bugzilla.kernel.org/show_bug.cgi?id=99891
+* https://bugzilla.kernel.org/show_bug.cgi?id=110901
 
 #### El Capitan
 * http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/
