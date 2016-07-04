@@ -737,8 +737,9 @@ chroot /arch runuser -l user -c "yaourt -Syy"
 ###############################################################################
 # Restore pacman's security
 ###############################################################################
-echo "Restoring pacman's security"
-chroot /arch sed -i "s/SigLevel = Never/#SigLevel = Never/g" /etc/pacman.conf
+#echo "Restoring pacman's security"
+# chroot /arch sed -i "s/SigLevel = Never/#SigLevel = Never/g" /etc/pacman.conf
+# TODO: disables infinality fonts so this needs to be redone
 
 ###############################################################################
 # Lets make sure that any config files etc our user has full ownership of.
