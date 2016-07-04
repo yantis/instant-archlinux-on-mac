@@ -804,9 +804,9 @@ time rsync -aAX --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*
 sync
 
 ###############################################################################
-#  Helpful message for user
+# Helpful message for user
 #
-# Not sure why mkinitcpio -p linux has two be done again
+# Not sure why mkinitcpio -p linux has to be done again
 ###############################################################################
 echo " "
 echo "If for some reason you get an error device not found"
