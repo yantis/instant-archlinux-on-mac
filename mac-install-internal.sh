@@ -177,7 +177,6 @@ echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf
 chroot /arch pacman --noconfirm -R vim-minimal
 chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/*.pkg.tar.xz
 
-
 ###############################################################################
 # update after pushing packages from docker container to get the system 
 # in the most up to date state.
@@ -409,7 +408,10 @@ chroot /arch locale-gen en_US.UTF-8
 ###############################################################################
 # Enable DKMS service
 ###############################################################################
-chroot /arch systemctl enable dkms.service
+# Seems to not exist anymore
+# chroot /arch systemctl enable dkms.service
+# Now installing it over just to be safe
+chroot /arch pacman --noconfirm --needed dkms
 
 ###############################################################################
 # Create new account that isn't root. user: user password: user
