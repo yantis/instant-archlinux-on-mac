@@ -54,6 +54,7 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net
 
 ## Tested not working but in progress
 * [MacBook8,1] - MacBook 12" April 2015 (Setup works but so far no one that I know has any version of Linux on one of these. If you do please let me know so I can fix it)
+  July 4th, 2016 Update - Still no working keyboard drivers
 
 # Setup
 * If the OS is El Capitan then you need to disable System Integrity Protection by rebooting and at the chime hiting command+R and opening a terminal and typing: csrutil disable; reboot
