@@ -146,7 +146,7 @@ $ diskutil list
 * Make sure to leave at least 30GB for Mac OSX (or at least whatever the drive space is plus a few GB for updates).
 * If you want to mess with a minimal install of Archlinux. It runs perfectly fine on 10GB or less of space.
 * This hasn't been tested with bootcamp but I suspect it will not work as is.
-* If for some reason on boot you get on boot select linux and hit F2 and select "Fallback with Micokerneal updates" and run as root "mkinitcpio -p linux" to regenerate the initramfs and reboot
+* If for some reason on boot you get no disk found  select linux and hit F2 and select "Fallback with Micokerneal updates" and run as root "mkinitcpio -p linux" to regenerate the initramfs and reboot
 
 # References & Resources
 
