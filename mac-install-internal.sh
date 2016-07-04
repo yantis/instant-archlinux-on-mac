@@ -262,6 +262,14 @@ else
 fi
 
 ###############################################################################
+# Fix root device not showing up.
+# http://superuser.com/questions/769047/unable-to-find-root-device-on-a-fresh-archlinux-install
+###############################################################################
+OLDLINE=`grep "^HOOKS" /arch/etc/mkinitcpio.conf`
+NEWLINE=`echo ${OLDLINE} | sed -e "s/autodetect block/block autodetect/"`
+sed -i "s/${OLDLINE}/${NEWLINE}/" /arch/etc/mkinitcpio.conf
+
+###############################################################################
 # Setup Intel GPU
 ###############################################################################
 if grep -i -A1 "Intel" /systeminfo | grep -qi "GPU" ; then
@@ -338,7 +346,8 @@ if grep -i -A1 "NVIDIA" /systeminfo | grep -qi "GPU" ; then
   echo "Machine has an NVIDIA graphics card."
 
   # Install Nvidia drivers with automatic re-compilation of the NVIDIA module with kernel update 
-  HOOKS="base udev autodetect modconf block filesystems keyboard fsck"
+  # Doesn't nothing
+  # HOOKS="base udev block autodetect modconf filesystems keyboard fsck"
 
   # Uninstall mesa-libgl since it will conflict with nividia-libgl
   chroot /arch pacman --noconfirm -Rdd mesa-libgl
