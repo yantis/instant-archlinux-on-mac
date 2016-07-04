@@ -195,7 +195,7 @@ $ diskutil list
 #### SquashFS
 * http://askubuntu.com/questions/95392/how-to-create-a-bootable-system-with-a-squashfs-root
 
-#### Macbook Retina 12" 2015
+#### Macbook Retina 12" 2015 (Macbook 8,1)
 * https://github.com/SicVolo/hid-apple-4.1.2
 * https://bugzilla.kernel.org/show_bug.cgi?id=96771
 * https://forums.opensuse.org/showthread.php/507933-openSUSE-on-the-2015-Apple-12-Inch-Retina-MacBook/page2
@@ -204,6 +204,7 @@ $ diskutil list
 * http://www.anandtech.com/show/9136/the-2015-macbook-review/8
 * http://ubuntuforums.org/showthread.php?t=2283423
 * https://bbs.archlinux.org/viewtopic.php?id=198051
+* https://bugzilla.kernel.org/show_bug.cgi?id=99891
 
 #### El Capitan
 * http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/
