@@ -280,7 +280,12 @@ if grep -i -A1 "Intel" /systeminfo | grep -qi "GPU" ; then
   # chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/custom/xf86-video-intel*.pkg.tar.xz
 
   # http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/
-  echo "options i915 enable_rc6=1 enable_fbc=1 lvds_downclock=1" >> /arch/etc/modprobe.d/i915.conf
+
+  if [ $MODEL == "MacBook8,1" ]; then
+    echo "options i915 enable_rc6=1 enable_fbc=1" >> /arch/etc/modprobe.d/i915.conf
+  else
+    echo "options i915 enable_rc6=1 enable_fbc=1 lvds_downclock=1" >> /arch/etc/modprobe.d/i915.conf
+  fi
 fi
 
 ###############################################################################
@@ -482,7 +487,8 @@ UUID=$(blkid /dev/sdb -o export | grep UUID | head -1)
 echo $UUID
 #if [ $MODEL == "MacBook8,1" ]; then
 if [ $MODEL == "EXPERIMENTAL" ]; then
-  echo "\"1\" \"root=$UUID rootfstype=ext4 rw i915.i915_enable_rc6=1 i915.i915_enable_fbc=1 i915.lvds_downclock=1 usbcore.autosuspend=1 h initrd=/boot/initramfs-linux.img\" " >> /arch/boot/refind_linux.conf
+  echo "placeholder"
+ #  echo "\"1\" \"root=$UUID rootfstype=ext4 rw downclock=1 usbcore.autosuspend=1 h initrd=/boot/initramfs-linux.img\" " >> /arch/boot/refind_linux.conf
 else
   # Normal setup which works fine.
   echo "\"Graphical Interface\" \"root=$UUID rootfstype=ext4 rw quiet loglevel=6 systemd.unit=graphical.target initrd=/boot/intel-ucode.img initrd=/boot/initramfs-linux.img\" " > /arch/boot/refind_linux.conf
@@ -506,7 +512,12 @@ echo "done fstab"
 # https://wiki.archlinux.org/index.php/MacBook
 ###############################################################################
 mkdir -p /media/mac
-echo "/dev/sda2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/fstab
+if [ $MODEL == "MacBook8,1" ]; then
+  # Macbook 12" 2015 uses nvme
+  echo "/dev/nvme0n1p2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/fstab
+else
+  echo "/dev/sda2    /media/mac     hfsplus auto,user,ro,exec   0 0" >> /arch/etc/fstab
+fi
 echo "done sharing"
 ###############################################################################
 # Enable and setup SDDM Display Manger
