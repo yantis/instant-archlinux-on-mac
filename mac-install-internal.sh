@@ -502,10 +502,8 @@ echo "end refind setup"
 # Setup fstab
 # TODO look into not using discard. http://blog.neutrino.es/2013/howto-properly-activate-trim-for-your-ssd-on-linux-fstrim-lvm-and-dmcrypt/
 ###############################################################################
-
-
 if [ $MODEL == "MacBook8,1" ]; then
-NVMe
+# NVMe on 8,1 does't user discard
   echo "$UUID / ext4 rw,relatime,data=ordered 0 1" > /arch/etc/fstab
 else
   echo "$UUID / ext4 discard,rw,relatime,data=ordered 0 1" > /arch/etc/fstab
