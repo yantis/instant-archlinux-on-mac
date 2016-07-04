@@ -54,6 +54,8 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net
 
 ## Tested not working but in progress
 * [MacBook8,1] - MacBook 12" July 4th, 2016 Update - Still no working keyboard or bluetooth
+Though bluetooth might be working with Kernel v4.6
+commit (https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2791b44d6b4a2280568e0dc84be51992b7b367f1)
 
 # Setup
 * If the OS is El Capitan then you need to disable System Integrity Protection by rebooting and at the chime hiting command+R and opening a terminal and typing: csrutil disable; reboot
