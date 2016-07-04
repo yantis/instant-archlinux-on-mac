@@ -208,6 +208,7 @@ $ diskutil list
 * https://bugzilla.kernel.org/show_bug.cgi?id=99891
 * https://bugzilla.kernel.org/show_bug.cgi?id=110901
 * https://forums.opensuse.org/showthread.php/507933-openSUSE-on-the-2015-Apple-12-Inch-Retina-MacBook/page5
+* https://www.bountysource.com/issues/35422234-macbook8-1-12-inch-early-2015-keyboard-and-trackpad-don-t-work
 
 #### El Capitan
 * http://osxdaily.com/2015/10/05/disable-rootless-system-integrity-protection-mac-os-x/
