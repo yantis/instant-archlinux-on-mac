@@ -168,6 +168,7 @@ $ diskutil list
 * https://github.com/jantman/puppet-archlinux-macbookretina
 * http://www.nixknight.com/2014/02/arch-linux-installation-with-kde-desktop/
 * http://codylittlewood.com/arch-linux-on-macbook-pro-installation/
+* https://aur.archlinux.org/packages/linux-macbook-pro
 
 #### Creating/Resizing of MacOS drives
 * http://apple.stackexchange.com/questions/63130/create-new-partition-in-unallocated-space-with-diskutil
