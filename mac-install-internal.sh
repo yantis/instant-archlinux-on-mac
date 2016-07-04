@@ -151,8 +151,8 @@ echo "Server = http://mirrors.kernel.org/archlinux/\$repo/os/\$arch" > /arch/etc
 mkdir -p /arch/var/cache/pacman/general/
 
 # Remove any development packages.
-rm /var/cache/pacman/general/*devel*
-# rm /var/cache/pacman/general/*-dev-*
+# rm /var/cache/pacman/general/*devel*
+# # rm /var/cache/pacman/general/*-dev-*
 
 cp /var/cache/pacman/general/* /arch/var/cache/pacman/general/
 
