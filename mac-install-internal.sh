@@ -266,7 +266,11 @@ fi
 # http://superuser.com/questions/769047/unable-to-find-root-device-on-a-fresh-archlinux-install
 ###############################################################################
 OLDLINE=`grep "^HOOKS" /arch/etc/mkinitcpio.conf`
-NEWLINE=`echo ${OLDLINE} | sed -e "s/autodetect modconf block/block autodetect modconf/"`
+NEWLINE=`echo ${OLDLINE} | sed -e "s/autodetect block/block autodetect/"`
+sed -i "s/${OLDLINE}/${NEWLINE}/" /arch/etc/mkinitcpio.conf
+
+OLDLINE=`grep "^HOOKS" /arch/etc/mkinitcpio.conf`
+NEWLINE=`echo ${OLDLINE} | sed -e "s/autodetect block/block autodetect/"`
 sed -i "s/${OLDLINE}/${NEWLINE}/" /arch/etc/mkinitcpio.conf
 
 ###############################################################################
@@ -687,7 +691,9 @@ chroot /arch updatedb
 # avoid fsck.aufs error
 chroot /arch ln -s /bin/true /sbin/fsck.aufs
 chroot /arch pacman --noconfirm -S linux
-# chroot /arch mkinitcpio -p linux
+
+# Needed or won't find the root device
+chroot /arch mkinitcpio -p linux
 
 # New Macbook Retina April 2015 Release
 # if [ $MODEL == "MacBook8,1" ]; then
