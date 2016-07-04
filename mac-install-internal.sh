@@ -804,6 +804,17 @@ time rsync -aAX --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*
 sync
 
 ###############################################################################
+#  Helpful message for user
+#
+# Not sure why mkinitcpio -p linux has two be done again
+###############################################################################
+echo " "
+echo "If for some reason you get an error device not found"
+echo "hit F2 then select a fallback"
+echo "then run mkinitcpio -p linux"
+echo " "
+
+###############################################################################
 # Unmount physical drive
 ###############################################################################
 # delay before unmount to finish writing.otherwise sometimes in use.
