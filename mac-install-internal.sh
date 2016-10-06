@@ -174,7 +174,8 @@ echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf
 ###############################################################################
 # Install general packages
 ###############################################################################
-chroot /arch pacman --noconfirm -R vim-minimal
+#chroot /arch pacman --noconfirm -R vim-minimal
+# chroot /arch pacman --noconfirm -R vim
 chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/*.pkg.tar.xz
 
 ###############################################################################
