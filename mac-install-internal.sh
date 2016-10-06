@@ -583,6 +583,8 @@ cat >/arch/home/user/.config/xfce4/terminal/accels.scm <<EOL
 (gtk_accel_path "<Actions>/terminal-window/contents" "")
 EOL
 
+chroot /arch pacman -Syy --noconfirm
+
 ###############################################################################
 # Install the xf86-input-mtrack package
 #
