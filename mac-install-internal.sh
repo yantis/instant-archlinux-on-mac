@@ -584,6 +584,7 @@ cat >/arch/home/user/.config/xfce4/terminal/accels.scm <<EOL
 EOL
 
 chroot /arch pacman -Syy --noconfirm
+chroot /arch cat /etc/pacman.conf
 
 ###############################################################################
 # Install the xf86-input-mtrack package
@@ -631,7 +632,9 @@ EOL
   echo "pointer = 1 2 3 5 4 6 7 8 9 10 11 12" > /arch/home/user/.Xmodmap
 else
   # Install mouse drivers.
-  pacman -S --noconfirm --needed xf86-input-mouse
+
+  chroot /arch pacman -S --noconfirm --needed xf86-input-mouse
+  # pacman -S --noconfirm --needed xf86-input-mouse
 fi
 
 ###############################################################################
