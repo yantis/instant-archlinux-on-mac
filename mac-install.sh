@@ -128,8 +128,8 @@ if ! hash vboxmanage 2> /dev/null; then
   # curl -OL http://download.virtualbox.org/virtualbox/5.0.10/VirtualBox-5.0.10-104061-OSX.dmg  
   # hdiutil mount VirtualBox-5.0.10-104061-OSX.dmg
 
-  curl -OL http://download.virtualbox.org/virtualbox/5.0.24/VirtualBox-5.0.24-108355-OSX.dmg
-  hdiutil mount VirtualBox-5.0.24-108355-OSX.dmg
+  curl -OL http://download.virtualbox.org/virtualbox/5.0.28/VirtualBox-5.0.28-111378-OSX.dmg
+  hdiutil mount VirtualBox-5.0.28-111378-OSX.dmg
 
   sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
   sleep 2
@@ -164,12 +164,12 @@ fi
 # Install Paragon ExtFS
 ###############################################################################
 if ! hash fsck_ufsd_ExtFS 2> /dev/null; then
-  curl -O http://dl.paragon-software.com/demo/extmac_trial_u.dmg
-  hdiutil attach extmac_trial_u.dmg
+  curl -O http://dl.paragon-software.com/demo/extmac10_trial.dmg
+  hdiutil attach extmac10_trial.dmg
   sudo installer -pkg /Volumes/ParagonFS.localized/FSInstaller.app/Contents/Resources/Paragon\ ExtFS\ for\ Mac\ OS\ X.pkg -target /
   sleep 2
   hdiutil detach -force /Volumes/ParagonFS.localized
-  rm extmac_trial_u.dmg
+  rm extmac10_trial.dmg
 fi
 
 ###############################################################################
