@@ -171,15 +171,15 @@ chroot /arch pacman -Syy --noconfirm
 # chroot /arch bash -c "(cd /var/cache/pacman/general && yes | pacman --noconfirm -U sqlite* aria2* c-ares*)"
 # echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf \$NF}' && printf '...' && /usr/bin/aria2c -m0 -q --allow-overwrite=true -c --file-allocation=falloc --log-level=error --max-connection-per-server=2 --max-file-not-found=99 --min-split-size=5M --no-conf --remote-time=true --summary-interval=0 -t600 -d / -o %o %u && echo ' Complete!'" >> /etc/pacman.conf
 
-echo "Removing imagemagick as causing conflicts"
-chroot /arch pacman -R --noconfirm imagemagick
+#echo "Removing imagemagick as causing conflicts"
+#chroot /arch pacman -R --noconfirm imagemagick
 
 ###############################################################################
-echo "Installing cached general packages"
+#echo "Installing cached general packages"
 ###############################################################################
 #chroot /arch pacman --noconfirm -R vim-minimal
 # chroot /arch pacman --noconfirm -R vim
-chroot /arch yes | pacman --noconfirm --needed -U /var/cache/pacman/general/*.pkg.tar.xz
+#chroot /arch yes | pacman --noconfirm --needed -U /var/cache/pacman/general/*.pkg.tar.xz
 
 ###############################################################################
 # update after pushing packages from docker container to get the system 
