@@ -168,7 +168,7 @@ chroot /arch pacman -Syy --noconfirm
 # Have pacman use aria2 for downloads and give it extreme patience
 # This is mostly to keep the script from breaking on pacman timeout errors.
 ###############################################################################
-chroot /arch bash -c "(cd /var/cache/pacman/general && yes | pacman --noconfirm -U sqlite* aria2* c-ares*)"
+# chroot /arch bash -c "(cd /var/cache/pacman/general && yes | pacman --noconfirm -U sqlite* aria2* c-ares*)"
 # echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf \$NF}' && printf '...' && /usr/bin/aria2c -m0 -q --allow-overwrite=true -c --file-allocation=falloc --log-level=error --max-connection-per-server=2 --max-file-not-found=99 --min-split-size=5M --no-conf --remote-time=true --summary-interval=0 -t600 -d / -o %o %u && echo ' Complete!'" >> /etc/pacman.conf
 
 ###############################################################################
