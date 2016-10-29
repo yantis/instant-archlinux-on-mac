@@ -458,8 +458,8 @@ echo applesmc >> /arch/etc/modules
 ###############################################################################
 # Enable Thermald 
 ###############################################################################
-chroot /arch runuser -l user -c "yaourt --noconfirm --needed -S thermald"
-chroot /arch systemctl enable thermald
+#chroot /arch runuser -l user -c "yaourt --noconfirm --needed -S thermald"
+#chroot /arch systemctl enable thermald
 
 ###############################################################################
 # Enable cpupower and set governer to powersave
