@@ -463,11 +463,13 @@ echo applesmc >> /arch/etc/modules
 ###############################################################################
 # Enable Thermald 
 ###############################################################################
+chroot /arch yaourt --noconfirm --needed -S thermald
 chroot /arch systemctl enable thermald
 
 ###############################################################################
 # Enable cpupower and set governer to powersave
 ###############################################################################
+chroot /arch yaourt --noconfirm --needed -S cpupower
 chroot /arch systemctl enable cpupower
 
 # works in a Linux docker container but not a mac boot2docker one
