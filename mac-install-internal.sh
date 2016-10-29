@@ -174,8 +174,7 @@ chroot /arch pacman -Syy --noconfirm
 ###############################################################################
 echo "Installing cached general packages"
 ###############################################################################
-#chroot /arch pacman --noconfirm -R vim-minimal
-# chroot /arch pacman --noconfirm -R vim
+chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/package-quer*.pkg.tar.xz
 chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/yaour*.pkg.tar.xz
 
 ###############################################################################
