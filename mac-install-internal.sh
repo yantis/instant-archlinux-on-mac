@@ -160,7 +160,7 @@ mkdir -p /arch/var/cache/pacman/custom/
 cp /var/cache/pacman/custom/* /arch/var/cache/pacman/custom/
 
 ###############################################################################
-# Sync pacman database 
+echo "** Syncing pacman database **"
 ###############################################################################
 chroot /arch pacman -Syy --noconfirm
 
@@ -186,8 +186,8 @@ chroot /arch pacman -Syy --noconfirm
 # in the most up to date state.
 ###############################################################################
 
-echo "Updating System"
-chroot /arch yes | pacman -Su --noconfirm
+echo "** Updating System **"
+chroot /arch pacman -Syyu --noconfirm
 
 ###############################################################################
 # Setup Infinality Fonts
