@@ -182,6 +182,9 @@ chroot /arch yes | pacman --noconfirm --needed -U /var/cache/pacman/general/*.pk
 # update after pushing packages from docker container to get the system 
 # in the most up to date state.
 ###############################################################################
+echo "Removing imagemagick as causing conflicts"
+chroot /arch pacman -R --noconfirm imagemagick
+
 echo "Updating System"
 chroot /arch yes | pacman -Su --noconfirm
 
