@@ -160,9 +160,9 @@ mkdir -p /arch/var/cache/pacman/custom/
 cp /var/cache/pacman/custom/* /arch/var/cache/pacman/custom/
 
 ###############################################################################
-echo "** Syncing pacman database **"
+# echo "** Syncing pacman database **"
 ###############################################################################
-chroot /arch pacman -Syy --noconfirm
+# chroot /arch pacman -Syy --noconfirm
 
 ###############################################################################
 # Have pacman use aria2 for downloads and give it extreme patience
@@ -188,6 +188,7 @@ chroot /arch pacman -Syy --noconfirm
 
 echo "** Updating System **"
 chroot /arch pacman -Syyu --noconfirm
+chroot /arch pacman --noconfirm --needed -S yaourt
 
 ###############################################################################
 # Setup Infinality Fonts
@@ -463,13 +464,13 @@ echo applesmc >> /arch/etc/modules
 ###############################################################################
 # Enable Thermald 
 ###############################################################################
-chroot /arch yaourt --noconfirm --needed -S thermald
+chroot /arch runuser -l user -c "yaourt --noconfirm --needed -S thermald"
 chroot /arch systemctl enable thermald
 
 ###############################################################################
 # Enable cpupower and set governer to powersave
 ###############################################################################
-chroot /arch yaourt --noconfirm --needed -S cpupower
+chroot /arch runuser -l user -c "yaourt --noconfirm --needed -S cpupower"
 chroot /arch systemctl enable cpupower
 
 # works in a Linux docker container but not a mac boot2docker one
