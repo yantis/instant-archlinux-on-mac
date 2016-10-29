@@ -481,7 +481,7 @@ chroot /arch systemctl enable cpupower
 ###############################################################################
 # Force reinstall microkernel updates so they appear in boot.
 ###############################################################################
-chroot /arch pacman -S --noconfirm intel-ucode
+chroot /arch pacman -S --noconfirm --needed intel-ucode
 echo "done ucode"
 ###############################################################################
 # Setup rEFInd to boot up using Intel Micokernel updates
@@ -536,6 +536,7 @@ echo "done fstab"
 ###############################################################################
 # Enable and setup SDDM Display Manger
 ###############################################################################
+chroot /arch pacman -S --noconfirm --needed sddm
 chroot /arch systemctl enable sddm
 cat >/arch/etc/sddm.conf<<EOL
 [Theme]
