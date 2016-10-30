@@ -174,7 +174,7 @@ chroot /arch pacman -Syy --noconfirm
 ###############################################################################
 echo "Fix dbus conflict"
 ###############################################################################
-chroot /arch yes | pacman --noconfirm dbus
+chroot /arch yes | pacman --noconfirm -S dbus
 
 ###############################################################################
 echo "Installing cached general packages"
