@@ -160,7 +160,7 @@ mkdir -p /arch/var/cache/pacman/custom/
 cp /var/cache/pacman/custom/* /arch/var/cache/pacman/custom/
 
 ###############################################################################
-# echo "** Syncing pacman database **"
+echo "** Syncing pacman database **"
 ###############################################################################
 chroot /arch pacman -Syy --noconfirm
 
@@ -174,8 +174,9 @@ chroot /arch pacman -Syy --noconfirm
 ###############################################################################
 echo "Installing cached general packages"
 ###############################################################################
-chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/package-quer*.pkg.tar.xz
-chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/yaour*.pkg.tar.xz
+# chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/package-quer*.pkg.tar.xz
+# chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/package-quer*.pkg.tar.xz
+chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/*.pkg.tar.xz
 
 ###############################################################################
 # update after pushing packages from docker container to get the system 
