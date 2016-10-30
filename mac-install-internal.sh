@@ -172,6 +172,11 @@ chroot /arch pacman -Syy --noconfirm
 # echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf \$NF}' && printf '...' && /usr/bin/aria2c -m0 -q --allow-overwrite=true -c --file-allocation=falloc --log-level=error --max-connection-per-server=2 --max-file-not-found=99 --min-split-size=5M --no-conf --remote-time=true --summary-interval=0 -t600 -d / -o %o %u && echo ' Complete!'" >> /etc/pacman.conf
 
 ###############################################################################
+echo "Fix dbus conflict"
+###############################################################################
+chroot /arch yes | pacman --noconfirm dbus
+
+###############################################################################
 echo "Installing cached general packages"
 ###############################################################################
 # chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/package-quer*.pkg.tar.xz
@@ -185,6 +190,8 @@ chroot /arch pacman --noconfirm --needed -U /var/cache/pacman/general/*.pkg.tar.
 
 echo "** Updating System **"
 chroot /arch pacman -Syyu --noconfirm
+
+
 ###############################################################################
 # Setup Infinality Fonts
 # Moved to DOCKERFILE
@@ -250,7 +257,7 @@ chroot /arch systemctl enable initial_configuration.service
 echo "FONT=ter-132n" >> /arch/etc/vconsole.conf
 
 
-if [ $MODEL == "MacBook8,1" ]; then
+if [ "$MODEL" == "MacBook8,1" ]; then
   ###############################################################################
   # Experimental
   ###############################################################################
@@ -287,7 +294,7 @@ if grep -i -A1 "Intel" /systeminfo | grep -qi "GPU" ; then
 
   # http://loicpefferkorn.net/2015/01/arch-linux-on-macbook-pro-retina-2014-with-dm-crypt-lvm-and-suspend-to-disk/
 
-  if [ $MODEL == "MacBook8,1" ]; then
+  if [ "$MODEL" == "MacBook8,1" ]; then
     echo "options i915 enable_rc6=1 enable_fbc=1" >> /arch/etc/modprobe.d/i915.conf
   else
     echo "options i915 enable_rc6=1 enable_fbc=1 lvds_downclock=1" >> /arch/etc/modprobe.d/i915.conf
