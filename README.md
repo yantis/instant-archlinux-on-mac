@@ -47,13 +47,13 @@ If you have any problems feel free to shoot me an email at yantis@yantis.net
 * Yaourt for AUR
 
 ## Tested Working
-* Mountain Lion, Lion, Yosemite and El Capitan 
+* Mountain Lion, Lion, Yosemite, El Capitan, and Sierra
 * [MacBookPro10,1] - MacBook Pro (Retina, Mid 2012)
 * [MacBookPro10,2] - MacBook Pro (Retina, 13-inch, Late 2012)
 * [iMac15,1] - iMac Retina 2014
 
 ## Tested not working but in progress
-* [MacBook8,1] - MacBook 12" July 4th, 2016 Update - Still no working keyboard
+* [MacBook8,1] - MacBook 12" Oct 29th, 2016 Update - Still no working keyboard
   though fully working if I install a usb hub, keyboard, mouse and usb ethernet
 
 # Setup
