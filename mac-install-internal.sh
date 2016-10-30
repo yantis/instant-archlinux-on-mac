@@ -160,9 +160,9 @@ mkdir -p /arch/var/cache/pacman/custom/
 cp /var/cache/pacman/custom/* /arch/var/cache/pacman/custom/
 
 ###############################################################################
-echo "** Syncing pacman database **"
+echo "** Syncing pacman database & Update **"
 ###############################################################################
-chroot /arch pacman -Syy --noconfirm
+chroot /arch pacman -Syyu --noconfirm
 
 ###############################################################################
 # Have pacman use aria2 for downloads and give it extreme patience
@@ -172,9 +172,9 @@ chroot /arch pacman -Syy --noconfirm
 # echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf \$NF}' && printf '...' && /usr/bin/aria2c -m0 -q --allow-overwrite=true -c --file-allocation=falloc --log-level=error --max-connection-per-server=2 --max-file-not-found=99 --min-split-size=5M --no-conf --remote-time=true --summary-interval=0 -t600 -d / -o %o %u && echo ' Complete!'" >> /etc/pacman.conf
 
 ###############################################################################
-echo "Fix dbus conflict"
+# echo "Fix dbus conflict"
 ###############################################################################
-chroot /arch yes | pacman --noconfirm -S dbus
+# chroot /arch yes | pacman --noconfirm -S dbus
 
 ###############################################################################
 echo "Installing cached general packages"
