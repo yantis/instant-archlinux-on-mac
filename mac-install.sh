@@ -233,7 +233,9 @@ if [ $INSTALL_TYPE  == "usb" ]; then
   else
     echo USB DISK $USBDISK found.
     ROOTDISK=$USBDISK
-    diskutil eraseDISK UFSD_EXTFS4 "1" $USBDISK
+    if !  diskutil eraseDISK UFSD_EXTFS4 "1" $USBDISK; then
+      echo "Erase failed. Try rebooting and rerunning the script"
+    fi
   fi
 
 else
@@ -296,7 +298,6 @@ fi
 echo "Get Boot2Docker exports"
 docker-machine regenerate-certs docker-vm --force
 eval "$(docker-machine env docker-vm)"
-# $(docker-machine env docker-vm)
 ###############################################################################
 
 ###############################################################################

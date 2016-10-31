@@ -2,7 +2,7 @@
 
 #==============================================================================
 #==============================================================================
-#         Copyright (c) 2015 Jonathan Yantis
+#         Copyright (c) 2015-2016 Jonathan Yantis
 #               yantis@yantis.net
 #          Released under the MIT license
 #==============================================================================
@@ -62,6 +62,9 @@ chroot /arch mount -t devpts none /dev/pts
 # (Doesn't seem to matter at all they are still messed up.)
 # mount -o bind /dev/pts /arch/dev/pts
 
+
+echo "checking network"
+ping 8.8.8.8
 
 ###############################################################################
 # Use Google's nameservers though I believe we may be able to simply copy the
