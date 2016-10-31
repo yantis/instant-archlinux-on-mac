@@ -110,13 +110,14 @@ fi
 ###############################################################################
 # Remove rEFInd
 ###############################################################################
- if [ -d  /Volumes/ESP/EFI/refind ]; then
-   echo "rEFInd installed uninstalling it."
 
-   # Delete rEFInd
-   sudo rm -rf /Volumes/ESP/EFI/refind
- fi
-
+if [ ! -d  /Volumes/ESP ]; then
+  echo "Mounting EFI volume"
+  sudo mkdir -p /Volumes/ESP
+  sudo mount -t msdos /dev/disk0s1 /Volumes/ESP
+  echo "rEFInd installed uninstalling it."
+  sudo rm -rf /Volumes/ESP/EFI/refind
+fi
 
 ###############################################################################
 # Restore security 
