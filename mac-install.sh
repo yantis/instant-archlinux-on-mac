@@ -110,7 +110,14 @@ fi
 if ! hash brew 2> /dev/null; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" </dev/null
 else
-  brew update
+  echo "Updating homebrew"
+  if !  brew update; then
+    echo "Homerbrew Update Error. Fixing Permissions"
+    sudo chown -R $(whoami) /usr/local
+    echo "Attempting to fix and update homebrew"
+    brew uninstall --force brew-cask
+    brew update
+  fi
 fi
 
 ###############################################################################
@@ -122,10 +129,9 @@ fi
 
 ###############################################################################
 # Install Virtualbox 
-# TODO: I am still getting asked for a password here.
 ###############################################################################
 if ! hash vboxmanage 2> /dev/null; then
-  echo "Installing VirtualBox"
+  echo "*** Installing VirtualBox ***"
 
   # curl -OL http://download.virtualbox.org/virtualbox/5.0.28/VirtualBox-5.0.28-111378-OSX.dmg
   # hdiutil mount VirtualBox-5.0.28-111378-OSX.dmg
@@ -143,13 +149,19 @@ fi
 # Install docker-machine
 ###############################################################################
 if ! hash docker-machine 2> /dev/null; then
-  brew install docker-machine 
+  echo "*** Installing Docker Machine***"
+  if ! brew install docker-machine; then
+    echo "Xcode 8.1 error most likely so installing from the source site"
+    curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
+    chmod +x /usr/local/bin/docker-machine
+  fi
 fi
 
 ###############################################################################
 echo "Initialize docker-machine"
 ###############################################################################
 if ! docker-machine status docker-vm 2> /dev/null; then
+  echo "*** Initialize docker-machine ***"
   docker-machine create --driver virtualbox docker-vm
 fi
 

@@ -63,6 +63,7 @@ if hash docker-machine 2> /dev/null; then
   ###############################################################################
   echo "Uninstalling docker"
   brew uninstall --force docker-machine
+  brew uninstall --force docker
 fi
 
 ###############################################################################
