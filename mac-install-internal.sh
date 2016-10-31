@@ -83,7 +83,7 @@ chroot /arch haveged
 # Fix for failed: IPC connect call failed
 
 echo "*** Checking network ***"
-chroot ping -c2  8.8.8.8
+chroot /arch ping -c2  8.8.8.8
 
 echo "*** Launching dirmngr ***"
 chroot /arch bash -c "dirmngr </dev/null > /dev/null 2>&1"
