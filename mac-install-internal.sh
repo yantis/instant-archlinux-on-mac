@@ -94,7 +94,9 @@ if ! chroot /arch pacman-key --init; then
 fi
 
 echo "*** pacman-key populate ***"
-chroot /arch pacman-key --populate
+if ! chroot /arch pacman-key --populate; then
+  echo "pacman-key init failure. Trying to continue anyway"
+fi
 
 ###############################################################################
 # Temp bypass sigchecks because of 
