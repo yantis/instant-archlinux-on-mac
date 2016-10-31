@@ -89,10 +89,12 @@ echo "*** Launching dirmngr ***"
 chroot /arch bash -c "dirmngr </dev/null > /dev/null 2>&1"
 
 echo "*** pacman-key Init ***"
-chroot /arch pacman-key --init --keyserver hkp://keyserver.ubuntu.com:80
+if ! chroot /arch pacman-key --init; then
+ echo "pacman-key init failure. Trying to continue anyway"
+fi
 
 echo "*** pacman-key populate ***"
-chroot /arch pacman-key --populate --keyserver hkp://keyserver.ubuntu.com:80
+chroot /arch pacman-key --populate
 
 ###############################################################################
 # Temp bypass sigchecks because of 
