@@ -151,9 +151,11 @@ fi
 if ! hash docker-machine 2> /dev/null; then
   echo "*** Installing Docker Machine***"
   if ! brew install docker-machine; then
-    echo "Xcode 8.1 error most likely so installing from the source site"
-    curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
-    chmod +x /usr/local/bin/docker-machine
+    echo "Xcode 8.1 error most likely. Sadly for now you need to get this from developer.apple.com and install by hand "
+    exit 1
+    # echo "Xcode 8.1 error most likely so installing from the source site"
+    # curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
+    # chmod +x /usr/local/bin/docker-machine
   fi
 fi
 
@@ -172,6 +174,7 @@ if ! hash docker 2> /dev/null; then
   echo "Installing docker"
   if ! brew install docker; then
     echo "Xcode 8.1 error most likely. Sadly for now you need to get this from developer.apple.com and install by hand "
+    exit 1
   fi
 fi
 
@@ -183,6 +186,7 @@ if ! hash boot2docker 2> /dev/null; then
   echo "Installing boot2docker"
   if ! brew install boot2docker; then
     echo "Xcode 8.1 error most likely. Sadly for now you need to get this from developer.apple.com and install by hand "
+    exit 1
   fi
 fi
 
