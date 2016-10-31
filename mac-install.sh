@@ -166,6 +166,27 @@ if ! docker-machine status docker-vm 2> /dev/null; then
 fi
 
 ###############################################################################
+# Install Docker 
+###############################################################################
+if ! hash docker 2> /dev/null; then
+  echo "Installing docker"
+  if ! brew install docker; then
+    echo "Xcode 8.1 error most likely. Sadly for now you need to get this from developer.apple.com and install by hand "
+  fi
+fi
+
+
+###############################################################################
+# Install boot2docker
+###############################################################################
+if ! hash boot2docker 2> /dev/null; then
+  echo "Installing boot2docker"
+  if ! brew install boot2docker; then
+    echo "Xcode 8.1 error most likely. Sadly for now you need to get this from developer.apple.com and install by hand "
+  fi
+fi
+
+###############################################################################
 # Install ZSH and Oh-my-zsh
 # You don't need this but I like it when working with this since while debugging this script
 ###############################################################################
