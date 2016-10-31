@@ -125,11 +125,11 @@ fi
 if ! hash vboxmanage 2> /dev/null; then
   echo "Installing VirtualBox"
 
-  # curl -OL http://download.virtualbox.org/virtualbox/5.0.10/VirtualBox-5.0.10-104061-OSX.dmg  
-  # hdiutil mount VirtualBox-5.0.10-104061-OSX.dmg
+  # curl -OL http://download.virtualbox.org/virtualbox/5.0.28/VirtualBox-5.0.28-111378-OSX.dmg
+  # hdiutil mount VirtualBox-5.0.28-111378-OSX.dmg
 
-  curl -OL http://download.virtualbox.org/virtualbox/5.0.28/VirtualBox-5.0.28-111378-OSX.dmg
-  hdiutil mount VirtualBox-5.0.28-111378-OSX.dmg
+  curl -OL http://download.virtualbox.org/virtualbox/5.1.8/VirtualBox-5.1.8-111374-OSX.dmg
+  hdiutil mount VirtualBox-5.1.8-111374-OSX.dmg
 
   sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
   sleep 2
