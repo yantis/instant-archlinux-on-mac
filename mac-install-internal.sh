@@ -121,17 +121,17 @@ sed -i 's/#\[multilib\]/\[multilib\]/g' /arch/etc/pacman.conf
 # Temp disable signature checking. But restore at the end.
 # because of GPGME error: Inapproropriate ioctrl for device
 ###############################################################################
-echo "[infinality-bundle-fonts]" >> /arch/etc/pacman.conf
-echo "Server = http://bohoomil.com/repo/fonts" >>/arch/etc/pacman.conf
-echo "SigLevel = Never" >> /arch/etc/pacman.conf
+# echo "[infinality-bundle-fonts]" >> /arch/etc/pacman.conf
+# echo "Server = http://bohoomil.com/repo/fonts" >>/arch/etc/pacman.conf
+# echo "SigLevel = Never" >> /arch/etc/pacman.conf
 
-echo "[infinality-bundle]" >> /arch/etc/pacman.conf
-echo "Server = http://bohoomil.com/repo/x86_64" >>/arch/etc/pacman.conf
-echo "SigLevel = Never" >> /arch/etc/pacman.conf
+# echo "[infinality-bundle]" >> /arch/etc/pacman.conf
+# echo "Server = http://bohoomil.com/repo/x86_64" >>/arch/etc/pacman.conf
+# echo "SigLevel = Never" >> /arch/etc/pacman.conf
 
-echo "[infinality-bundle-multilib]" >> /arch/etc/pacman.conf
-echo "Server = http://bohoomil.com/repo/multilib/x86_64" >> /arch/etc/pacman.conf
-echo "SigLevel = Never" >> /arch/etc/pacman.conf
+# echo "[infinality-bundle-multilib]" >> /arch/etc/pacman.conf
+# echo "Server = http://bohoomil.com/repo/multilib/x86_64" >> /arch/etc/pacman.conf
+# echo "SigLevel = Never" >> /arch/etc/pacman.conf
 
 # chroot /arch pacman-key -r 962DDE58 # --keyserver hkp://subkeys.pgp.net
 # chroot /arch pacman-key --lsign 962DDE58
@@ -182,11 +182,6 @@ chroot /arch pacman -Syyu --noconfirm
 ###############################################################################
 # chroot /arch bash -c "(cd /var/cache/pacman/general && yes | pacman --noconfirm -U sqlite* aria2* c-ares*)"
 # echo "XferCommand = /usr/bin/printf 'Downloading ' && echo %u | awk -F/ '{printf \$NF}' && printf '...' && /usr/bin/aria2c -m0 -q --allow-overwrite=true -c --file-allocation=falloc --log-level=error --max-connection-per-server=2 --max-file-not-found=99 --min-split-size=5M --no-conf --remote-time=true --summary-interval=0 -t600 -d / -o %o %u && echo ' Complete!'" >> /etc/pacman.conf
-
-###############################################################################
-# echo "Fix dbus conflict"
-###############################################################################
-# chroot /arch yes | pacman --noconfirm -S dbus
 
 ###############################################################################
 echo "Installing cached general packages"
