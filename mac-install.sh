@@ -323,21 +323,21 @@ else
   fi
 
   # Install rEFInd
-  curl -OL http://downloads.sourceforge.net/project/refind/0.10.3/refind-bin-0.10.3.zip
-  unzip -o refind-bin-0.10.3.zip
+  curl -OL http://downloads.sourceforge.net/project/refind/0.10.4/refind-bin-0.10.4.zip
+  unzip -o refind-bin-0.10.4.zip
   if [ $INSTALL_TYPE  == "usb" ]; then
     # (cd refind-bin-0.8.7 && sudo sh install.sh --alldrivers --usedefault /dev/${ROOTDISK}s1 )
     echo "Installing rEFInd to USB"
     mkdir -p  /Volumes/ESP/EFI
-    cp -R refind-bin-0.10.3/refind /Volumes/ESP/EFI
-    cp refind-bin-0.10.3/refind/refind.conf-sample /Volumes/ESP/EFI/refind/refind.conf
+    cp -R refind-bin-0.10.4/refind /Volumes/ESP/EFI
+    cp refind-bin-0.10.4/refind/refind.conf-sample /Volumes/ESP/EFI/refind/refind.conf
 
   else
-    sh refind-bin-0.10.3/refind-install --alldrivers --yes
+    sh refind-bin-0.10.4/refind-install --alldrivers --yes
   fi
 
-  rm -r refind-bin-0.10.3
-  rm refind-bin-0.10.3.zip
+  rm -r refind-bin-0.10.4
+  rm refind-bin-0.10.4.zip
 
   # Sometimes rEFInd fails to unmount /Volumes/ESP so lets use that if its already open
   if [ ! -d  /Volumes/ESP ];
