@@ -62,10 +62,6 @@ chroot /arch mount -t devpts none /dev/pts
 # (Doesn't seem to matter at all they are still messed up.)
 # mount -o bind /dev/pts /arch/dev/pts
 
-
-echo "checking network"
-ping 8.8.8.8
-
 ###############################################################################
 # Use Google's nameservers though I believe we may be able to simply copy the
 # /etc/resolv.conf over since Docker magages that and it "should" be accurate.
@@ -85,8 +81,17 @@ chroot /arch haveged
 # Init pacman
 ###############################################################################
 # Fix for failed: IPC connect call failed
+
+echo "*** Checking network ***"
+chroot ping -c2  8.8.8.8
+
+echo "*** Launching dirmngr ***"
 chroot /arch bash -c "dirmngr </dev/null > /dev/null 2>&1"
+
+echo "*** pacman-key Init ***"
 chroot /arch pacman-key --init
+
+echo "*** pacman-key populate ***"
 chroot /arch pacman-key --populate
 
 ###############################################################################
