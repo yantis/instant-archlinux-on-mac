@@ -38,6 +38,16 @@ unmount()
 echo "Temporarily Disabling sudo password timeout"
 sudo sh -c 'echo "\nDefaults timestamp_timeout=-1">>/etc/sudoers'
 
+##############################################################################
+# Uninstall Boot2Docker
+###############################################################################
+if hash boot2docker 2> /dev/null; then
+  echo "Removing boot2docker"
+  boot2docker stop
+  boot2docker delete
+  brew uninstall --force boot2docker
+fi
+
 ###############################################################################
 # Uninstall docker"
 ###############################################################################
@@ -53,6 +63,25 @@ if hash docker-machine 2> /dev/null; then
   ###############################################################################
   echo "Uninstalling docker"
   brew uninstall --force docker-machine
+fi
+
+###############################################################################
+# Uninstall virtualbox
+###############################################################################
+if hash vboxmanage 2> /dev/null; then
+
+  if [ ! -f VirtualBox-5.1.8-111374-OSX.dmg ];
+  then
+    curl -OL http://download.virtualbox.org/virtualbox/5.1.8/VirtualBox-5.1.8-111374-OSX.dmg
+  fi
+
+  hdiutil mount VirtualBox-5.1.8-111374-OSX.dmg
+  sudo sh /Volumes/VirtualBox/VirtualBox_Uninstall.tool --unattended
+  sleep 2
+  hdiutil unmount /Volumes/VirtualBox/
+
+  # Unrem this to remove the downloaded install file.
+  # rm VirtualBox-4.3.26-98988-OSX.dmg
 fi
 
 ###############################################################################
