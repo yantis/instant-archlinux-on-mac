@@ -137,7 +137,6 @@ if ! hash vboxmanage 2> /dev/null; then
   curl -OL http://download.virtualbox.org/virtualbox/5.1.14/VirtualBox-5.1.14-112924-OSX.dmg
 
   # hdiutil mount VirtualBox-5.1.8-111374-OSX.dmg
-  # hdiutil mount VirtualBox-5.1.8-111374-OSX.dmg
   hdiutil mount VirtualBox-5.1.14-112924-OSX.dmg
 
   sudo installer -pkg /Volumes/VirtualBox/VirtualBox.pkg -target /
