@@ -205,7 +205,8 @@ fi
 if ! hash fsck_ufsd_ExtFS 2> /dev/null; then
   curl -O http://dl.paragon-software.com/demo/extmac10_trial.dmg
   hdiutil attach extmac10_trial.dmg
-  sudo installer -pkg /Volumes/ParagonFS.localized/FSInstaller.app/Contents/Resources/Paragon\ ExtFS\ for\ Mac\ OS\ X.pkg -target /
+  # sudo installer -pkg /Volumes/ParagonFS.localized/FSInstaller.app/Contents/Resources/Paragon\ ExtFS\ for\ Mac\ OS\ X.pkg -target /
+  sudo installer -pkg /Volumes/ParagonFS.localized/FSInstaller.app/Contents/Resources/Paragon\ ExtFS\ for\ Mac.pkg -target /
   sleep 2
   hdiutil detach -force /Volumes/ParagonFS.localized
   rm extmac10_trial.dmg
