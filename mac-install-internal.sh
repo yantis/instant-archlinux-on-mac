@@ -517,11 +517,11 @@ if [ $MODEL == "EXPERIMENTAL" ]; then
  #  echo "\"1\" \"root=$UUID rootfstype=ext4 rw downclock=1 usbcore.autosuspend=1 h initrd=/boot/initramfs-linux.img\" " >> /arch/boot/refind_linux.conf
 else
   # Normal setup which works fine.
+  echo "\"Fallback with microkernel updates\" \"root=$UUID rootfstype=ext4 rw loglevel=6 initrd=/boot/intel-ucode.img initrd=/boot/initramfs-linux-fallback.img\" " >> /arch/boot/refind_linux.conf
+  echo "\"Fallback without microkernel updates\" \"root=$UUID rootfstype=ext4 rw loglevel=6 initrd=/boot/initramfs-linux-fallback\" " >> /arch/boot/refind_linux.conf
   echo "\"Graphical Interface\" \"root=$UUID rootfstype=ext4 rw quiet loglevel=6 systemd.unit=graphical.target initrd=/boot/intel-ucode.img initrd=/boot/initramfs-linux.img\" " > /arch/boot/refind_linux.conf
   echo "\"Normal with microkernel updates\" \"root=$UUID rootfstype=ext4 rw loglevel=6 initrd=/boot/intel-ucode.img initrd=/boot/initramfs-linux.img\" " >> /arch/boot/refind_linux.conf
   echo "\"Normal without microkernel updates\" \"root=$UUID rootfstype=ext4 rw loglevel=6 initrd=/boot/initramfs-linux.img\" " >> /arch/boot/refind_linux.conf
-  echo "\"Fallback with microkernel updates\" \"root=$UUID rootfstype=ext4 rw loglevel=6 initrd=/boot/intel-ucode.img initrd=/boot/initramfs-linux-fallback.img\" " >> /arch/boot/refind_linux.conf
-  echo "\"Fallback without microkernel updates\" \"root=$UUID rootfstype=ext4 rw loglevel=6 initrd=/boot/initramfs-linux-fallback\" " >> /arch/boot/refind_linux.conf
 fi
 echo "end refind setup"
 ###############################################################################
