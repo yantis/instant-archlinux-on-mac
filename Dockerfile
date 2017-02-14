@@ -38,7 +38,7 @@ RUN pacman --noconfirm -Syy && \
     sed -i "s/\[community\]/\[community\]\nSigLevel = Never/" /etc/pacman.conf && \
 
     # Remove the texinfo-fake package since we are installing perl for rsync.
-    pacman --noconfirm -Rdd texinfo-fake && \
+    # pacman --noconfirm -Rdd texinfo-fake && \
 
     # Install stuff we will need later
     pacman --noconfirm --needed -S \
@@ -238,7 +238,7 @@ RUN pacman --noconfirm --needed -Sy base-devel && \
     xorg-font-utils fontconfig libtool m4 git inputproto \
     dbus systemd package-query bison autoconf \
     freetype2 harfbuzz graphite libpng xorg-server-devel \
-    libunistring gettext && \
+    gettext && \
 
     # Clean up to make this as small as possible
     localepurge && \
