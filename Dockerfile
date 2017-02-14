@@ -368,48 +368,48 @@ RUN pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
             rm -r /var/lib/pacman/sync/*
 
 
-# Download and cache Infinality Fonts
-RUN bash -c "echo \"[infinality-bundle-fonts]\" >> /etc/pacman.conf" && \
-    bash -c "echo \"Server = http://bohoomil.com/repo/fonts \" >>/etc/pacman.conf" && \
-    bash -c "echo \"SigLevel = Never\" >> /etc/pacman.conf" && \
+# # Download and cache Infinality Fonts
+# RUN bash -c "echo \"[infinality-bundle-fonts]\" >> /etc/pacman.conf" && \
+#     bash -c "echo \"Server = http://bohoomil.com/repo/fonts \" >>/etc/pacman.conf" && \
+#     bash -c "echo \"SigLevel = Never\" >> /etc/pacman.conf" && \
 
-    bash -c "echo \"[infinality-bundle]\" >> /etc/pacman.conf" && \
-    bash -c "echo \"Server = http://bohoomil.com/repo/x86_64 \" >>/etc/pacman.conf" && \
-    bash -c "echo \"SigLevel = Never\" >> /etc/pacman.conf" && \
+#     bash -c "echo \"[infinality-bundle]\" >> /etc/pacman.conf" && \
+#     bash -c "echo \"Server = http://bohoomil.com/repo/x86_64 \" >>/etc/pacman.conf" && \
+#     bash -c "echo \"SigLevel = Never\" >> /etc/pacman.conf" && \
 
-    rm /var/cache/pacman/general/ttf-dejavu-* && \
-    rm /var/cache/pacman/general/freetype2-* && \
-    rm /var/cache/pacman/general/fontconfig-* && \
-    rm /var/cache/pacman/general/cairo-* && \
-    rm /var/cache/pacman/general/cantarell-fonts-* && \
+#     rm /var/cache/pacman/general/ttf-dejavu-* && \
+#     rm /var/cache/pacman/general/freetype2-* && \
+#     rm /var/cache/pacman/general/fontconfig-* && \
+#     rm /var/cache/pacman/general/cairo-* && \
+#     rm /var/cache/pacman/general/cantarell-fonts-* && \
 
-    pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
-            infinality-bundle \
-            ibfonts-meta-base \
-            otf-cantarell-ib \
-            ibfonts-meta-extended-lt \
-            otf-oswald-ib \
-            otf-quintessential-ib \
-            otf-tex-gyre-ib \
-            t1-cursor-ib \
-            t1-urw-fonts-ib \
-            ttf-caladea-ib \
-            ttf-cantoraone-ib \
-            ttf-carlito-ib \
-            ttf-ddc-uchen-ib \
-            ttf-droid-ib \
-            ttf-gelasio-ib \
-            ttf-lohit-odia-ib \
-            ttf-lohit-punjabi-ib \
-            ttf-merriweather-ib \
-            ttf-merriweather-sans-ib \
-            # ttf-noto-serif-multilang-ib \
-            ttf-opensans-ib \
-            ttf-signika-family-ib \
-            ttf-ubuntu-font-family-ib && \
+#     pacman --noconfirm -Syw --cachedir /var/cache/pacman/general \
+#             infinality-bundle \
+#             ibfonts-meta-base \
+#             otf-cantarell-ib \
+#             ibfonts-meta-extended-lt \
+#             otf-oswald-ib \
+#             otf-quintessential-ib \
+#             otf-tex-gyre-ib \
+#             t1-cursor-ib \
+#             t1-urw-fonts-ib \
+#             ttf-caladea-ib \
+#             ttf-cantoraone-ib \
+#             ttf-carlito-ib \
+#             ttf-ddc-uchen-ib \
+#             ttf-droid-ib \
+#             ttf-gelasio-ib \
+#             ttf-lohit-odia-ib \
+#             ttf-lohit-punjabi-ib \
+#             ttf-merriweather-ib \
+#             ttf-merriweather-sans-ib \
+#             # ttf-noto-serif-multilang-ib \
+#             ttf-opensans-ib \
+#             ttf-signika-family-ib \
+#             ttf-ubuntu-font-family-ib && \
 
-    # Clean up pacman
-    rm -r /var/lib/pacman/sync/*
+#     # Clean up pacman
+#     rm -r /var/lib/pacman/sync/*
 
 CMD /bin/zsh
 
