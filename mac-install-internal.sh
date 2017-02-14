@@ -281,12 +281,15 @@ fi
 # Fix root device not showing up.
 # http://superuser.com/questions/769047/unable-to-find-root-device-on-a-fresh-archlinux-install
 ###############################################################################
+# HOOKS="base udev autodetect modconf block filesystems keyboard fsck"
+# HOOKS="base udev fsck block autodetect modconf filesystems keyboard"
 OLDLINE=`grep "^HOOKS" /arch/etc/mkinitcpio.conf`
 NEWLINE=`echo ${OLDLINE} | sed -e "s/autodetect block/block autodetect/"`
 sed -i "s/${OLDLINE}/${NEWLINE}/" /arch/etc/mkinitcpio.conf
 
+# Fix macbook 12.1 not booting and possibly others
 OLDLINE=`grep "^HOOKS" /arch/etc/mkinitcpio.conf`
-NEWLINE=`echo ${OLDLINE} | sed -e "s/autodetect block/block autodetect/"`
+NEWLINE=`echo ${OLDLINE} | sed -e "s/base udev autodetect modconf block filesystems keyboard fsck/base udev fsck block autodetect modconf filesystems keyboard/"`
 sed -i "s/${OLDLINE}/${NEWLINE}/" /arch/etc/mkinitcpio.conf
 
 ###############################################################################
@@ -496,7 +499,8 @@ chroot /arch systemctl enable cpupower
 ###############################################################################
 # Force reinstall microkernel updates so they appear in boot.
 ###############################################################################
-chroot /arch pacman -S --noconfirm --needed intel-ucode
+# chroot /arch pacman -S --noconfirm --needed intel-ucode
+chroot /arch pacman -S --noconfirm intel-ucode
 echo "done ucode"
 ###############################################################################
 # Setup rEFInd to boot up using Intel Micokernel updates
