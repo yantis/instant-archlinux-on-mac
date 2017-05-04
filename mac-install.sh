@@ -112,7 +112,7 @@ if ! hash brew 2> /dev/null; then
 else
   echo "Updating homebrew"
   if !  brew update; then
-    echo "Homerbrew Update Error. Fixing Permissions"
+    echo "Homebrew Update Error. Fixing Permissions"
     sudo chown -R $(whoami) /usr/local
     echo "Attempting to fix and update homebrew"
     brew uninstall --force brew-cask
