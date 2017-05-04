@@ -76,6 +76,6 @@ amixer sset Master unmute
 # Cleanup
 # This is supposed to delete us but it still is around as I see a fragment in the journal
 ###############################################################################
-sytemctl disable initial_configuration.service
+systemctl disable initial_configuration.service
 rm /usr/lib/systemd/system/initial_configuration.service
 rm $0
