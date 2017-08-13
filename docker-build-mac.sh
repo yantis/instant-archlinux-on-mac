@@ -109,7 +109,7 @@ then
   echo "Downloading rootfs image"
   cd ~
   # curl -OL http://mirror.rackspace.com/archlinux/iso/2016.10.01/arch/x86_64/airootfs.sfs
-  curl -OL http://mirror.rackspace.com/archlinux/iso/2017.02.01/arch/x86_64/airootfs.sfs
+  curl -OL http://mirror.rackspace.com/archlinux/iso/2017.08.01/arch/x86_64/airootfs.sfs
 fi
 
 ###############################################################################
