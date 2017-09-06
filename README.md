@@ -1,4 +1,6 @@
-# Instant Arch Linux on Macs & MacBooks
+# Instant Arch Linux on Macs & MacBooks [deprecated, help welcome]
+
+NB: This project is currently not being actively maintained, and is not usable at this moment. PRs are still very welcome in order to fix the current usability issues.
 
 This will setup Arch Linux on your Mac or MacBook all from Mac OSX. No need for any USB drives or figuring out the proper network/video drivers to get your
 system to get up. It should install without any rebooting etc. Just launch it and enter your password twice and go about your business.
